@@ -11,3 +11,5 @@
 
 1. from root run `yarn`
 2. run `yarn run storybook`
+
+or visit https://learning-platfrom-storybook.netlify.app/
