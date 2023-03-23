@@ -1,0 +1,5 @@
+!.storybook
+dist
+.idea
+node_modules
+storybook-static
