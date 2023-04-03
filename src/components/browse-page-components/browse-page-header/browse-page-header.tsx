@@ -1,7 +1,7 @@
 import { Typography } from 'components/common/typography/typography';
 import { concatClasses } from 'helpers/string/string';
 import { useContext, useRouter } from 'hooks/hooks';
-import { DataStatus } from 'common/enum/enum';
+import { DataStatus, IconName } from 'common/enum/enum';
 import { BrowsePageContext } from 'pages/browse/index';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
 import { TagDataType } from 'types/api/data';
@@ -78,6 +78,7 @@ export const BrowsePageHeader = ({
           items={courseSearchValues}
           inputProps={{
             placeholder: 'Search for anything',
+            iconName: IconName.SEARCH,
           }}
           handleSearch={handleCourseSearch}
           handleAutocompleteSelect={handleAutocompleteSelect}

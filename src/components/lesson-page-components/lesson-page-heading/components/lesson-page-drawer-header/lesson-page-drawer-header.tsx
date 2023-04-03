@@ -38,7 +38,7 @@ const LessonPageDrawerHeader = ({
         ])}
       >
         <Typography
-          as={'h4'}
+          as={'h2'}
           styleName={'h3'}
           className={'text-center sm:text-left'}
         >

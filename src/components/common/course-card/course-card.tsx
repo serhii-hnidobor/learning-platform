@@ -59,7 +59,9 @@ const CourseCard = ({
               className={'z-0 w-full'}
               src={previewImgSrc}
               fill={true}
-              sizes={'(min-width: 1280px) 280px, (min-width: 1024px) 240px, (min-width: 768px) 275px, 280px'}
+              sizes={
+                '(min-width: 1280px) 280px, (min-width: 1024px) 240px, (min-width: 768px) 275px, 280px'
+              }
               alt={`${title} video preview image`}
             />
           )}

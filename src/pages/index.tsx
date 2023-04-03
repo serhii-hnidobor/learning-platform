@@ -4,12 +4,14 @@ import { ProductReviewSection } from 'components/landing-page-components/product
 import { ProductAdvantages } from 'components/landing-page-components/product-advantages/product-advantages';
 import { ProductDescriptionSection } from 'components/landing-page-components/product-description-section/product-description-section';
 import { SectionHero } from 'components/landing-page-components/hero-section/section-hero';
-import { getData } from '../hooks/use-data-fetch/helper/getData/getData';
-import { CollectionName } from '../common/enum/api/api';
-import { CourseDataType, ReviewDataType, TagDataType } from 'types/api/data';
+import { getData } from 'hooks/use-data-fetch/helper/getData/getData';
+import { CollectionName } from 'common/enum/api/api';
+import { ReviewDataType, TagDataType } from 'types/api/data';
+import { convertCourseDataToCourseProps } from 'helpers/data/data';
+import { CoursePropsDataType } from 'types/props/landing-page';
 
 interface LandingPageProps {
-  courseData: CourseDataType[];
+  courseData: CoursePropsDataType[];
   tagData: TagDataType[];
   reviewData: ReviewDataType[];
 }
@@ -20,7 +22,10 @@ const LandingPage = ({ courseData, tagData, reviewData }: LandingPageProps) => {
       <SectionHero />
       <ProductDescriptionSection />
       <ProductCategoriesDescription />
-      <ProductPreviewSection tagData={tagData} courseCardData={courseData} />
+      <ProductPreviewSection
+        tagData={tagData}
+        courseCardProposes={courseData}
+      />
       <ProductAdvantages />
       <ProductReviewSection reviewsData={reviewData} />
     </>
@@ -30,16 +35,31 @@ const LandingPage = ({ courseData, tagData, reviewData }: LandingPageProps) => {
 export default LandingPage;
 
 export async function getStaticProps() {
-  const courseData = await getData({ name: CollectionName.COURSES });
-  const tagData = await getData({ name: CollectionName.TAGS });
-  const reviewData = await getData({ name: CollectionName.REVIEWS });
+  const courseData = await getData<CollectionName.COURSES>({
+    name: CollectionName.COURSES,
+  });
+  const tagData = await getData<CollectionName.TAGS>({
+    name: CollectionName.TAGS,
+  });
+  const reviewData = await getData<CollectionName.REVIEWS>({
+    name: CollectionName.REVIEWS,
+  });
+
+  const trimmedCourseData = convertCourseDataToCourseProps(courseData).map(
+    (course, index) => {
+      return {
+        ...course,
+        tags: courseData[index].tags,
+      };
+    },
+  );
 
   return {
     props: {
-      courseData,
+      courseData: trimmedCourseData,
       tagData,
       reviewData,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }

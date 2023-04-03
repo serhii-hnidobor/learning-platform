@@ -51,7 +51,7 @@ const ProductShortInfoCard = ({
           {...iconProps}
         />
         <Typography
-          as="h3"
+          as="h2"
           styleName="h4"
           color={variant === 'nonActive' ? 'black' : 'white'}
         >
@@ -59,7 +59,7 @@ const ProductShortInfoCard = ({
         </Typography>
       </header>
       <Typography
-        as="h3"
+        as="h2"
         styleName="body2Regular"
         color={variant === 'nonActive' ? 'grey' : 'white'}
       >

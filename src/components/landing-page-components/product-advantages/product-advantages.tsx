@@ -28,7 +28,7 @@ const ProductAdvantages = () => {
       >
         <div className={concatClasses(['mb-6'])}>
           <Typography
-            as={'h3'}
+            as={'h2'}
             styleName={'h3'}
             className={'text-center 2xl:text-left'}
             color={'black'}
@@ -38,7 +38,7 @@ const ProductAdvantages = () => {
         </div>
         <div className={concatClasses(['mb-9'])}>
           <Typography
-            as={'h4'}
+            as={'h3'}
             styleName={'body2Regular'}
             className={'text-center 2xl:text-left'}
             color={'grey'}

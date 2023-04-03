@@ -7,12 +7,12 @@ async function getAllLessonId() {
   });
 
   return lessonData.map((lesson) => {
-      return {
-        params: {
-          id: lesson.id,
-        },
-      };
-    });
+    return {
+      params: {
+        id: lesson.id,
+      },
+    };
+  });
 }
 
 export default getAllLessonId;

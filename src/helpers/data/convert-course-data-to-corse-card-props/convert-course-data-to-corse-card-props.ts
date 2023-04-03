@@ -1,5 +1,6 @@
 import { CourseDataType } from 'types/api/data';
 import { CourseCardProps } from 'components/common/course-card/course-card';
+import { CoursePropsDataType } from 'types/props/landing-page';
 
 /**
  * Converts an array of CourseDataType objects to an array of CourseCardProps objects.
@@ -7,10 +8,24 @@ import { CourseCardProps } from 'components/common/course-card/course-card';
  * @returns The converted array of CourseCardProps objects.
  */
 export function convertCourseDataToCourseProps(
-  data: CourseDataType[],
+  data: CourseDataType[] | CoursePropsDataType[] | CourseCardProps[],
 ): CourseCardProps[] {
   return data.map((course) => {
-    const { previewImgSrc, lessonNum, authorName, name, rate, id, popular } =
+    if ('popular' in course) {
+      const { previewImgSrc, lessonNum, authorName, name, rate, id, popular } =
+        course;
+      return {
+        previewImgSrc,
+        lessonNum,
+        authorName,
+        name,
+        rate,
+        id,
+        isPopular: popular,
+      };
+    }
+
+    const { previewImgSrc, lessonNum, authorName, name, rate, id, isPopular } =
       course;
     return {
       previewImgSrc,
@@ -19,7 +34,7 @@ export function convertCourseDataToCourseProps(
       name,
       rate,
       id,
-      isPopular: popular,
+      isPopular,
     };
   });
 }

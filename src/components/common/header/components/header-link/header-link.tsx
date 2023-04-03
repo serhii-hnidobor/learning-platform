@@ -29,11 +29,10 @@ export const HeaderLink = ({ isActive, name, route }: Props) => {
         'flex-col',
         'justify-center',
         'align-center',
-        'cursor-pointer',
         typographyClassName,
       ])}
     >
-      <Link href={route} tabIndex={0} ref={ref}>
+      <Link href={route} tabIndex={0} ref={ref} className={'cursor-pointer'}>
         <Typography as={'span'} textTransform={'capitalize'}>
           {name}
         </Typography>

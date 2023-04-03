@@ -194,7 +194,7 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
       lessonData: trimmedLessonData,
       markdownJsxString: markdownJsxString,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }
 

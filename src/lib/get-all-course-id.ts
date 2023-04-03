@@ -7,12 +7,12 @@ async function getAllCourseId() {
   });
 
   return courseData.map((course) => {
-      return {
-        params: {
-          id: course.id,
-        },
-      };
-    });
+    return {
+      params: {
+        id: course.id,
+      },
+    };
+  });
 }
 
 export default getAllCourseId;

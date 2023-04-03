@@ -114,7 +114,7 @@ const LessonPageHeading = ({
         ) : (
           <Typography
             as={'h1'}
-            styleName={'h3'}
+            styleName={'h2'}
             color={'white'}
             className={'text-center xl:text-left'}
           >
@@ -168,11 +168,15 @@ const LessonPageHeading = ({
                 id={youtubeEmbedId}
                 wrapperClass={concatClasses([
                   'relative',
+                  'yt-lite',
                   'w-full',
                   'height-[0px]',
                   'overflow-hidden',
                   'mb-[50px]',
                   'aspect-video',
+                  'bg-no-repeat',
+                  'bg-cover',
+                  'bg-center',
                 ])}
                 iframeClass={concatClasses([
                   'w-full',
@@ -193,7 +197,7 @@ const LessonPageHeading = ({
             />
           ) : (
             <Typography
-              as="h4"
+              as={'h2'}
               color={'grey'}
               styleName={'body2Medium'}
               className={'mb-3 block'}

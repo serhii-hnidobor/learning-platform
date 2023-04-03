@@ -2,6 +2,8 @@ import { CourseDataType } from 'types/api/data';
 import isEqual from 'lodash/isEqual';
 import difference from 'lodash/difference';
 import { convertCourseDataToCourseProps } from 'helpers/data/data';
+import { CourseCardProps } from 'components/common/course-card/course-card';
+import { CoursePropsDataType } from 'types/props/landing-page';
 
 /**
  * Searches for a course by tag.
@@ -11,14 +13,14 @@ import { convertCourseDataToCourseProps } from 'helpers/data/data';
  * @returns An array of courses that match the given tag array or null if not find.
  */
 export function tagSearch(
-  courseArray: CourseDataType[] | null,
+  courseArray: CourseDataType[] | null | CoursePropsDataType[],
   tagArray: string[] | null,
 ) {
   if (!courseArray || !courseArray.length || !tagArray || !tagArray.length) {
     return null;
   }
 
-  const searchResult: CourseDataType[] = [];
+  const searchResult: CourseCardProps[] = [];
 
   courseArray.forEach((course) => {
     const { tags: courseTags } = course;

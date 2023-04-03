@@ -7,7 +7,7 @@ import { createContext } from 'react';
 import { convertCourseDataToCourseProps } from 'helpers/data/data';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
-import { getData } from '../../hooks/use-data-fetch/helper/getData/getData';
+import { getData } from 'hooks/use-data-fetch/helper/getData/getData';
 
 interface BrowsePageContextType {
   handleCourseSearch: (searchString: string) => void;
@@ -177,6 +177,6 @@ export async function getStaticProps() {
       tagData,
       topicsData,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }

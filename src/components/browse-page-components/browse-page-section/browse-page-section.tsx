@@ -88,7 +88,7 @@ const BrowsePageSection = ({
       >
         <Typography
           styleName={'h4'}
-          as={'h3'}
+          as={'h2'}
           color={'black'}
           className={'truncate'}
         >

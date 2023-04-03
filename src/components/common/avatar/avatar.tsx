@@ -48,7 +48,7 @@ const Avatar = ({
         alt={alt}
         className={imgClassName}
         width={size === 'small' ? 24 : 366}
-        height={size === 'small' ? 24 : 495}
+        height={size === 'small' ? 24 : 432}
       />
     </div>
   );

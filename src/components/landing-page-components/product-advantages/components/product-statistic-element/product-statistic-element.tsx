@@ -13,7 +13,7 @@ const ProductStatisticElement = ({
 }: ProductStatisticElementProps) => {
   return (
     <div {...restWrapperProps}>
-      <Typography as={'h5'} styleName={'h4'}>
+      <Typography as={'h2'} styleName={'h4'}>
         {title}
       </Typography>
       <Typography as={'p'} styleName={'body2Regular'} color={'grey'}>

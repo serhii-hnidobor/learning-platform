@@ -107,7 +107,7 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
       markdownJsxString,
       headingProps,
     },
-    revalidate: 10,
+    revalidate: 3600,
   };
 }
 

@@ -181,7 +181,7 @@ const Carousel = ({
           <div>
             {title && (
               <Typography
-                as={'h3'}
+                as={'h2'}
                 styleName={'h3'}
                 color={'black'}
                 className={concatClasses([

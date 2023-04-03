@@ -53,7 +53,11 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
             />
           </ul>
           <div className={'flex items-center justify-center gap-6'}>
-            <Link href={'https://www.facebook.com/'} target={'_blank'}>
+            <Link
+              href={'https://www.facebook.com/'}
+              aria-label="Learing platform facebook"
+              target={'_blank'}
+            >
               <Icon
                 name={IconName.FACEBOOK}
                 boxProps={{
@@ -69,7 +73,11 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
                 stroke={'grey'}
               />
             </Link>
-            <Link href={'https://www.youtube.com'} target={'_blank'}>
+            <Link
+              href={'https://www.youtube.com'}
+              aria-label="Learing platform yputube chanel"
+              target={'_blank'}
+            >
               <Icon
                 name={IconName.YOUTUBE}
                 boxProps={{
@@ -85,7 +93,11 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
                 stroke={'grey'}
               />
             </Link>
-            <Link href={'https://www.instagram.com/'} target={'_blank'}>
+            <Link
+              href={'https://www.instagram.com/'}
+              aria-label="Learing platform instagram"
+              target={'_blank'}
+            >
               <Icon
                 name={IconName.INSTAGRAM}
                 boxProps={{

@@ -29,7 +29,7 @@ const CourseAccordionHeaderContent = ({
         <Skeleton />
       ) : (
         <Typography
-          as="h3"
+          as="h2"
           styleName={'h5'}
           color={'black'}
           className={'line-clamp-1 mb-3 inline-block'}

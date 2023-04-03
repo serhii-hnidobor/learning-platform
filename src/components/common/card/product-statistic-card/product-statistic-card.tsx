@@ -52,7 +52,7 @@ const ProductStatisticCard = ({
         strokeWidth={'2'}
       />
       <Typography
-        as={'h5'}
+        as={'h2'}
         styleName={'body1Bold'}
         className={'line-clamp-1 inline-block self-center'}
       >

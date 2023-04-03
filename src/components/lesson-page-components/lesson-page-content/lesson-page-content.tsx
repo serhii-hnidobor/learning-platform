@@ -32,7 +32,7 @@ type LessonPagePropsType =
 const LessonPageContent = ({
   error,
   loading,
-                             markdownJsx,
+  markdownJsx,
   fileAttachment,
 }: LessonPagePropsType) => {
   let lessonAttachmentSection: JSX.Element | null;

@@ -197,4 +197,8 @@ const CoursePageHeading = ({
   );
 };
 
-export { CoursePageHeading, type CoursePageHeaderProps, type CoursePageHeaderBaseProps };
+export {
+  CoursePageHeading,
+  type CoursePageHeaderProps,
+  type CoursePageHeaderBaseProps,
+};

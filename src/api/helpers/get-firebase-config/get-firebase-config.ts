@@ -35,7 +35,6 @@ function getFirebaseConfig(): ApiConfigType {
     messagingSenderId,
     appId,
   };
-
 }
 
 export { getFirebaseConfig, type ApiConfigType };

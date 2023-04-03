@@ -44,7 +44,7 @@ const ProductInfoCard = ({
         boxProps={{ className: iconWrapperClasName }}
       />
       <Typography
-        as={'h3'}
+        as={'h2'}
         styleName={'h4'}
         color={'black'}
         className={'mb-3'}

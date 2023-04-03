@@ -64,7 +64,7 @@ const LessonAttachment = ({
         />
       ) : (
         <Typography
-          as={'h4'}
+          as={'h2'}
           styleName={'h4'}
           color={'black'}
           className={'line-clamp-1 mb-8 block'}

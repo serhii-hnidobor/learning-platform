@@ -8,7 +8,7 @@ interface TopicDataType extends TagDataType {}
 
 interface CourseSectionType extends TagDataType {
   duration: number;
-  lessonsNum: 27;
+  lessonsNum: number;
   youtubeEmbedId: string;
   index: number;
 }

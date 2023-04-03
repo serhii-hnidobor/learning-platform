@@ -1,9 +1,9 @@
 interface CoursePageAccordionLessonType {
-    isTextLesson: boolean;
-    duration: number;
-    name: string;
-    index: number;
-    id: string;
+  isTextLesson: boolean;
+  duration: number;
+  name: string;
+  index: number;
+  id: string;
 }
 
 export { type CoursePageAccordionLessonType };

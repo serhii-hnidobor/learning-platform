@@ -1,6 +1,5 @@
 import { Typography } from 'components/common/typography/typography';
 import { tagSearch } from 'helpers/search/search';
-import { convertCourseDataToCourseProps } from 'helpers/data/data';
 import { concatClasses } from 'helpers/string/string';
 import { CoursesList } from 'components/common/courses-list/courses-list';
 import { useState } from 'hooks/hooks';
@@ -8,12 +7,13 @@ import { DataStatus } from 'common/enum/enum';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { Section } from 'components/common/section/section';
-import { CourseDataType, TagDataType } from 'types/api/data';
+import { TagDataType } from 'types/api/data';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
+import { CoursePropsDataType } from 'types/props/landing-page';
 
 interface ProductPreviewSectionBaseProps {
   tagData: TagDataType[];
-  courseCardData: CourseDataType[];
+  courseCardProposes: CoursePropsDataType[];
   loading?: false;
   error?: false;
 }
@@ -35,7 +35,7 @@ type ProductReviewSectionProps =
 
 const ProductPreviewSection = ({
   tagData,
-  courseCardData,
+  courseCardProposes,
   loading,
   error,
 }: ProductReviewSectionProps) => {
@@ -44,10 +44,10 @@ const ProductPreviewSection = ({
   >([]);
 
   const handleSearch = (tagArray: string[]) => {
-    if (!courseCardData) {
+    if (!courseCardProposes) {
       return;
     }
-    const searchResult = tagSearch(courseCardData, tagArray);
+    const searchResult = tagSearch(courseCardProposes, tagArray);
 
     setFoundedCourseList(searchResult);
   };
@@ -62,8 +62,8 @@ const ProductPreviewSection = ({
 
   if (foundedCourseList && foundedCourseList.length) {
     courseDataToRender = foundedCourseList;
-  } else if (courseCardData) {
-    courseDataToRender = convertCourseDataToCourseProps(courseCardData);
+  } else if (courseCardProposes) {
+    courseDataToRender = courseCardProposes;
   }
 
   return (
@@ -77,7 +77,7 @@ const ProductPreviewSection = ({
       <header className={'mb-16'}>
         <Typography
           styleName={'h3'}
-          as={'h3'}
+          as={'h2'}
           color="white"
           className={'max-w-[448px]'}
         >

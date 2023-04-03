@@ -8,7 +8,7 @@ import { Icon } from 'components/common/icon/icon';
 
 interface SearchInputProps extends ComponentBaseProps<'input'> {
   placeholder: string;
-  iconName?: IconName;
+  iconName: IconName;
   onBlur: VoidFunction;
   isAutocompleteSelected?: boolean;
   isAutocompleteDisplay?: boolean;

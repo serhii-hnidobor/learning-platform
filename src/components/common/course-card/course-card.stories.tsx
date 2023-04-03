@@ -1,6 +1,6 @@
 import { CourseCard } from './course-card';
 import { Meta, StoryObj } from '@storybook/react';
-import { SkeletonWrapper } from '../../common/skeleton-wrapper/skeleton-wrapper';
+import { SkeletonWrapper } from '../skeleton-wrapper/skeleton-wrapper';
 
 const meta = {
   title: 'components/common/CourseCard',
