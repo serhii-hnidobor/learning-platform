@@ -45,7 +45,9 @@ export async function getStaticProps() {
     name: CollectionName.REVIEWS,
   });
 
-  const trimmedCourseData = convertCourseDataToCourseProps(courseData).map(
+  const popularCourses = courseData.slice(0, 5);
+
+  const trimmedCourseData = convertCourseDataToCourseProps(popularCourses).map(
     (course, index) => {
       return {
         ...course,
