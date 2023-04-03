@@ -1,4 +1,5 @@
-import { Button, Typography } from 'components/common/common';
+import { Typography } from 'components/common/typography/typography';
+import Button from 'components/common/button/button';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 
 interface LessonPageDrawerHeaderProps {

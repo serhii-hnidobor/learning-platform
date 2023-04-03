@@ -1,8 +1,8 @@
 import React from 'react';
-import { Drawer, DrawerProps } from './drawer';
+import Drawer, { DrawerProps } from './drawer';
 import { Meta, StoryFn } from '@storybook/react';
 import { useState } from 'hooks/hooks';
-import { Button } from '../../common/common';
+import Button from '../button/button';
 
 export default {
   title: 'components/common/Drawer',

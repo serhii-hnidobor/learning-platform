@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin');
+const { fontFamily } = require('tailwindcss/defaultTheme')
+
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
   theme: {
@@ -71,7 +73,7 @@ module.exports = {
       'gradient-dark-color-2': '#272728',
     },
     fontFamily: {
-      serif: ['Lato', 'sans-serif'],
+      serif: ['var(--font-lato)', ...fontFamily.serif],
     },
     fontSize: {
       sm: ['14px', '20px'],

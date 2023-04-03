@@ -1,10 +1,13 @@
-import { Icon, IconProps } from 'components/common/icon/icon';
-import { IconName } from 'common/enum/enum';
-import { Typography, TypographyProps } from 'components/common/common';
 import Skeleton from 'react-loading-skeleton';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
 import { getDurationString } from 'helpers/time/time';
 import { useKeyPress, useRef } from 'hooks/hooks';
+import {
+  Typography,
+  TypographyProps,
+} from 'components/common/typography/typography';
+import { Icon, IconProps } from 'components/common/icon/icon';
+import { IconName } from 'common/enum/icons/icons';
 
 interface Props extends Omit<ComponentBaseProps<'div'>, 'onClick'> {
   id: string;

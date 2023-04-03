@@ -4,7 +4,8 @@ import {
   avatarWrapperVariants,
   AvatarWrapperVariantsType,
 } from './cva-varinats/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
+import Image from 'next/image';
 
 interface AvatarProps {
   size?: AvatarWrapperVariantsType['size'];
@@ -12,7 +13,7 @@ interface AvatarProps {
   rounded?: AvatarWrapperVariantsType['rounded'];
   src: string;
   alt: string;
-  imageHtmlProps?: AllHtmlElementProps<'div', AvatarProps>;
+  imageHtmlProps?: Omit<AllHtmlElementProps<'div', AvatarProps>, 'placeholder'>;
   wrapperHtmlProps?: AllHtmlElementProps<'div', AvatarProps>;
 }
 
@@ -40,7 +41,15 @@ const Avatar = ({
 
   return (
     <div {...wrapperHtmlProps} className={wrapperClassName}>
-      <img {...imageHtmlProps} src={src} alt={alt} className={imgClassName} />
+      <Image
+        priority={true}
+        {...imageHtmlProps}
+        src={src}
+        alt={alt}
+        className={imgClassName}
+        width={size === 'small' ? 24 : 366}
+        height={size === 'small' ? 24 : 495}
+      />
     </div>
   );
 };

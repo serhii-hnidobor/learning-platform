@@ -1,6 +1,5 @@
-import { SearchBox } from './search-box';
+import SearchBox from './search-box';
 import { Meta, StoryObj } from '@storybook/react';
-import { IconName } from 'common/enum/icons/icons';
 
 const meta = {
   title: 'components/common/Rating',
@@ -29,7 +28,6 @@ export const SearchBoxDefault: Story = {
     items: searchData,
     inputProps: {
       placeholder: 'Search for anything',
-      iconName: IconName.SEARCH,
     },
     handleSearch: () => undefined,
     handleAutocompleteSelect: () => undefined,

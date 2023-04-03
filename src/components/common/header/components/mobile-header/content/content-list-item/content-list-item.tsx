@@ -1,4 +1,4 @@
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Icon, IconProps } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import {
@@ -51,7 +51,7 @@ export const ContentListItem = ({
         height={24}
       />
       <Typography
-        as={'a'}
+        as={'span'}
         textTransform={'capitalize'}
         className={'group-hover:text-white'}
       >

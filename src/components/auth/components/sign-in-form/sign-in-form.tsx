@@ -1,5 +1,5 @@
 import { useAppForm, useState } from 'hooks/hooks';
-import { Button } from 'components/common/button/button';
+import Button from 'components/common/button/button';
 import { Input } from 'components/common/input/input';
 import { SignInFormValues } from 'types/user/user-sign-in-form-values';
 import { userSignIn } from 'common/validation-schemas/validation-schemas';
@@ -7,8 +7,8 @@ import { PasswordInput } from 'components/common/password-input/password-input';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { Typography } from 'components/common/typography/typography';
-import { concatClasses } from 'helpers/helpers';
-import { signInWithGoogle } from 'api/firebase';
+import { concatClasses } from 'helpers/string/string';
+import { signInWithGoogle } from 'api/auth';
 import { AuthContainerLink } from 'components/auth/components/auth-container/link/auth-container-link';
 import { AppRoutes } from 'common/enum/enum';
 
@@ -18,7 +18,7 @@ interface SignInFormProps {
   handleSubmitEvent: (data: SignInFormValues) => Promise<void>;
 }
 
-export const SignInForm = ({
+const SignInForm = ({
   handleSubmitEvent,
   handleGoogleFail,
   handleGoogleSuccess,
@@ -126,3 +126,5 @@ export const SignInForm = ({
     </>
   );
 };
+
+export default SignInForm;

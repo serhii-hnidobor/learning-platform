@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import { Typography } from 'components/common/typography/typography';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import remarkGfm from 'remark-gfm';
 import Skeleton from 'react-loading-skeleton';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -175,4 +175,4 @@ const Markdown = ({
   );
 };
 
-export { Markdown, type MarkdownPropsType };
+export { Markdown as default, type MarkdownPropsType };

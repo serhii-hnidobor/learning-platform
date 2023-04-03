@@ -1,16 +1,23 @@
-import { Burger, Button, Drawer, Icon, Logo } from 'components/common/common';
-import { IconName } from 'common/enum/icons/icons';
 import { useWindowDimensions } from 'hooks/use-window-dimensions/use-window-dimensions';
-import { concatClasses } from 'helpers/helpers';
-import { useContext, useLocation, useNavigate, useState } from 'hooks/hooks';
+import { concatClasses } from 'helpers/string/string';
+import { useContext, useRouter, useState } from 'hooks/hooks';
 import { createContext, useEffect } from 'react';
-import { MobileDrawerContent } from './components/mobile-header/content/content';
+import { MobileDrawerContent } from './components/mobile-header';
 import { AppRoutes } from 'common/enum/app/app';
 import { HeaderLink } from './components/header-link/header-link';
 import { MobileHeaderDrawerHeader } from 'components/common/header/components/mobile-header';
 import { HeaderMenu } from './components/header-menu/header-menu';
-import { AppContext } from 'components/app/app';
-import { auth } from 'api/firebase';
+import { AppContext } from 'pages/_app';
+import { auth } from 'api/auth';
+import { Burger } from '../burger/burger';
+import Logo from '../logo/logo';
+import Button from '../button/button';
+import dynamic from 'next/dynamic';
+import { Icon } from '../icon/icon';
+import { IconName } from 'common/enum/enum';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+
+const Drawer = dynamic(import('../drawer/drawer'));
 
 interface HeaderProps {
   isSignIn?: boolean;
@@ -24,10 +31,9 @@ interface HeaderContextInterface {
 const HeaderContext = createContext<HeaderContextInterface | null>(null);
 
 const Header = ({ isSignIn = false }: HeaderProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const Router = useRouter();
 
-  const { pathname: curRoute } = location;
+  const { route: curRoute } = Router;
 
   const from = encodeURIComponent(curRoute);
 
@@ -40,6 +46,17 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
   if (!appContext) {
     throw new Error('try to use header without app context');
   }
+
+  useDeepCompareEffect(() => {
+    auth.onAuthStateChanged(async (authenticate) => {
+      if (authenticate && authenticate.emailVerified) {
+        const { email, uid: id } = authenticate;
+        if (email) {
+          appContext.setUser({ email, id });
+        }
+      }
+    });
+  }, [appContext]);
 
   const handleSignOut = async () => {
     try {
@@ -66,11 +83,11 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
     screen === 'extra-small';
 
   const handleRedirectSignIn = () => {
-    navigate(`${AppRoutes.SIGN_IN}?from=${from}`, { replace: false });
+    Router.push(`${AppRoutes.SIGN_IN}?from=${from}`);
   };
 
   const handleRedirectSignUp = () => {
-    navigate(`${AppRoutes.SIGN_UP}?from=${from}`, { replace: false });
+    Router.push(`${AppRoutes.SIGN_UP}?from=${from}`);
   };
 
   useEffect(() => {
@@ -109,14 +126,12 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
             '2xl:w-[1497px]',
           ])}
         >
-          {isMobileMenuNeed && (
-            <Burger
-              isOpen={isDrawerOpen}
-              className={'flex items-center justify-center py-0'}
-              onOpen={() => setIsDrawerOpen(true)}
-              onClose={() => setIsDrawerOpen(false)}
-            />
-          )}
+          <Burger
+            isOpen={isDrawerOpen}
+            className={'flex items-center justify-center py-0 md:hidden'}
+            onOpen={() => setIsDrawerOpen(true)}
+            onClose={() => setIsDrawerOpen(false)}
+          />
           <Drawer
             isOpen={isDrawerOpen}
             contentContainerClassName={'h-full bg-dark !w-full'}
@@ -126,7 +141,7 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
                 handleSignOut={handleSignOut}
                 curRoute={curRoute}
                 isSignIn={isSignIn}
-                handleRedirect={(route) => navigate(route)}
+                handleRedirect={(route) => Router.push(route)}
               />
             }
             header={
@@ -136,10 +151,7 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
               />
             }
           />
-          <Logo
-            logoIconProps={{ className: 'mr-4' }}
-            isTitleNeed={isCompanyNameNeed}
-          />
+          <Logo isTitleNeed={isCompanyNameNeed} />
           <div className="flex items-center gap-x-9">
             <ul className="hidden h-full items-center gap-x-8 md:flex">
               <HeaderLink
@@ -198,4 +210,4 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
   );
 };
 
-export { Header };
+export default Header;

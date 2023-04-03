@@ -1,17 +1,16 @@
-import { Accordion } from 'components/common/common';
+import Accordion from 'components/common/accordion/accordion';
 import { CourseAccordionHeaderContent } from './components/header-content/header-content';
-import { useDataFetch, useNavigate } from 'hooks/hooks';
-import { CollectionName, DataStatus } from 'common/enum/api/api';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import { CourseAccordionItemWrapper } from './components/course-page-accordion-item-wrapper/course-page-accordion-item-wrapper';
+import { useRouter } from 'next/router';
+import { CoursePageAccordionLessonType } from './type/course-page-lesson';
 
 interface CoursePageAccordionProps extends ComponentBaseProps<'div'> {
   name: string;
   lessonNum: number;
+  lessonData: CoursePageAccordionLessonType[];
   duration: number;
-  courseSectionId: string;
   onClick?: VoidFunction;
-  handleError: VoidFunction;
 }
 
 const CoursePageAccordionLoading = () => {
@@ -27,50 +26,24 @@ const CoursePageAccordion = ({
   name,
   duration,
   lessonNum,
-  courseSectionId,
-  handleError,
+  lessonData,
   ...restWrapperProps
 }: CoursePageAccordionProps) => {
-  const navigate = useNavigate();
+  const Router = useRouter();
 
-  const { data: lessonData, dataStatus: lessonDataStatus } =
-    useDataFetch<CollectionName.LESSONS>({
-      name: CollectionName.LESSONS,
-      whereOptions: {
-        fieldName: 'sectionId',
-        comparator: '==',
-        value: courseSectionId,
-      },
-    });
-
-  const loading =
-    lessonDataStatus === DataStatus.PENDING ||
-    lessonDataStatus === DataStatus.IDLE;
-
-  let accordionChildren: JSX.Element;
-  let accordionHeader: JSX.Element;
-
-  if (loading) {
-    accordionChildren = <CourseAccordionItemWrapper loading={true} />;
-    accordionHeader = <CourseAccordionHeaderContent loading={true} />;
-  } else if (lessonData && lessonDataStatus === DataStatus.SUCCESS) {
-    accordionChildren = (
-      <CourseAccordionItemWrapper
-        lessonData={lessonData}
-        handleLessonClick={(lessonIndex) => navigate(`/lesson/${lessonIndex}`)}
-      />
-    );
-    accordionHeader = (
-      <CourseAccordionHeaderContent
-        name={name}
-        duration={duration}
-        lessonNum={lessonNum}
-      />
-    );
-  } else {
-    handleError();
-    throw Error('failed to load lessons data');
-  }
+  const accordionChildren = (
+    <CourseAccordionItemWrapper
+      lessonData={lessonData}
+      handleLessonClick={(lessonIndex) => Router.push(`/lesson/${lessonIndex}`)}
+    />
+  );
+  const accordionHeader = (
+    <CourseAccordionHeaderContent
+      name={name}
+      duration={duration}
+      lessonNum={lessonNum}
+    />
+  );
 
   return (
     <Accordion

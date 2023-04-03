@@ -3,7 +3,7 @@ import {
   circleDecorationVariantsType,
 } from 'components/common/circle-decoration/cva-variants/cva-variants';
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 
 interface CircleDecoration extends ComponentBaseProps<'div'> {
   bumpPosition?: NonNullable<circleDecorationVariantsType['position']>;

@@ -1,22 +1,25 @@
-import {
-  Button,
-  Drawer,
-  Icon,
-  Section,
-  Typography,
-} from 'components/common/common';
-import { concatClasses, randomInt } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
 import { LoadingProps } from 'types/html-elemet-props';
-import { NextLessonType } from 'types/api/data';
-import { IconName } from 'common/enum/enum';
-import { useNavigate, useState } from 'hooks/hooks';
-import YouTube from 'react-youtube';
+import { CourseSectionType, NextLessonType } from 'types/api/data';
+import { useRouter, useState } from 'hooks/hooks';
 import { getDurationString } from 'helpers/time/time';
 import { LessonPageDrawerHeader } from './components/lesson-page-drawer-header/lesson-page-drawer-header';
 import { LessonPageDrawerContent } from './components/lesson-page-drawer-conent/lesson-page-drawer-content';
+import { Section } from 'components/common/section/section';
+import dynamic from 'next/dynamic';
+import { Typography } from 'components/common/typography/typography';
+import Button from 'components/common/button/button';
+import { IconName } from 'common/enum/enum';
+import { Icon } from 'components/common/icon/icon';
+import { LessonDataArgType } from 'helpers/data/data';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+
+const Drawer = dynamic(import('components/common/drawer/drawer'));
 
 interface LessonPageHeadingProps {
+  lessonData: LessonDataArgType[];
+  courseSectionData: CourseSectionType[];
   sectionIndex: number;
   index: number;
   courseId: string;
@@ -46,8 +49,10 @@ const LessonPageHeading = ({
   loading,
   youtubeEmbedId,
   courseId,
+  lessonData,
+  courseSectionData,
 }: LessonPageHeaderProps) => {
-  const navigate = useNavigate();
+  const Router = useRouter();
 
   const [isNeedDrawer, setIsNeedDrawer] = useState(false);
 
@@ -63,11 +68,16 @@ const LessonPageHeading = ({
         isRight={true}
         header={
           <LessonPageDrawerHeader
-            progress={randomInt(0, 100)}
+            progress={50}
             handleClose={() => setIsNeedDrawer((prev) => !prev)}
           />
         }
-        children={<LessonPageDrawerContent courseId={courseId} />}
+        children={
+          <LessonPageDrawerContent
+            lessonData={lessonData}
+            courseSectionData={courseSectionData}
+          />
+        }
       />
     );
   }
@@ -153,9 +163,10 @@ const LessonPageHeading = ({
                 className={'aspect-video w-full'}
               />
             ) : (
-              <YouTube
-                videoId={youtubeEmbedId}
-                className={concatClasses([
+              <LiteYouTubeEmbed
+                title={name}
+                id={youtubeEmbedId}
+                wrapperClass={concatClasses([
                   'relative',
                   'w-full',
                   'height-[0px]',
@@ -163,7 +174,7 @@ const LessonPageHeading = ({
                   'mb-[50px]',
                   'aspect-video',
                 ])}
-                iframeClassName={concatClasses([
+                iframeClass={concatClasses([
                   'w-full',
                   'h-full',
                   'absolute',
@@ -300,9 +311,9 @@ const LessonPageHeading = ({
               <Button
                 ariaLabel={'go to next lesson'}
                 intent={'regularOutlined'}
-                onClick={() => {
+                onClick={async () => {
                   if (nextLesson) {
-                    navigate(`/lesson/${nextLesson.id}`);
+                    await Router.push(`/lesson/${nextLesson.id}`);
                   }
                 }}
               >

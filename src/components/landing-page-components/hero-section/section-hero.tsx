@@ -1,22 +1,20 @@
-import {
-  Avatar,
-  Button,
-  CircleDecoration,
-  Section,
-  Typography,
-} from 'components/common/common';
 import { ProductInfoListItem } from './components/product-info-list-item/product-info-list-item';
 import { AppRoutes, IconName } from 'common/enum/enum';
-import HeroImg from 'assets/images/hero.webp';
 import { HeroLabel } from './components/hero-label/hero-label';
-import { concatClasses } from 'helpers/helpers';
-import { useNavigate } from 'hooks/hooks';
+import { concatClasses } from 'helpers/string/string';
+import { useRouter } from 'next/router';
+import { Typography } from 'components/common/typography/typography';
+import Button from 'components/common/button/button';
+import { CircleDecoration } from 'components/common/circle-decoration/circle-decoration';
+import { Avatar } from 'components/common/avatar/avatar';
+import { Section } from 'components/common/section/section';
 
+import HeroImg from 'assets/images/hero.webp';
 const SectionHero = () => {
-  const navigate = useNavigate();
+  const Router = useRouter();
 
   const handleLearnMoreClick = () => {
-    navigate(AppRoutes.BROWSE);
+    Router.push(AppRoutes.BROWSE);
   };
 
   return (

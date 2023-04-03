@@ -14,9 +14,5 @@ export {
   useId,
   useCallback,
 } from 'react';
-export {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+
+export { useRouter } from 'next/router';

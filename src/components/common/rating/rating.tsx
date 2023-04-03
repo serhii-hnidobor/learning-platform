@@ -1,9 +1,13 @@
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { Icon, Typography, TypographyProps } from 'components/common/common';
+import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
-import { getHalfStarIndex } from 'components/common/rating/helpres/get-half-star-index';
+import { getHalfStarIndex } from './helpres/get-half-star-index';
+import {
+  Typography,
+  TypographyProps,
+} from 'components/common/typography/typography';
 
 interface RatingProps extends ComponentBaseProps<'div'> {
   rating: number;

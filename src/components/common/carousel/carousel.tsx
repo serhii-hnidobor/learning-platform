@@ -1,8 +1,9 @@
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import { useCallback, useEffect, useRef, useState } from 'hooks/hooks';
-import { ControlButton, Typography } from 'components/common/common';
+import { ControlButton } from 'components/common/control-button/control-button';
+import { Typography } from 'components/common/typography/typography';
 import { PaginationMarker } from './component/pagination-marker/pagination-marker';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { useSwipeable } from 'react-swipeable';
 import {
   ProductShortInfoCard,

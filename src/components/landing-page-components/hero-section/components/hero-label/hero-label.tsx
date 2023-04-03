@@ -2,7 +2,7 @@ import {
   heroLabelVariants,
   HeroLabelVariantsType,
 } from 'components/landing-page-components/hero-section/components/hero-label/cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/enum';
 import { Typography } from 'components/common/typography/typography';
@@ -47,7 +47,7 @@ const HeroLabel = ({
       {illustration}
       <div className={`flex ${infoWrapperDirection}`}>
         <Typography
-          as={'h4'}
+          as={'h2'}
           styleName={'h4'}
           color={'white'}
           align={textAlign}
@@ -56,7 +56,7 @@ const HeroLabel = ({
           {label}
         </Typography>
         <Typography
-          as={'h4'}
+          as={'h3'}
           styleName={'body3Regular'}
           color={'grey'}
           textTransform={'capitalize'}

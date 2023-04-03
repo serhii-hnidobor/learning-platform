@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Burger } from '../../common/common';
+import { Burger } from 'components/common/burger/burger';
 
 const meta = {
   title: 'components/common/burger',

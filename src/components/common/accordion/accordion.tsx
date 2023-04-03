@@ -1,7 +1,7 @@
 import { IconName } from 'common/enum/enum';
-import { Icon } from 'components/common/common';
+import { Icon } from 'components/common/icon/icon';
 import { useRef, useState } from 'react';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { useKeyPress } from 'hooks/hooks';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
 
@@ -91,4 +91,4 @@ const Accordion = ({
   );
 };
 
-export { Accordion, type AccordionPropsType };
+export { Accordion as default, type AccordionPropsType };

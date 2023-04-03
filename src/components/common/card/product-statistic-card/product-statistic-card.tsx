@@ -3,11 +3,12 @@ import {
   ProductStatisticCardVariantsType,
 } from 'components/common/card/product-statistic-card/cva-variants/cva-variants';
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { concatClasses } from 'helpers/helpers';
-import { IconName } from 'common/enum/icons/icons';
-import { Icon, IconProps, Typography } from 'components/common/common';
+import { concatClasses } from 'helpers/string/string';
+import { IconProps, Icon } from 'components/common/icon/icon';
+import { Typography } from 'components/common/typography/typography';
 import { useHoverScaleAnimation } from 'hooks/hooks';
 import { animated } from '@react-spring/web';
+import { IconName } from 'common/enum/icons/icons';
 
 interface ProductStatisticCardProps extends ComponentBaseProps<'div'> {
   state: NonNullable<ProductStatisticCardVariantsType['state']>;

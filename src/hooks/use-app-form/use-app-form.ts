@@ -9,7 +9,7 @@ import {
   UseFormSetValue,
 } from 'react-hook-form';
 
-import { getFormValidationResolver } from 'helpers/helpers';
+import { getFormValidationResolver } from 'helpers/validation/validation';
 import { FormControlErrors } from 'types/form/form-control-error';
 import { FormControl } from 'types/form/form-control';
 import { ValidationSchema } from 'types/validation/validation-schema.type';

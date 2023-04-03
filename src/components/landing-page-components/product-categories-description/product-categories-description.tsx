@@ -1,7 +1,7 @@
 import { Carousel } from 'components/common/carousel/carousel';
 import { IconName } from 'common/enum/icons/icons';
 import { ProductShortInfoCardProps } from 'components/common/card/product-short-info-card/product-short-info-card';
-import { Section } from 'components/common/common';
+import { Section } from 'components/common/section/section';
 
 //Data for static landing page section
 const cards: ProductShortInfoCardProps[] = [

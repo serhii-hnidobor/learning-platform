@@ -1,9 +1,9 @@
-import { Icon, IconProps } from 'components/common/icon/icon';
 import {
   Typography,
   TypographyProps,
 } from 'components/common/typography/typography';
 import { IconName } from 'common/enum/icons/icons';
+import { Icon, IconProps } from 'components/common/icon/icon';
 
 interface ProductInfoListItemProps {
   iconProps?: Omit<IconProps, 'label'>;

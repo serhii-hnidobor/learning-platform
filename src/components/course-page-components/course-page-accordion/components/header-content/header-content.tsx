@@ -1,7 +1,8 @@
-import { Icon, Typography } from 'components/common/common';
+import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/enum';
 import Skeleton from 'react-loading-skeleton';
-import { getDurationString } from 'helpers/helpers';
+import { getDurationString } from 'helpers/time/time';
+import { Typography } from 'components/common/typography/typography';
 
 interface Props {
   name: string;

@@ -4,7 +4,7 @@ import {
 } from 'components/common/control-button/cva-variant/cva-variants';
 import { Icon } from 'components/common/icon/icon';
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { IconName } from 'common/enum/icons/icons';
 
 interface ControlButtonProps extends ComponentBaseProps<'button'> {

@@ -1,15 +1,16 @@
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
-import { LessonDataType } from 'types/api/data';
-import {
-  concatClasses,
-  convertLessonDataToAccordionLessonItemProps,
-} from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { AccordionLessonItem } from '../accordion-lesson-item/accordion-lesson-item';
-import { FetchFailedBanner } from 'components/common/common';
+import dynamic from 'next/dynamic';
+import { CoursePageAccordionLessonType } from '../../type/course-page-lesson';
+
+const FetchFailedBanner = dynamic(
+  import('components/common/fetch-failed-banner/fetch-failed-banner'),
+);
 
 interface CourseAccordionItemWrapperProps extends ComponentBaseProps<'div'> {
   loading?: false;
-  lessonData: LessonDataType[] | null;
+  lessonData: CoursePageAccordionLessonType[] | null;
   handleLessonClick: (lessonIndex: string) => void;
 }
 
@@ -38,20 +39,18 @@ const CourseAccordionItemWrapper = ({
   let content: JSX.Element[] | JSX.Element;
 
   if (lessonData && lessonData.length) {
-    content = lessonData.map((lesson, index) => {
-      const props = convertLessonDataToAccordionLessonItemProps(lesson);
-
-      const { index: lessonIndex, id } = props;
+    content = lessonData.map((lesson) => {
+      const { index: lessonIndex, id } = lesson;
 
       return (
         <AccordionLessonItem
-          {...props}
+          {...lesson}
           onClick={() => {
             if (handleLessonClick) {
               handleLessonClick(id);
             }
           }}
-          key={`short-lesson-info-${index}`}
+          key={`short-lesson-info-${id}`}
           number={lessonIndex}
           loading={false}
         />

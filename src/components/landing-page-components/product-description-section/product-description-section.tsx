@@ -1,7 +1,8 @@
-import { Section, Typography } from 'components/common/common';
+import { Typography } from 'components/common/typography/typography';
+import { Section } from 'components/common/section/section';
 import { ProductInfoCard } from './components/product-info-card/product-info-card';
 import { IconName } from 'common/enum/enum';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { useWindowDimensions } from 'hooks/hooks';
 
 const ProductDescriptionSection = () => {

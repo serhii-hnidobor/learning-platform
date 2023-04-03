@@ -1,15 +1,14 @@
 import { SVGProps } from 'react';
 import { ComponentBaseProps } from 'types/html-elemet-props';
+import { IconName } from 'common/enum/icons/icons';
+import { AppRoutes } from 'common/enum/enum';
+import { concatClasses } from 'helpers/string/string';
+import { useRouter } from 'next/router';
 import {
-  Icon,
-  IconProps,
   Typography,
   TypographyProps,
-} from 'components/common/common';
-import { IconName } from 'common/enum/icons/icons';
-import { useLocation, useNavigate } from 'hooks/hooks';
-import { AppRoutes } from 'common/enum/enum';
-import { concatClasses } from 'helpers/helpers';
+} from 'components/common/typography/typography';
+import { Icon, IconProps } from 'components/common/icon/icon';
 
 interface LogoProps extends ComponentBaseProps<'div'> {
   logoIconProps?: Omit<SVGProps<SVGElement>, keyof IconProps>;
@@ -25,8 +24,9 @@ const Logo = ({
   className,
   ...restWrapperProps
 }: LogoProps) => {
-  const navigate = useNavigate();
-  const { pathname: curRoute } = useLocation();
+  const Router = useRouter();
+
+  const { route: curRoute } = Router;
 
   let wrapperClassName = 'inline-flex items-center cursor-pointer';
 
@@ -34,9 +34,9 @@ const Logo = ({
     wrapperClassName = concatClasses([wrapperClassName, className]);
   }
 
-  const handleRootRedirect = () => {
+  const handleRootRedirect = async () => {
     if (curRoute !== AppRoutes.ROOT) {
-      navigate(AppRoutes.ROOT);
+      await Router.push(AppRoutes.ROOT);
     }
   };
   return (
@@ -48,6 +48,7 @@ const Logo = ({
       <Icon width={32} height={32} {...logoIconProps} name={IconName.LOGO} />
       {isTitleNeed && (
         <Typography
+          className={'ml-4'}
           {...typographyProps}
           styleName={'body2ExtraBold'}
           as={'span'}
@@ -60,4 +61,4 @@ const Logo = ({
   );
 };
 
-export { Logo };
+export default Logo;

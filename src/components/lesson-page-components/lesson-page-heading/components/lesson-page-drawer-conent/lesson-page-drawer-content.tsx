@@ -1,70 +1,20 @@
-import { useContext, useDataFetch } from 'hooks/hooks';
-import { CollectionName, DataStatus } from 'common/enum/enum';
+import { CoursePageAccordion } from 'components/course-page-components/course-page-accordion/course-page-accordion';
+import { concatClasses } from 'helpers/string/string';
+import { CourseSectionType } from 'types/api/data';
 import {
-  CoursePageAccordion,
-  CoursePageAccordionLoading,
-} from 'components/course-page-components/course-page-accordion/course-page-accordion';
-import { concatClasses } from 'helpers/helpers';
-import { LessonPageContext } from 'pages/lesson-page/lesson-page';
+  getSectionLessons,
+  LessonDataArgType,
+} from 'helpers/data/get-section-lessons/get-section-lessons';
 
 interface LessonPageDrawerContentProps {
-  courseId: string;
+  lessonData: LessonDataArgType[];
+  courseSectionData: CourseSectionType[];
 }
 
 const LessonPageDrawerContent = ({
-  courseId,
+  lessonData,
+  courseSectionData,
 }: LessonPageDrawerContentProps) => {
-  const { data: courseSectionData, dataStatus: courseSectionDataStatus } =
-    useDataFetch<CollectionName.COURSE_SECTIONS>({
-      name: CollectionName.COURSE_SECTIONS,
-      whereOptions: {
-        fieldName: 'courseId',
-        comparator: '==',
-        value: courseId,
-      },
-    });
-
-  const lessonPageContext = useContext(LessonPageContext);
-
-  if (!lessonPageContext) {
-    throw new Error('try to use LessonPageContext without lesson page content');
-  }
-
-  const { setIsError } = lessonPageContext;
-
-  let content: JSX.Element[] | null;
-
-  if (courseSectionData && courseSectionDataStatus === DataStatus.SUCCESS) {
-    content = courseSectionData.map((section, index) => {
-      const { name, lessonsNum, duration, id: courseSectionId } = section;
-      return (
-        <CoursePageAccordion
-          name={name}
-          key={`${section.id}-section-${index}`}
-          lessonNum={lessonsNum}
-          duration={duration}
-          handleError={() => setIsError(true)}
-          courseSectionId={courseSectionId}
-        />
-      );
-    });
-  } else if (
-    courseSectionDataStatus === DataStatus.PENDING ||
-    courseSectionDataStatus === DataStatus.IDLE
-  ) {
-    content = new Array(4).map((_, index) => {
-      return (
-        <CoursePageAccordionLoading
-          key={`loading-lesson-page-accordion-${index}`}
-        />
-      );
-    });
-  } else {
-    // if error
-    setIsError(true);
-    content = null;
-  }
-
   return (
     <div
       className={concatClasses([
@@ -76,7 +26,21 @@ const LessonPageDrawerContent = ({
         'gap-6',
       ])}
     >
-      {content}
+      {courseSectionData.map((section, index) => {
+        const { name, lessonsNum, duration, id: courseSectionId } = section;
+
+        const sectionLesson = getSectionLessons(lessonData, courseSectionId);
+
+        return (
+          <CoursePageAccordion
+            name={name}
+            key={`${section.id}-section-${index}`}
+            lessonNum={lessonsNum}
+            duration={duration}
+            lessonData={sectionLesson}
+          />
+        );
+      })}
     </div>
   );
 };

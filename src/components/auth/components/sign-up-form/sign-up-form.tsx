@@ -1,12 +1,12 @@
 import { useAppForm, useState } from 'hooks/hooks';
-import { Button } from 'components/common/button/button';
+import Button from 'components/common/button/button';
 import { Input } from 'components/common/input/input';
 import { PasswordInput } from 'components/common/password-input/password-input';
 import { userSignUp } from 'common/validation-schemas/user/user-sign-up.validation-schema';
 import { UserSignUpFormValues } from 'types/user/user-sign-up-form-values';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Typography } from 'components/common/typography/typography';
-import { signInWithGoogle } from 'api/firebase';
+import { signInWithGoogle } from 'api/auth';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { AuthContainerLink } from 'components/auth/components/auth-container/link/auth-container-link';
@@ -18,7 +18,7 @@ interface SignUpFormProps {
   handleGoogleSuccess: VoidFunction;
 }
 
-export const SignUpForm = ({
+const SignUpForm = ({
   handleSubmitEvent,
   handleGoogleSuccess,
   handleGoogleFail,
@@ -154,3 +154,5 @@ export const SignUpForm = ({
     </>
   );
 };
+
+export default SignUpForm;

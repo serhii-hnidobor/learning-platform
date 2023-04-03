@@ -1,26 +1,44 @@
 import { Typography } from 'components/common/typography/typography';
-import {
-  concatClasses,
-  convertCourseDataToCourseProps,
-  tagSearch,
-} from 'helpers/helpers';
+import { tagSearch } from 'helpers/search/search';
+import { convertCourseDataToCourseProps } from 'helpers/data/data';
+import { concatClasses } from 'helpers/string/string';
 import { CoursesList } from 'components/common/courses-list/courses-list';
-import { useDataFetch, useState } from 'hooks/hooks';
-import { CollectionName } from 'common/enum/enum';
+import { useState } from 'hooks/hooks';
+import { DataStatus } from 'common/enum/enum';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
-import { CourseCardProps, Section } from 'components/common/common';
+import { CourseCardProps } from 'components/common/course-card/course-card';
+import { Section } from 'components/common/section/section';
+import { CourseDataType, TagDataType } from 'types/api/data';
+import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
 
-const ProductPreviewSection = () => {
-  const { data: tagData, dataStatus: tagDataStatus } =
-    useDataFetch<CollectionName.TAGS>({
-      name: CollectionName.TAGS,
-    });
+interface ProductPreviewSectionBaseProps {
+  tagData: TagDataType[];
+  courseCardData: CourseDataType[];
+  loading?: false;
+  error?: false;
+}
 
-  const { data: courseCardData, dataStatus: courseCardDataStatus } =
-    useDataFetch<CollectionName.COURSES>({
-      name: CollectionName.COURSES,
-    });
+interface ProductPreviewSectionLoadingProps
+  extends LoadingProps<ProductPreviewSectionBaseProps> {
+  loading: true;
+}
 
+interface ProductPreviewSectionErrorProps
+  extends ErrorProps<ProductPreviewSectionBaseProps> {
+  error: true;
+}
+
+type ProductReviewSectionProps =
+  | ProductPreviewSectionBaseProps
+  | ProductPreviewSectionLoadingProps
+  | ProductPreviewSectionErrorProps;
+
+const ProductPreviewSection = ({
+  tagData,
+  courseCardData,
+  loading,
+  error,
+}: ProductReviewSectionProps) => {
   const [foundedCourseList, setFoundedCourseList] = useState<
     CourseCardProps[] | null
   >([]);
@@ -33,6 +51,12 @@ const ProductPreviewSection = () => {
 
     setFoundedCourseList(searchResult);
   };
+
+  const dataStatus = error
+    ? DataStatus.FAILED
+    : loading
+    ? DataStatus.PENDING
+    : DataStatus.SUCCESS;
 
   let courseDataToRender = null;
 
@@ -62,15 +86,15 @@ const ProductPreviewSection = () => {
       </header>
       <div className={'mb-16'}>
         <TagScrollComponentWrapper
-          data={tagData}
+          data={tagData || null}
           isProductPreviewSection={true}
           handleCourseSearch={handleSearch}
-          status={tagDataStatus}
+          status={dataStatus}
         />
       </div>
       <CoursesList
         videoInfoArray={courseDataToRender}
-        dataStatus={courseCardDataStatus}
+        dataStatus={dataStatus}
         courseTitleColor={'white'}
       />
     </Section>

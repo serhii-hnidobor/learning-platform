@@ -12,10 +12,10 @@ import {
   passwordInputVariants,
   passwordInputVariantsType,
 } from './cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
-import { Button } from 'components/common/button/button';
+import Button from 'components/common/button/button';
 
 interface PasswordInputProps<T> extends ComponentBaseProps<'input'> {
   control: FormControl<T>;

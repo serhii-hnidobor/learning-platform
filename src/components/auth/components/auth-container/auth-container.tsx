@@ -1,6 +1,6 @@
 import { Typography } from 'components/common/typography/typography';
-import { concatClasses } from 'helpers/helpers';
-import { Logo } from 'components/common/logo/logo';
+import { concatClasses } from 'helpers/string/string';
+import Logo from 'components/common/logo/logo';
 
 interface AuthContainerProps {
   children: JSX.Element;

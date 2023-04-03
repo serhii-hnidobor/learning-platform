@@ -1,0 +1,182 @@
+import { BrowsePageHeader } from 'components/browse-page-components/browse-page-header/browse-page-header';
+import { BrowsePageSection } from 'components/browse-page-components/browse-page-section/browse-page-section';
+import { useState } from 'hooks/hooks';
+import { CollectionName, DataStatus } from 'common/enum/api/api';
+import { CourseDataType, TagDataType, TopicDataType } from 'types/api/data';
+import { createContext } from 'react';
+import { convertCourseDataToCourseProps } from 'helpers/data/data';
+import { CourseCardProps } from 'components/common/course-card/course-card';
+import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
+import { getData } from '../../hooks/use-data-fetch/helper/getData/getData';
+
+interface BrowsePageContextType {
+  handleCourseSearch: (searchString: string) => void;
+  handleTagsSearch: (topics: string[]) => void;
+  courseData: CourseDataType[];
+}
+
+const BrowsePageContext = createContext<BrowsePageContextType | null>(null);
+
+interface BrowsePageProps {
+  courseData: CourseDataType[];
+  tagData: TagDataType[];
+  topicsData: TopicDataType[];
+}
+
+const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
+  const [topicCourseSearchResult, setTopicCourseSearchResult] = useState<
+    CourseCardProps[] | null
+  >();
+
+  const [selectedTopic, setSelectedTopic] = useState<TopicDataType | null>(
+    null,
+  );
+
+  const [isNeedFullCourseSection, setIsNeedFullCourseSection] = useState(false);
+
+  const [searchCourseResult, setSearchCourseResult] = useState<
+    CourseCardProps[] | null
+  >(null);
+
+  const [courseTagSearchResult, setCourseTagSearchResult] = useState<
+    CourseCardProps[] | null
+  >(null);
+
+  const handleSearchCourseByTopic = (
+    selectedTopicData: TopicDataType | null,
+  ) => {
+    if (!selectedTopicData || !courseData || !courseData.length) {
+      setTopicCourseSearchResult(undefined);
+      setSelectedTopic(null);
+      return;
+    }
+
+    const searchResult = courseTopicsSearch({
+      selectedTopicData: selectedTopicData,
+      courseData: courseData,
+    });
+
+    setTopicCourseSearchResult(searchResult);
+    setSelectedTopic(selectedTopicData);
+  };
+
+  const handleCourseSearch = async (searchString: string) => {
+    const { default: courseNameSearch } = await import(
+      'helpers/search/name-search/name-search'
+    );
+
+    const searchResult = courseNameSearch({ searchString, courseData });
+
+    setSearchCourseResult(searchResult);
+  };
+
+  const handleTagsSearch = (tagArray: string[]) => {
+    const searchResult = tagSearch(courseData, tagArray);
+
+    setCourseTagSearchResult(searchResult);
+  };
+
+  const courseDataStatus = DataStatus.SUCCESS;
+  const topicsDataStatus = DataStatus.SUCCESS;
+
+  let content: CourseCardProps[];
+
+  if (!courseData) {
+    content = [];
+  } else {
+    content = convertCourseDataToCourseProps(courseData);
+  }
+
+  return (
+    <BrowsePageContext.Provider
+      value={{
+        handleCourseSearch,
+        courseData: courseData || [],
+        handleTagsSearch,
+      }}
+    >
+      {isNeedFullCourseSection && (
+        <BrowsePageSection
+          name={'All courses'}
+          isCourseSection={true}
+          content={content}
+          dataStatus={courseDataStatus}
+          headerButtonText={'Expand recommendation'}
+          onHeaderButtonClick={() => setIsNeedFullCourseSection(false)}
+        />
+      )}
+
+      {!isNeedFullCourseSection && (
+        <>
+          <BrowsePageHeader tagData={tagData} />
+          {courseTagSearchResult && (
+            <BrowsePageSection
+              onHeaderButtonClick={() => setIsNeedFullCourseSection(true)}
+              isCourseSection={true}
+              name={'tags search'}
+              content={courseTagSearchResult}
+              dataStatus={courseDataStatus}
+            />
+          )}
+          {searchCourseResult && (
+            <BrowsePageSection
+              onHeaderButtonClick={() => setIsNeedFullCourseSection(true)}
+              isCourseSection={true}
+              name={'search result'}
+              content={searchCourseResult}
+              dataStatus={courseDataStatus}
+            />
+          )}
+          <BrowsePageSection
+            isCourseSection={true}
+            onHeaderButtonClick={() => setIsNeedFullCourseSection(true)}
+            name={'Recommended for you'}
+            content={content}
+            dataStatus={courseDataStatus}
+          />
+          <BrowsePageSection
+            isCourseSection={true}
+            onHeaderButtonClick={() => setIsNeedFullCourseSection(true)}
+            name={'Students are viewing'}
+            content={content}
+            dataStatus={courseDataStatus}
+          />
+          <BrowsePageSection
+            selectedTopic={selectedTopic}
+            name={'Topics recommended for you'}
+            content={topicsData}
+            isTopicsSection={true}
+            onTopicSelect={(topicData) => handleSearchCourseByTopic(topicData)}
+            dataStatus={topicsDataStatus}
+          />
+          {topicCourseSearchResult && (
+            <BrowsePageSection
+              onHeaderButtonClick={() => setIsNeedFullCourseSection(true)}
+              name={`${selectedTopic?.name || 'search tags result'}`}
+              isCourseSection={true}
+              content={topicCourseSearchResult}
+              dataStatus={DataStatus.SUCCESS}
+            />
+          )}
+        </>
+      )}
+    </BrowsePageContext.Provider>
+  );
+};
+
+export { BrowsePage as default, BrowsePageContext, type BrowsePageContextType };
+
+export async function getStaticProps() {
+  const courseData = await getData({ name: CollectionName.COURSES });
+  const tagData = await getData({ name: CollectionName.TAGS });
+  const topicsData = await getData({ name: CollectionName.TOPICS });
+
+  return {
+    props: {
+      courseData,
+      tagData,
+      topicsData,
+    },
+    revalidate: 10,
+  };
+}

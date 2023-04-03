@@ -14,12 +14,6 @@ plugins:
   - react
   - react-hooks
   - eslint-plugin-tsdoc
-  - react-refresh
-
-overrides:
-  - files: './src/**/*.stories.@(js|jsx|ts|tsx)'
-    rules:
-      react-refresh/only-export-components: 'off'
 
 extends:
   - eslint:recommended
@@ -30,11 +24,24 @@ extends:
   - plugin:@typescript-eslint/recommended
   - plugin:storybook/recommended
   - plugin:tailwindcss/recommended
+  - plugin:@next/next/recommended
 
 rules:
   tailwindcss/no-custom-classname:
     - error
-    - whitelist: ['autocomplete', 'bg-grey/10', 'translate-y-negative-1/2']
+    - whitelist:
+        [
+          'autocomplete',
+          'bg-grey/10',
+          'translate-y-negative-1/2',
+          'line-clamp-1',
+          'line-clamp-2',
+          'line-clamp-3',
+          'line-clamp-4',
+          'text-blue',
+          'bg-grey-light',
+          'bg-blue',
+        ]
   react-hooks/exhaustive-deps:
     - error
   no-tabs:
@@ -44,8 +51,6 @@ rules:
     - error
     - max: 1
   no-var:
-    - error
-  react-refresh/only-export-components:
     - error
   no-console:
     - error
@@ -89,7 +94,7 @@ rules:
     - off
   import/no-default-export:
     - off
-  "@typescript-eslint/explicit-function-return-type":
+  '@typescript-eslint/explicit-function-return-type':
     - off
-  "import/no-cycle":
+  'import/no-cycle':
     - error

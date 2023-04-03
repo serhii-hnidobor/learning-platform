@@ -1,4 +1,4 @@
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Burger } from 'components/common/burger/burger';
 
 interface Props {

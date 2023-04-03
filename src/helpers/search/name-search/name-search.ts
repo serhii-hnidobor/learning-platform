@@ -23,4 +23,4 @@ function courseNameSearch({
   return convertCourseDataToCourseProps(searchResult);
 }
 
-export { courseNameSearch, type CourseNameSearchArgType };
+export { courseNameSearch as default, type CourseNameSearchArgType };

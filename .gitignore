@@ -24,7 +24,13 @@ dist-ssr
 *.sw?
 
 # Env folder
-.env
+.env.local
 
 # Local Netlify folder
 .netlify
+
+# Build directory
+/.next/
+
+# Storybook build folder
+/storybook-static/

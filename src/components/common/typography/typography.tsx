@@ -5,7 +5,7 @@ import {
   typographyVariants,
   type TypographyVariantsType,
 } from './cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 
 type TypographyElementHTMLProps<ElementType> = Omit<
   HTMLAttributes<ElementType>,

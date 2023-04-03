@@ -1,11 +1,7 @@
-import {
-  DataObjectType,
-  getData,
-  GetDataArg,
-} from 'api/helpers/get-data/get-data';
 import { useState } from 'hooks/hooks';
 import { CollectionName, DataStatus } from 'common/enum/api/api';
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import { DataObjectType, getData, GetDataArg } from './helper/helper';
 
 /**
  * Hook to fetch data from a Firestore collection.

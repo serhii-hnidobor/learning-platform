@@ -1,8 +1,8 @@
 import { IconName } from 'common/enum/icons/icons';
 import { AppRoutes, AppRouteType } from 'common/enum/app/app';
 import { ContentListItem } from 'components/common/header/components/mobile-header/content/content-list-item/content-list-item';
-import { useNavigate } from 'hooks/hooks';
-import { Button } from 'components/common/button/button';
+import Button from 'components/common/button/button';
+import { useRouter } from 'next/router';
 
 interface Props {
   curRoute: string;
@@ -17,14 +17,14 @@ const MobileDrawerContent = ({
   isSignIn,
   handleSignOut,
 }: Props) => {
-  const navigate = useNavigate();
+  const Router = useRouter();
 
-  const redirectSignIn = () => {
-    navigate(AppRoutes.SIGN_IN);
+  const redirectSignIn = async () => {
+    await Router.push(AppRoutes.SIGN_IN);
   };
 
-  const redirectSignUp = () => {
-    navigate(AppRoutes.SIGN_UP);
+  const redirectSignUp = async () => {
+    await Router.push(AppRoutes.SIGN_UP);
   };
 
   let buttons = (

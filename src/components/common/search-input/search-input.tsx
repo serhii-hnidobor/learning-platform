@@ -1,9 +1,10 @@
 import { IconName } from 'common/enum/icons/icons';
 import { ChangeEvent, useRef } from 'react';
-import { Button, Icon } from 'components/common/common';
-import { concatClasses } from 'helpers/helpers';
+import Button from '../button/button';
+import { concatClasses } from 'helpers/string/string';
 import { useKeyPress, useOutsideClick, useState } from 'hooks/hooks';
 import { ComponentBaseProps } from 'types/html-elemet-props';
+import { Icon } from 'components/common/icon/icon';
 
 interface SearchInputProps extends ComponentBaseProps<'input'> {
   placeholder: string;
@@ -51,7 +52,8 @@ const SearchInput = ({
       }
 
       if (
-        document.activeElement === inputRef.current ||
+        (typeof document !== 'undefined' &&
+          document.activeElement === inputRef.current) ||
         keyName === 'Escape' ||
         keyName === 'Shift' ||
         keyName === 'ArrowUp' ||

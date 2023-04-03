@@ -3,7 +3,7 @@ import { useKeyPress, useState } from 'hooks/hooks';
 import {
   SearchInput,
   type SearchInputProps as InputProps,
-} from 'components/common/common';
+} from '../search-input/search-input';
 import Fuse from 'fuse.js';
 import { AutoCompleteItem } from './components/autocomplete-item';
 import { ComponentBaseProps } from 'types/html-elemet-props';
@@ -140,4 +140,4 @@ const SearchBox = ({
   );
 };
 
-export { SearchBox, type SearchBoxProps };
+export { SearchBox as default, type SearchBoxProps };

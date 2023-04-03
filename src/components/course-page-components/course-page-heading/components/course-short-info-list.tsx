@@ -2,7 +2,7 @@ import Skeleton from 'react-loading-skeleton';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { Typography } from 'components/common/typography/typography';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { getDurationString } from 'helpers/time/time';
 
 interface CourseShortInfoListProps {

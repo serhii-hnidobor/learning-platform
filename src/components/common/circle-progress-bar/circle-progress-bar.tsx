@@ -4,7 +4,7 @@ import {
   progressRignVariants,
   ProgressRignVariantType,
 } from 'components/common/circle-progress-bar/cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 
 type CircleProgressBarSizeType = NonNullable<

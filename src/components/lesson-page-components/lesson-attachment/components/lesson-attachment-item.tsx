@@ -4,12 +4,10 @@ import useDownloader from 'react-use-downloader';
 import Skeleton from 'react-loading-skeleton';
 import prettyBytes from 'pretty-bytes';
 import { useEffect } from 'hooks/hooks';
-import { concatClasses } from 'helpers/helpers';
-import {
-  createToastNotification,
-  Icon,
-  Typography,
-} from 'components/common/common';
+import { concatClasses } from 'helpers/string/string';
+import { createToastNotification } from 'components/common/toast-notification';
+import { Typography } from 'components/common/typography/typography';
+import { Icon } from 'components/common/icon/icon';
 
 interface LessonAttachmentItemProps extends ComponentBaseProps<'div'> {
   fileName: string;

@@ -1,9 +1,12 @@
-import { Icon, Rating, Typography } from 'components/common/common';
 import { IconName } from 'common/enum/enum';
 import Skeleton from 'react-loading-skeleton';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
-import { Link } from 'react-router-dom';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Typography } from '../typography/typography';
+import { Icon } from '../icon/icon';
+import { Rating } from '../rating/rating';
 
 interface CourseCardProps extends ComponentBaseProps<'div'> {
   previewImgSrc: string;
@@ -38,7 +41,7 @@ const CourseCard = ({
 }: CourseCardPropsType) => {
   return (
     <div {...restWrapperProps}>
-      <Link to={`/course/${id}`}>
+      <Link href={`/course/${id}`}>
         <div
           className={concatClasses([
             'aspect-video-preview',
@@ -52,10 +55,12 @@ const CourseCard = ({
           {loading ? (
             <Skeleton className={'h-full w-full'} />
           ) : (
-            <img
+            <Image
               className={'z-0 w-full'}
               src={previewImgSrc}
-              alt={`${title && ''}video preview image`}
+              fill={true}
+              sizes={'(min-width: 1280px) 280px, (min-width: 1024px) 240px, (min-width: 768px) 275px, 280px'}
+              alt={`${title} video preview image`}
             />
           )}
 
@@ -111,7 +116,7 @@ const CourseCard = ({
         {loading ? (
           <Skeleton />
         ) : (
-          <Link to={`/course/${id}`}>
+          <Link href={`/course/${id}`}>
             <Typography
               as={'span'}
               styleName={'body2Bold'}

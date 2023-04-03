@@ -14,6 +14,5 @@ export function courseDataToCoursePageHeadingProps(data: CourseDataType) {
     rate,
     youtubeEmbedId,
     description,
-    loading: false as const,
   };
 }

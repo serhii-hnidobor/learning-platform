@@ -10,13 +10,13 @@ import { LessonDataType } from 'types/api/data';
 export function convertLessonDataToAccordionLessonItemProps(
   data: LessonDataType,
 ) {
-  const { youtubeEmbedId, duration, name, index: number, id } = data;
+  const { youtubeEmbedId, duration, name, index, id } = data;
 
   return {
     isTextLesson: Boolean(youtubeEmbedId),
     duration,
     name,
-    index: number,
+    index,
     id,
   };
 }

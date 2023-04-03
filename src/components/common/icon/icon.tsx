@@ -26,12 +26,10 @@ import { ReactComponent as Rocket } from 'assets/icons/rocket.svg';
 import { ReactComponent as PlayerPlay } from 'assets/icons/player-play.svg';
 import { ReactComponent as Quotes } from 'assets/icons/quote.svg';
 import { ReactComponent as User } from 'assets/icons/user.svg';
-import { ReactComponent as NotFound } from 'assets/icons/not-found.svg';
-import { ReactComponent as ErrorIcon } from 'assets/icons/error.svg';
 import { ReactComponent as CloseIcon } from 'assets/icons/close.svg';
 import { ReactComponent as Eye } from 'assets/icons/eye.svg';
 import { ReactComponent as EyeClose } from 'assets/icons/eye-slash.svg';
-import { ReactComponent as EmptyStar } from 'assets/icons/empty-start.svg';
+import { ReactComponent as EmptyStar } from 'assets/icons/empty-star.svg';
 import { ReactComponent as Star } from 'assets/icons/star.svg';
 import { ReactComponent as HalfStart } from 'assets/icons/half-star.svg';
 import { ReactComponent as Download } from 'assets/icons/download.svg';
@@ -47,9 +45,8 @@ import { ReactComponent as Google } from 'assets/icons/google.svg';
 import { ReactComponent as Youtube } from 'assets/icons/brand-youtube.svg';
 import { ReactComponent as Facebook } from 'assets/icons/brand-facebook.svg';
 import { ReactComponent as Instagram } from 'assets/icons/brand-instagram.svg';
-import { ReactComponent as Looking } from 'assets/icons/looking.svg';
 
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { AllHtmlElementProps } from 'types/html-elemet-props';
 
 interface IconProps extends SVGProps<SVGElement> {
@@ -101,498 +98,462 @@ const Icon = ({
   switch (name) {
     case IconName.LOGO: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <LogoIcon
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.SEARCH: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <SearchIcon
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.USER_SUCCESS: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <UserSuccess
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.BAG: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Bag
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
 
     case IconName.BULB: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Bulb
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.COMPUTER: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Computer
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.USERS: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Users
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.DEVICES: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Devices
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHART_DOTS: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <ChartDots
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.BROWSER: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Browser
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.TOOLS: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Tools
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHEVRON_LEFT: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <ChevronLeft
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHEVRON_RIGHT: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <ChevronRight
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.FLAME: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Flame
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.SCHOOL: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <School
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.ROCKET: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Rocket
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.PLAYER_PLAY: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <PlayerPlay
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.QUOTE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Quotes
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.USER: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <User
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
-      );
-    }
-    case IconName['NOT_FOUND']: {
-      return (
-        <div {...boxProps} className={iconBoxClassName}>
-          <NotFound
-            {...restSvgProps}
-            width={width}
-            height={height}
-            className={iconClassName}
-          />
-        </div>
-      );
-    }
-    case IconName.ERROR: {
-      return (
-        <div {...boxProps} className={iconBoxClassName}>
-          <ErrorIcon
-            {...restSvgProps}
-            width={width}
-            height={height}
-            className={iconClassName}
-          />
-        </div>
+        </span>
       );
     }
     case IconName.CLOSE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <CloseIcon
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.EYE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Eye
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.EYE_CLOSE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <EyeClose
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
 
     case IconName.EMPTY_STAR: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <EmptyStar
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
 
     case IconName.STAR: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Star
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
 
     case IconName.HALF_STAR: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <HalfStart
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.DOWNLOAD: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Download
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.FILE_TEXT: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <FileText
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.FILE_CERTIFICATE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <FileCertificate
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHEVRON_UP: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <ChevronUp
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHEVRON_DOWN: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <ChevronDown
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CLOCK: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Clock
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.CHECK: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Check
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.HOME: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Home
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.COMPASS: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Compass
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.GOOGLE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Google
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.FACEBOOK: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Facebook
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.YOUTUBE: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Youtube
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
+        </span>
       );
     }
     case IconName.INSTAGRAM: {
       return (
-        <div {...boxProps} className={iconBoxClassName}>
+        <span {...boxProps} className={iconBoxClassName}>
           <Instagram
             {...restSvgProps}
             width={width}
             height={height}
             className={iconClassName}
           />
-        </div>
-      );
-    }
-    case IconName.LOOKING: {
-      return (
-        <div {...boxProps} className={iconBoxClassName}>
-          <Looking
-            {...restSvgProps}
-            width={width}
-            height={height}
-            className={iconClassName}
-          />
-        </div>
+        </span>
       );
     }
     default: {

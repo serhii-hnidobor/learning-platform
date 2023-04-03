@@ -2,7 +2,7 @@ import { HTMLProps, ReactNode } from 'react';
 import { Icon, IconProps } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import Skeleton from 'react-loading-skeleton';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 
 interface ListIconProps extends HTMLProps<HTMLUListElement> {
   children: ReactNode[];

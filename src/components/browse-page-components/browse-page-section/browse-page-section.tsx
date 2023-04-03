@@ -1,9 +1,9 @@
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { CoursesList } from 'components/common/courses-list/courses-list';
 import { Typography } from 'components/common/typography/typography';
-import { Button } from 'components/common/button/button';
 import { DataStatus } from 'common/enum/api/api';
-import { Section } from 'components/common/common';
+import Button from 'components/common/button/button';
+import { Section } from 'components/common/section/section';
 import { TopicDataType } from 'types/api/data';
 import { TopicSection } from 'components/browse-page-components/browse-page-section/components/topic-section/topic-section';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';

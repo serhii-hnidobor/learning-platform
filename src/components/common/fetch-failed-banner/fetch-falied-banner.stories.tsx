@@ -1,4 +1,4 @@
-import { FetchFailedBanner } from './fetch-failed-banner';
+import FetchFailedBanner from './fetch-failed-banner';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta = {

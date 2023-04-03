@@ -1,15 +1,43 @@
 import { Typography } from 'components/common/typography/typography';
-import { IconName } from 'common/enum/icons/icons';
-import { concatClasses } from 'helpers/helpers';
-import { useContext, useDataFetch, useNavigate } from 'hooks/hooks';
-import { CollectionName } from 'common/enum/enum';
-import { BrowsePageContext } from 'pages/browse-page/browse-page';
-import { SearchBox } from 'components/common/search-box/search-box';
+import { concatClasses } from 'helpers/string/string';
+import { useContext, useRouter } from 'hooks/hooks';
+import { DataStatus } from 'common/enum/enum';
+import { BrowsePageContext } from 'pages/browse/index';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
+import { TagDataType } from 'types/api/data';
+import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
+import dynamic from 'next/dynamic';
 
-export const BrowsePageHeader = () => {
+const SearchBox = dynamic(import('components/common/search-box/search-box'));
+
+interface BrowsePageHeaderBaseProps {
+  tagData: TagDataType[];
+  loading?: false;
+  error?: false;
+}
+
+interface BrowsePageHeaderLoadingProps
+  extends LoadingProps<BrowsePageHeaderBaseProps> {
+  loading: true;
+}
+
+interface BrowsePageHeaderErrorProps
+  extends ErrorProps<BrowsePageHeaderBaseProps> {
+  error: true;
+}
+
+type BrowsePageProps =
+  | BrowsePageHeaderBaseProps
+  | BrowsePageHeaderLoadingProps
+  | BrowsePageHeaderErrorProps;
+
+export const BrowsePageHeader = ({
+  tagData,
+  error,
+  loading,
+}: BrowsePageProps) => {
   const context = useContext(BrowsePageContext);
-  const navigate = useNavigate();
+  const Router = useRouter();
 
   if (!context) {
     throw new Error(
@@ -19,16 +47,12 @@ export const BrowsePageHeader = () => {
 
   const { handleCourseSearch, courseData, handleTagsSearch } = context;
 
-  const { data, dataStatus } = useDataFetch<CollectionName.TAGS>({
-    name: CollectionName.TAGS,
-  });
-
   const courseSearchValues = courseData.map((course) => {
     return { name: course.name, id: course.id };
   });
 
   const handleAutocompleteSelect = (id: string) => {
-    navigate(`/course/${id}`);
+    Router.push(`/course/${id}`);
   };
 
   return (
@@ -54,7 +78,6 @@ export const BrowsePageHeader = () => {
           items={courseSearchValues}
           inputProps={{
             placeholder: 'Search for anything',
-            iconName: IconName.SEARCH,
           }}
           handleSearch={handleCourseSearch}
           handleAutocompleteSelect={handleAutocompleteSelect}
@@ -62,8 +85,14 @@ export const BrowsePageHeader = () => {
       </div>
       <div className={'mx-auto max-w-[1044px]'}>
         <TagScrollComponentWrapper
-          status={dataStatus}
-          data={data}
+          status={
+            loading
+              ? DataStatus.PENDING
+              : error
+              ? DataStatus.FAILED
+              : DataStatus.SUCCESS
+          }
+          data={tagData || null}
           handleCourseSearch={handleTagsSearch}
         />
       </div>

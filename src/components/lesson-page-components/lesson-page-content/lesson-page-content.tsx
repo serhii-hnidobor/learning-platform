@@ -3,16 +3,16 @@ import {
   ErrorProps,
   LoadingProps,
 } from 'types/html-elemet-props';
-import { FetchFailedBanner, Markdown, Section } from 'components/common/common';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { LessonAttachment } from 'components/lesson-page-components/lesson-attachment/lesson-attachment';
 import { FileAttachmentType } from 'types/api/data';
+import { Section } from 'components/common/section/section';
 
 interface LessonPageContentProps extends ComponentBaseProps<'div'> {
   loading?: false;
   error?: false;
-  textContent: string;
   fileAttachment: FileAttachmentType | null;
+  markdownJsx: JSX.Element;
 }
 
 interface LessonPageContentLoadingProps
@@ -32,14 +32,12 @@ type LessonPagePropsType =
 const LessonPageContent = ({
   error,
   loading,
-  textContent,
+                             markdownJsx,
   fileAttachment,
 }: LessonPagePropsType) => {
-  let markdownSection: JSX.Element;
   let lessonAttachmentSection: JSX.Element | null;
 
   if (loading) {
-    markdownSection = <Markdown loading={true} />;
     lessonAttachmentSection = (
       <LessonAttachment
         loading={true}
@@ -47,10 +45,8 @@ const LessonPageContent = ({
       />
     );
   } else if (error) {
-    markdownSection = <FetchFailedBanner status={'error'} />;
     lessonAttachmentSection = null;
   } else {
-    markdownSection = <Markdown source={textContent} />;
     lessonAttachmentSection = fileAttachment ? (
       <LessonAttachment
         fileUrl={fileAttachment.fileUrl}
@@ -72,7 +68,7 @@ const LessonPageContent = ({
         'gap-[30px]',
       ])}
     >
-      {markdownSection}
+      {markdownJsx}
       {lessonAttachmentSection}
     </Section>
   );

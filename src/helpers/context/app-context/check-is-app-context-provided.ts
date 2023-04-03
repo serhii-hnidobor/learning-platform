@@ -1,4 +1,4 @@
-import { AppContextType } from 'components/app/app';
+import { AppContextType } from 'pages/_app';
 
 export function appContextProvideCheck(appContext: AppContextType | null) {
   if (!appContext) {

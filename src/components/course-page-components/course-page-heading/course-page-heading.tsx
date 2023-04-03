@@ -1,27 +1,30 @@
-import { Button, Rating, Section, Typography } from 'components/common/common';
-import YouTube from 'react-youtube';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
 import { CourseShortInfoList } from './components/course-short-info-list';
+import { Rating } from 'components/common/rating/rating';
+import { Section } from 'components/common/section/section';
+import { Typography } from 'components/common/typography/typography';
+import Button from 'components/common/button/button';
+import { LoadingProps } from 'types/html-elemet-props';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
-interface CoursePageHeadingProps {
+interface CoursePageHeaderBaseProps {
   authorName: string;
   rate: number;
   name: string;
   youtubeEmbedId: string;
   description: string;
   loading?: false;
-  error?: false;
 }
 
-interface CoursePageHeadingPropsLoadingProps
-  extends Partial<Omit<CoursePageHeadingProps, 'loading'>> {
+interface CoursePageHeaderLoadingProps
+  extends LoadingProps<CoursePageHeaderBaseProps> {
   loading: true;
 }
 
 type CoursePageHeaderProps =
-  | CoursePageHeadingProps
-  | CoursePageHeadingPropsLoadingProps;
+  | CoursePageHeaderBaseProps
+  | CoursePageHeaderLoadingProps;
 
 const CoursePageHeading = ({
   authorName,
@@ -163,9 +166,10 @@ const CoursePageHeading = ({
             className={'aspect-video w-full'}
           />
         ) : (
-          <YouTube
-            videoId={youtubeEmbedId}
-            className={concatClasses([
+          <LiteYouTubeEmbed
+            id={youtubeEmbedId}
+            title={name}
+            wrapperClass={concatClasses([
               'relative',
               'w-full',
               'height-[0px]',
@@ -173,7 +177,7 @@ const CoursePageHeading = ({
               'mb-[50px]',
               'aspect-video',
             ])}
-            iframeClassName={concatClasses([
+            iframeClass={concatClasses([
               'w-full',
               'h-full',
               'absolute',
@@ -193,4 +197,4 @@ const CoursePageHeading = ({
   );
 };
 
-export { CoursePageHeading, type CoursePageHeaderProps };
+export { CoursePageHeading, type CoursePageHeaderProps, type CoursePageHeaderBaseProps };

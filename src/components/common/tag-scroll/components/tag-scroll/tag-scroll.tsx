@@ -5,7 +5,7 @@ import {
   RightArrowButton,
 } from 'components/common/tag-scroll/components/arrow-button/arrow-button';
 import { useState } from 'hooks/hooks';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
 
 interface Tag {

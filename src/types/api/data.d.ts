@@ -84,7 +84,6 @@ export {
   type ReviewDataType,
   type CourseSectionType,
   type TagDataType,
-  type CollectionName,
   type DataType,
   type UserDataType,
   type NextLessonType,

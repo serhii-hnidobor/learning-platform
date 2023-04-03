@@ -1,5 +1,5 @@
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { Typography } from 'components/common/typography/typography';

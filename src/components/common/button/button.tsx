@@ -4,7 +4,7 @@ import {
   TypographyVariantsType,
 } from 'components/common/typography/cva-variants/cva-variants';
 import { MouseEvent, ReactNode } from 'react';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ThreeDots } from 'react-loader-spinner';
 import { useButtonAnimation } from 'hooks/use-button-animation/use-button-animation';
 import { animated } from '@react-spring/web';
@@ -159,4 +159,4 @@ const Button = ({
   );
 };
 
-export { Button, type ButtonProps };
+export { Button as default, type ButtonProps };

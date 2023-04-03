@@ -1,4 +1,4 @@
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import { useRef } from 'hooks/hooks';
@@ -94,7 +94,7 @@ const Drawer = ({
     ]);
   }
 
-  return createPortal(
+  const drawerContent = (
     <>
       {isOpen && (
         <div
@@ -163,9 +163,12 @@ const Drawer = ({
           <div className={contentWrapperClassName}>{children}</div>
         </div>
       </animated.div>
-    </>,
-    document.body,
+    </>
   );
+
+  return typeof document === 'undefined'
+    ? drawerContent
+    : createPortal(drawerContent, document.body);
 };
 
-export { Drawer, type DrawerProps };
+export { Drawer as default, type DrawerProps };

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Accordion } from './accordion';
+import Accordion from './accordion';
 import { CourseAccordionHeaderContent } from '../../course-page-components/course-page-accordion/components/header-content/header-content';
-import { SkeletonWrapper } from '../../common/common';
+import { SkeletonWrapper } from '../skeleton-wrapper/skeleton-wrapper';
 import { ComponentType } from 'react';
 import { AccordionLessonItem } from '../../course-page-components/course-page-accordion/components/accordion-lesson-item/accordion-lesson-item';
 

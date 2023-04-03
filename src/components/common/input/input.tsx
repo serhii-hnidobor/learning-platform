@@ -4,9 +4,9 @@ import { FormControlPath } from 'types/form/form-control-path';
 import { useFormControl, useId } from 'hooks/hooks';
 import { ReactElement } from 'react';
 import { FieldValues } from 'react-hook-form';
-import { Typography, TypographyProps } from 'components/common/common';
+import { Typography, TypographyProps } from '../typography/typography';
 import { inputVariants, InputVariantsType } from './cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 
 interface InputProps<T> extends ComponentBaseProps<'input'> {

@@ -4,7 +4,7 @@ import {
   ProductShortInfoCardVariants,
   type ProductShortInfoCardVariantsType,
 } from 'components/common/card/product-short-info-card/cva-variants/cva-variants';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { Icon, IconProps } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { Typography } from 'components/common/typography/typography';

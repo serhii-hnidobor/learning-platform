@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 
 interface SectionProps
   extends Omit<ComponentBaseProps<'section'>, 'className'> {

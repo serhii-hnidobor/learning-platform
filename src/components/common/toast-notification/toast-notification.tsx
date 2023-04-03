@@ -1,5 +1,5 @@
-import { Typography } from 'components/common/common';
-import { concatClasses } from 'helpers/helpers';
+import { Typography } from '../typography/typography';
+import { concatClasses } from 'helpers/string/string';
 import { TypeOptions } from 'react-toastify';
 
 type ToastNotificationParams = {

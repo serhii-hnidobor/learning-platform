@@ -8,12 +8,12 @@ interface ApiConfigType {
 }
 
 function getFirebaseConfig(): ApiConfigType {
-  const apiKey = import.meta.env.VITE_API_KEY;
-  const authDomain = import.meta.env.VITE_AUTH_DOMAIN;
-  const projectId = import.meta.env.VITE_PROJECT_ID;
-  const storageBucket = import.meta.env.VITE_STORAGE_BUCKET;
-  const messagingSenderId = import.meta.env.VITE_MESSAGING_SENDER_ID;
-  const appId = import.meta.env.VITE_APP_ID;
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const authDomain = process.env.NEXT_PUBLIC_AUTH_DOMAIN;
+  const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
+  const storageBucket = process.env.NEXT_PUBLIC_STORAGE_BUCKET;
+  const messagingSenderId = process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID;
+  const appId = process.env.NEXT_PUBLIC_APP_ID;
 
   const isAllEnvSpecify =
     apiKey &&
@@ -35,6 +35,7 @@ function getFirebaseConfig(): ApiConfigType {
     messagingSenderId,
     appId,
   };
+
 }
 
 export { getFirebaseConfig, type ApiConfigType };

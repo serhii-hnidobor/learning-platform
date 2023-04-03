@@ -3,16 +3,13 @@ import {
   ErrorProps,
   LoadingProps,
 } from 'types/html-elemet-props';
-import { Typography, TypographyProps } from 'components/common/common';
-import { concatClasses } from 'helpers/helpers';
+import { Typography, TypographyProps } from '../typography/typography';
+import { concatClasses } from 'helpers/string/string';
 import { useHoverScaleAnimation } from 'hooks/hooks';
 import { animated } from '@react-spring/web';
 import { TopicDataType } from 'types/api/data';
 import Skeleton from 'react-loading-skeleton';
-import {
-  topicVariants,
-  TopicVariantsType,
-} from 'components/common/topic/cva-variants/cva-variants';
+import { topicVariants, TopicVariantsType } from './cva-variants/cva-variants';
 
 interface TopicProps extends ComponentBaseProps<'div'> {
   topicData: TopicDataType;

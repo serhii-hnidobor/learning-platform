@@ -1,7 +1,7 @@
 import { VisibilityContext } from 'react-horizontal-scrolling-menu';
 import { useContext, useEffect, useState } from 'hooks/hooks';
 import { ControlButton } from 'components/common/control-button/control-button';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import {
   leftButtonBoxVariants,

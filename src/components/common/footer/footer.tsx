@@ -1,11 +1,12 @@
-import { Section } from 'components/common/common';
-import { concatClasses } from 'helpers/helpers';
-import { Logo } from 'components/common/logo/logo';
+import { Section } from 'components/common/section/section';
+import { concatClasses } from 'helpers/string/string';
+import Logo from 'components/common/logo/logo';
 import { HeaderLink } from '../header/components/header-link/header-link';
 import { AppRoutes, IconName } from 'common/enum/enum';
 import { Icon } from 'components/common/icon/icon';
 import { Typography } from 'components/common/typography/typography';
 import { ComponentBaseProps } from 'types/html-elemet-props';
+import Link from 'next/link';
 
 interface FooterProps extends ComponentBaseProps<'footer'> {}
 
@@ -52,7 +53,7 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
             />
           </ul>
           <div className={'flex items-center justify-center gap-6'}>
-            <a href={'https://www.facebook.com/'} target={'_blank'}>
+            <Link href={'https://www.facebook.com/'} target={'_blank'}>
               <Icon
                 name={IconName.FACEBOOK}
                 boxProps={{
@@ -67,8 +68,8 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
                 intent={'base'}
                 stroke={'grey'}
               />
-            </a>
-            <a href={'https://www.youtube.com'} target={'_blank'}>
+            </Link>
+            <Link href={'https://www.youtube.com'} target={'_blank'}>
               <Icon
                 name={IconName.YOUTUBE}
                 boxProps={{
@@ -83,8 +84,8 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
                 intent={'base'}
                 stroke={'grey'}
               />
-            </a>
-            <a href={'https://www.instagram.com/'} target={'_blank'}>
+            </Link>
+            <Link href={'https://www.instagram.com/'} target={'_blank'}>
               <Icon
                 name={IconName.INSTAGRAM}
                 boxProps={{
@@ -99,7 +100,7 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
                 intent={'base'}
                 stroke={'grey'}
               />
-            </a>
+            </Link>
           </div>
           <Typography
             as="span"

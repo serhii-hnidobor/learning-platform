@@ -1,5 +1,5 @@
 import { animated, useSpring } from '@react-spring/web';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import {
   burgerVariants,

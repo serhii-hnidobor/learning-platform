@@ -1,6 +1,4 @@
-import { Icon, IconProps } from 'components/common/icon/icon';
-import { IconName } from 'common/enum/icons/icons';
-import { concatClasses } from 'helpers/helpers';
+import { concatClasses } from 'helpers/string/string';
 import {
   Typography,
   TypographyProps,
@@ -10,7 +8,6 @@ import { ComponentBaseProps } from 'types/html-elemet-props';
 
 interface NotFoundBannerProps extends ComponentBaseProps<'div'> {
   headerProps?: TypographyProps<HTMLHeadingElement>;
-  iconProps?: IconProps;
   status?: 'empty' | 'error';
   message?: string;
 }
@@ -20,7 +17,6 @@ const FetchFailedBanner = ({
   message,
   headerProps,
   className,
-  iconProps,
   ...restWrapperProp
 }: NotFoundBannerProps) => {
   const isError = status === 'error';
@@ -41,14 +37,6 @@ const FetchFailedBanner = ({
   return (
     <div {...restWrapperProp} className={wrapperClassName}>
       <div className={'flex max-w-[500px] flex-col items-center'}>
-        <Icon
-          {...iconProps}
-          name={status === 'error' ? IconName.ERROR : IconName.NOT_FOUND}
-          intent={'base'}
-          width={'100%'}
-          boxProps={{ className: 'w-full h-full max-w-[700px]' }}
-          height={'100%'}
-        />
         <Typography
           styleName={'h3'}
           {...headerProps}
@@ -64,4 +52,4 @@ const FetchFailedBanner = ({
   );
 };
 
-export { FetchFailedBanner, type NotFoundBannerProps };
+export { FetchFailedBanner as default, type NotFoundBannerProps };

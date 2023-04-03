@@ -2,8 +2,8 @@ import { Typography } from 'components/common/typography/typography';
 import { ProductStatisticElement } from './components/product-statistic-element/product-statistic-element';
 import { ProductStatisticCard } from 'components/common/card/product-statistic-card/product-statistic-card';
 import { IconName } from 'common/enum/icons/icons';
-import { concatClasses } from 'helpers/helpers';
-import { Section } from 'components/common/common';
+import { concatClasses } from 'helpers/string/string';
+import { Section } from 'components/common/section/section';
 
 const ProductAdvantages = () => {
   return (

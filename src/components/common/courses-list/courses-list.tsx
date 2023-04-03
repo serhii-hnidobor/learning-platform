@@ -1,11 +1,12 @@
-import { concatClasses } from 'helpers/helpers';
-import {
-  CourseCard,
-  CourseCardProps,
-  FetchFailedBanner,
-} from 'components/common/common';
+import { concatClasses } from 'helpers/string/string';
 import { DataStatus } from 'common/enum/api/api';
 import { ComponentBaseProps } from 'types/html-elemet-props';
+import { CourseCard, CourseCardProps } from '../course-card/course-card';
+import dynamic from 'next/dynamic';
+
+const FetchFailedBanner = dynamic(
+  import('components/common/fetch-failed-banner/fetch-failed-banner'),
+);
 
 interface CoursesListProps extends ComponentBaseProps<'div'> {
   videoInfoArray: CourseCardProps[] | null;

@@ -5,8 +5,12 @@ import {
   ErrorProps,
   LoadingProps,
 } from 'types/html-elemet-props';
-import { FetchFailedBanner } from 'components/common/fetch-failed-banner/fetch-failed-banner';
 import { TopicDataType } from 'types/api/data';
+import dynamic from 'next/dynamic';
+
+const FetchFailedBanner = dynamic(
+  import('components/common/fetch-failed-banner/fetch-failed-banner'),
+);
 
 interface TopicSectionProps extends ComponentBaseProps<'div'> {
   topicArray: TopicDataType[] | null;

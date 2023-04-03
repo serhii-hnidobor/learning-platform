@@ -1,34 +1,20 @@
-import * as Joi from 'joi';
 import { SignInFormValues } from 'types/user/user-sign-in-form-values';
 import { UserValidationMessage } from 'common/enum/enum';
+import { Schema, object, string } from 'yup';
 
-const userSignIn = Joi.object<SignInFormValues, true>({
-  email: Joi.string()
+const userSignIn: Schema<SignInFormValues> = object({
+  email: string()
     .trim()
-    .email({ tlds: { allow: false } })
-    .min(6)
-    .pattern(/[а-яА-ЯЁёІіЄєЇї]/, { invert: true })
-    .required()
-    .messages({
-      'string.email': UserValidationMessage.EMAIL_WRONG,
-      'string.empty': UserValidationMessage.EMAIL_REQUIRE,
-      'any.required': UserValidationMessage.EMAIL_REQUIRE,
-      'string.min': UserValidationMessage.EMAIL_WRONG_LENGTH,
-      'string.pattern.invert.base': UserValidationMessage.EMAIL_WRONG_REGEX,
-    }),
-  password: Joi.string()
+    .email(UserValidationMessage.EMAIL_WRONG)
+    .min(6, UserValidationMessage.EMAIL_WRONG_LENGTH)
+    .matches(/^[^а-яА-ЯЁёІіЄєЇї]*$/, UserValidationMessage.EMAIL_WRONG_REGEX)
+    .required(UserValidationMessage.EMAIL_REQUIRE),
+  password: string()
     .trim()
-    .min(8)
-    .max(16)
-    .pattern(/[а-яА-ЯЁёІіЄєЇї]/, { invert: true })
-    .required()
-    .messages({
-      'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
-      'any.required': UserValidationMessage.PASSWORD_REQUIRE,
-      'string.min': UserValidationMessage.PASSWORD_WRONG_LENGTH,
-      'string.max': UserValidationMessage.PASSWORD_WRONG_LENGTH,
-      'string.pattern.invert.base': UserValidationMessage.PASSWORD_WRONG_REGEX,
-    }),
+    .min(8, UserValidationMessage.PASSWORD_WRONG_LENGTH)
+    .max(16, UserValidationMessage.PASSWORD_WRONG_LENGTH)
+    .matches(/^[^а-яА-ЯЁёІіЄєЇї]*$/, UserValidationMessage.PASSWORD_WRONG_REGEX)
+    .required(UserValidationMessage.PASSWORD_REQUIRE),
 });
 
 export { userSignIn };
