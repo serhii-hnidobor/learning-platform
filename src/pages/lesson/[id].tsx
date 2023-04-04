@@ -78,14 +78,6 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
     },
   });
 
-  const trimmedLessonData = lessonData.map((lesson) => {
-    const { sectionId } = lesson;
-    return {
-      ...convertLessonDataToAccordionLessonItemProps(lesson),
-      sectionId,
-    };
-  });
-
   const headingProps = convertLessonDataToProps(lessonData[0]);
 
   const courseSectionData = await getData<CollectionName.COURSE_SECTIONS>({
@@ -99,9 +91,26 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
 
   const markdownJsxString = getMarkdownHtmlString(lessonData[0].textContent);
 
+  const courseLessonData = await getData<CollectionName.LESSONS>({
+    name: CollectionName.LESSONS,
+    whereOptions: {
+      fieldName: 'courseId',
+      comparator: '==',
+      value: courseSectionData[0].courseId,
+    },
+  });
+
+  const trimmedCourseLessonData = courseLessonData.map((lesson) => {
+    const { sectionId } = lesson;
+    return {
+      ...convertLessonDataToAccordionLessonItemProps(lesson),
+      sectionId,
+    };
+  });
+
   return {
     props: {
-      lessonData: trimmedLessonData,
+      lessonData: trimmedCourseLessonData,
       pageLessonAttachment: lessonData[0].attachment,
       courseSectionData,
       markdownJsxString,

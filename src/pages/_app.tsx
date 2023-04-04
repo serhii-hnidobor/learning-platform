@@ -12,6 +12,9 @@ const Header = dynamic(import('components/common/header/header'));
 
 import { Lato } from 'next/font/google';
 
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
+
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../global-style.css';
 
@@ -176,7 +179,8 @@ function App({ Component, pageProps }: AppProps) {
           {!isAuthRoute && (
             <>
               <Header isSignIn={isSingIn} />
-              <div
+              <SimpleBar
+                style={{ maxHeight: 'calc(100vh - 80px)' }}
                 className={concatClasses([
                   'h-[calc(100vh_-_80px)]',
                   'flex',
@@ -186,10 +190,13 @@ function App({ Component, pageProps }: AppProps) {
                   'overflow-y-auto',
                   'relative',
                 ])}
+                autoHide={false}
               >
-                <Component {...pageProps} />
-                <Footer />
-              </div>
+                <div>
+                  <Component {...pageProps} />
+                  <Footer />
+                </div>
+              </SimpleBar>
             </>
           )}
         </AppContext.Provider>

@@ -170,19 +170,23 @@ const CoursePageHeading = ({
             id={youtubeEmbedId}
             title={name}
             wrapperClass={concatClasses([
-              'relative',
-              'w-full',
-              'height-[0px]',
-              'overflow-hidden',
-              'mb-[50px]',
-              'aspect-video',
+                'relative',
+                'yt-lite',
+                'w-full',
+                'height-[0px]',
+                'overflow-hidden',
+                'mb-[50px]',
+                'aspect-video',
+                'bg-no-repeat',
+                'bg-cover',
+                'bg-center',
             ])}
             iframeClass={concatClasses([
-              'w-full',
-              'h-full',
-              'absolute',
-              'top-0',
-              'left-0',
+                'w-full',
+                'h-full',
+                'absolute',
+                'top-0',
+                'left-0',
             ])}
           />
         )}

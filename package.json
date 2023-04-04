@@ -55,6 +55,7 @@
     "remark-gfm": "^3.0.1",
     "server-only": "^0.0.1",
     "sharp": "^0.32.0",
+    "simplebar-react": "^3.2.3",
     "svg-fill": "^2.0.1",
     "url-loader": "^4.1.1",
     "use-deep-compare-effect": "^1.8.1",
