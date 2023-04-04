@@ -5,16 +5,16 @@
   "version": "0.0.1",
   "scripts": {
     "lint:fs": "ls-lint",
-    "lint": "npx eslint \"src/**/*.{ts,tsx}\" --resolve-plugins-relative-to . --max-warnings=0",
+    "lint": "next lint",
     "dev": "next dev",
     "build": "next build",
     "analyze": "ANALYZE=true next build && next bundle-analyzer",
-    "preview": " yarn run build && next start",
+    "preview": " pnpm run build && next start",
     "storybook": "storybook dev -p 6006",
     "build:css": "npx tailwindcss -i src/global-style.css -o ./public/index.css",
     "build:storybook": "storybook build",
     "watch:css": "npx tailwindcss -i src/global-style.css -o index.css --watch",
-    "watch:storybook": "yarn run build:css && storybook dev -p 6006 -s ../public",
+    "watch:storybook": "pnpm run build:css && storybook dev -p 6006 -s ../public",
     "build-storybook": "storybook build"
   },
   "dependencies": {
