@@ -112,17 +112,19 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
           'border-b',
           'z-40',
           'border-b-white/10',
+          'lg:px-28',
+          'sm:px-8',
+          'px-4',
+          'w-full',
+          'flex',
+          'justify-center',
         ])}
       >
         <div
           className={concatClasses([
             'w-full',
             'flex',
-            'lg:px-28',
-            'sm:px-8',
-            'px-4',
             'justify-between',
-            'w-full',
             '2xl:w-[1497px]',
           ])}
         >

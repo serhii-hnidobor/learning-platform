@@ -178,7 +178,7 @@ const SectionHero = () => {
           <HeroLabel
             label={'250+'}
             variant="horizontal"
-            className="absolute right-[-11px] bottom-[40px] z-20"
+            className="absolute bottom-[40px] right-[-11px] z-20"
             description={'tutors'}
             iconName={IconName.USERS}
           />
@@ -186,7 +186,7 @@ const SectionHero = () => {
             label={'5k+'}
             description={'online courses'}
             progress={45}
-            className="absolute top-[-19px] right-[-17px] z-20"
+            className="absolute right-[-17px] top-[-19px] z-20"
             variant={'vertical'}
           />
           <Avatar

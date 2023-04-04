@@ -62,7 +62,7 @@ const ProductStatisticCard = ({
         as={'p'}
         styleName={'body2Regular'}
         color={'grey'}
-        className={'line-clamp-3 col-start-2'}
+        className={'col-start-2 line-clamp-3'}
       >
         {statisticText}
       </Typography>

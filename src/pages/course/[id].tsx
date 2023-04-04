@@ -64,14 +64,26 @@ const CoursePage = ({
             '2xl:w-[1497px]',
             'w-full',
             'grid',
-            '2xl:grid-cols-[652px_440px]',
+            'xl:grid-cols-[1fr_auto]',
             'grid-cols-1',
+            'grid-rows-[min-content_min-content]',
             'gap-y-4',
             'justify-center',
-            'gap-x-[124px]',
           ])}
         >
-          <div className={'row-start-1 row-end-3 flex flex-col gap-3 pt-8'}>
+          <div
+            className={concatClasses([
+              'row-start-1',
+              'row-end-2',
+              'flex',
+              'flex-col',
+              'gap-3',
+              'pt-8',
+              'xl:w-[80%]',
+              'w-full',
+              'justify-self-start',
+            ])}
+          >
             {courseSectionsData.map((section, index) => {
               const { name, lessonsNum, duration, id: sectionId } = section;
 
@@ -79,7 +91,12 @@ const CoursePage = ({
 
               return (
                 <div
-                  className={'flex flex-col justify-center gap-3'}
+                  className={concatClasses([
+                    'flex',
+                    'flex-col',
+                    'justify-center',
+                    'gap-3',
+                  ])}
                   key={`course-page-accordion-${sectionId}`}
                 >
                   <CoursePageAccordion
@@ -105,6 +122,14 @@ const CoursePage = ({
               'justify-center',
               'gap-8',
               'my-6',
+              'xl:col-start-2',
+              'xl:col-end-3',
+              'max-h-fit',
+              'w-full',
+              'xl:row-start-1',
+              'xl:row-end-3',
+              'h-fit',
+              'justify-self-end',
             ])}
           >
             <div>
@@ -120,7 +145,13 @@ const CoursePage = ({
             />
           </div>
           <div
-            className={'col-start-1 col-end-2'}
+            className={concatClasses([
+              'col-start-1',
+              'col-end-2',
+              'xl:w-[80%]',
+              'w-full',
+              'justify-self-start',
+            ])}
             dangerouslySetInnerHTML={{ __html: markdownJsxString }}
           />
         </div>

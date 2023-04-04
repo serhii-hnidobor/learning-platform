@@ -67,7 +67,7 @@ const LessonAttachment = ({
           as={'h2'}
           styleName={'h4'}
           color={'black'}
-          className={'line-clamp-1 mb-8 block'}
+          className={'mb-8 line-clamp-1 block'}
         >
           {fileName}
         </Typography>

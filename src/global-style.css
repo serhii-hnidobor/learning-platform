@@ -66,3 +66,7 @@ input:focus {
   opacity: 0;
   pointer-events: none;
 }
+
+.simplebar-content {
+  height: 100%;
+}

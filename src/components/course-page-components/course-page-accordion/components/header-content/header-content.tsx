@@ -32,7 +32,7 @@ const CourseAccordionHeaderContent = ({
           as="h2"
           styleName={'h5'}
           color={'black'}
-          className={'line-clamp-1 mb-3 inline-block'}
+          className={'mb-3 line-clamp-1 inline-block'}
           title={name}
         >
           {name}

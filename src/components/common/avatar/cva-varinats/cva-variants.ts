@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority';
 
-const avatarWrapperVariants = cva(['overflow-hidden', 'w-auto'], {
+const avatarWrapperVariants = cva(['overflow-hidden'], {
   variants: {
     rounded: {
       full: ['rounded-full'],

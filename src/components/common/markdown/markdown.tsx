@@ -54,7 +54,7 @@ const Markdown = ({
                 styleName={'h1'}
                 color={'black'}
                 children={node.children[0]}
-                className={'mt-12 mb-8 inline-block'}
+                className={'mb-8 mt-12 inline-block'}
               />
             );
           },
@@ -64,7 +64,7 @@ const Markdown = ({
               styleName={'h2'}
               color={'black'}
               children={node.children[0]}
-              className={'mt-12 mb-8 inline-block'}
+              className={'mb-8 mt-12 inline-block'}
             />
           ),
           h3: (node) => (
@@ -73,7 +73,7 @@ const Markdown = ({
               styleName={'h3'}
               color={'black'}
               children={node.children[0]}
-              className={'mt-12 mb-8 inline-block'}
+              className={'mb-8 mt-12 inline-block'}
             />
           ),
           h4: (node) => (
@@ -82,7 +82,7 @@ const Markdown = ({
               styleName={'h4'}
               color={'black'}
               children={node.children[0]}
-              className={'mt-12 mb-8 inline-block'}
+              className={'mb-8 mt-12 inline-block'}
             />
           ),
           h5: (node) => (
@@ -91,7 +91,7 @@ const Markdown = ({
               styleName={'h5'}
               color={'black'}
               children={node.children[0]}
-              className={'mt-12 mb-8 inline-block'}
+              className={'mb-8 mt-12 inline-block'}
             />
           ),
           span: (node) => (

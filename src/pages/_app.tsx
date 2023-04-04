@@ -192,7 +192,7 @@ function App({ Component, pageProps }: AppProps) {
                 ])}
                 autoHide={false}
               >
-                <div>
+                <div className={'flex h-full flex-col justify-between'}>
                   <Component {...pageProps} />
                   <Footer />
                 </div>

@@ -1,11 +1,11 @@
-import { HTMLProps, ReactNode } from 'react';
+import { HTMLProps } from 'react';
 import { Icon, IconProps } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import Skeleton from 'react-loading-skeleton';
 import { concatClasses } from 'helpers/string/string';
 
 interface ListIconProps extends HTMLProps<HTMLUListElement> {
-  children: ReactNode[];
+  children: string[];
   iconName: IconName;
   liClassName?: string;
   liProps?: Omit<HTMLProps<HTMLLIElement>, 'className'>;
@@ -56,15 +56,15 @@ const ListIcon = ({
         : children.map((child, index) => {
             return (
               <li
-                className={'flex items-start gap-3'}
+                className={'line-clamp-1 flex items-start gap-3'}
                 key={`icon-list-li-${index}`}
               >
                 <Icon
                   name={iconName}
-                  className={'min-h-[20px] min-w-[20px]'}
+                  className={'mt-0.5 min-h-[20px] min-w-[20px]'}
                   {...iconProps}
                 />
-                {child}
+                <span className={'line-clamp-3'}>{child}</span>
               </li>
             );
           })}

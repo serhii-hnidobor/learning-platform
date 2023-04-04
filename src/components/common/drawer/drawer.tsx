@@ -112,6 +112,7 @@ const Drawer = ({
             '!user-select-none',
           ])}
           onClick={() => setIsOpen(false)}
+          onTouchStart={() => setIsOpen(false)}
         />
       )}
       <animated.div
@@ -156,11 +157,14 @@ const Drawer = ({
               : `${isRight ? 'translate-x-full' : '-translate-x-full'}`,
           ])}
           onClick={(event) => event.stopPropagation()}
+          onTouchMove={(event) => event.stopPropagation()}
           {...bind()}
           ref={mainContentRef}
         >
-          <header className={'shrink-0'}>{header}</header>
-          <div className={contentWrapperClassName}>{children}</div>
+          <header className={'shrink-0 touch-none'}>{header}</header>
+          <div className={`${contentWrapperClassName} touch-none`}>
+            {children}
+          </div>
         </div>
       </animated.div>
     </>

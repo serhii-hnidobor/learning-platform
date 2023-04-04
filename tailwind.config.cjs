@@ -88,7 +88,6 @@ module.exports = {
   },
   plugins: [
     require('tailwind-scrollbar'),
-    require('@tailwindcss/line-clamp'),
     require('tailwindcss-border-gradient-radius'),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
