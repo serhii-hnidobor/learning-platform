@@ -1,6 +1,6 @@
 import { AppRoutes } from 'common/enum/enum';
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { useRouter, useState } from 'hooks/hooks';
+import { useEffect, useRouter, useState } from 'hooks/hooks';
 import { concatClasses } from 'helpers/string/string';
 import { ToastContainer } from 'react-toastify';
 import { AppProps } from 'next/app';
@@ -18,6 +18,8 @@ import 'simplebar-react/dist/simplebar.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../global-style.css';
 
+import { auth } from 'api/auth';
+
 import Head from 'next/head';
 
 const lato = Lato({
@@ -34,6 +36,8 @@ interface AppUserInterface {
 interface AppContextType {
   user: AppUserInterface | undefined;
   setUser: Dispatch<SetStateAction<AppUserInterface | undefined>>;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -47,14 +51,26 @@ function App({ Component, pageProps }: AppProps) {
 
   const [user, setUser] = useState<AppUserInterface>();
 
-  const isSingIn = Boolean(user);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fontClassName = `${lato.variable} font-serif`;
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (authenticate) => {
+      if (authenticate && authenticate.emailVerified) {
+        const { email, uid: id } = authenticate;
+        if (email) {
+          setUser({ email, id });
+        }
+      }
+      setIsLoading(false);
+    });
+  }, []);
 
   return (
     <div className={fontClassName}>
       <SkeletonWrapper>
-        <AppContext.Provider value={{ user, setUser }}>
+        <AppContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -178,7 +194,7 @@ function App({ Component, pageProps }: AppProps) {
           )}
           {!isAuthRoute && (
             <>
-              <Header isSignIn={isSingIn} />
+              <Header />
               <SimpleBar
                 style={{ maxHeight: 'calc(100vh - 80px)' }}
                 className={concatClasses([

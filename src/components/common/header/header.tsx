@@ -15,13 +15,9 @@ import Button from '../button/button';
 import dynamic from 'next/dynamic';
 import { Icon } from '../icon/icon';
 import { IconName } from 'common/enum/enum';
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import Skeleton from 'react-loading-skeleton';
 
 const Drawer = dynamic(import('../drawer/drawer'));
-
-interface HeaderProps {
-  isSignIn?: boolean;
-}
 
 interface HeaderContextInterface {
   isDrawerOpen: boolean;
@@ -30,7 +26,7 @@ interface HeaderContextInterface {
 
 const HeaderContext = createContext<HeaderContextInterface | null>(null);
 
-const Header = ({ isSignIn = false }: HeaderProps) => {
+const Header = () => {
   const Router = useRouter();
 
   const { route: curRoute } = Router;
@@ -43,20 +39,13 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
 
   const appContext = useContext(AppContext);
 
+  const isSignIn = Boolean(appContext?.user);
+
   if (!appContext) {
     throw new Error('try to use header without app context');
   }
 
-  useDeepCompareEffect(() => {
-    auth.onAuthStateChanged(async (authenticate) => {
-      if (authenticate && authenticate.emailVerified) {
-        const { email, uid: id } = authenticate;
-        if (email) {
-          appContext.setUser({ email, id });
-        }
-      }
-    });
-  }, [appContext]);
+  const { isLoading } = appContext;
 
   const handleSignOut = async () => {
     try {
@@ -95,6 +84,45 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
       setIsDrawerOpen(false);
     }
   }, [isMobileMenuNeed]);
+
+  let ControlButtons: JSX.Element;
+
+  if (isLoading) {
+    ControlButtons = (
+      <Skeleton
+        className={'h-full w-full'}
+        containerClassName={concatClasses([
+          'flex',
+          'items-center',
+          'justify-center',
+          '!w-[84px]',
+          '!h-[35px]',
+        ])}
+      />
+    );
+  } else if (isSignIn) {
+    ControlButtons = (
+      <>
+        <Button
+          ariaLabel={'sign in button'}
+          intent={'textSecondary'}
+          onClick={handleRedirectSignIn}
+        >
+          Sign In
+        </Button>
+        <Button
+          ariaLabel={'sign up button'}
+          size={'small'}
+          intent={'secondary'}
+          onClick={handleRedirectSignUp}
+        >
+          Get started
+        </Button>
+      </>
+    );
+  } else {
+    ControlButtons = <HeaderMenu handleSignOut={handleSignOut} />;
+  }
 
   return (
     <HeaderContext.Provider value={{ isDrawerOpen, setIsDrawerOpen }}>
@@ -142,6 +170,7 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
               <MobileDrawerContent
                 handleSignOut={handleSignOut}
                 curRoute={curRoute}
+                isLoading={isLoading}
                 isSignIn={isSignIn}
                 handleRedirect={(route) => Router.push(route)}
               />
@@ -176,7 +205,6 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
           </div>
           <div
             className={concatClasses([
-              'user-control-box',
               'md:flex',
               'hidden',
               'items-center',
@@ -184,27 +212,7 @@ const Header = ({ isSignIn = false }: HeaderProps) => {
               'gap-6',
             ])}
           >
-            {isSignIn ? (
-              <HeaderMenu handleSignOut={handleSignOut} />
-            ) : (
-              <>
-                <Button
-                  ariaLabel={'sign in button'}
-                  intent={'textSecondary'}
-                  onClick={handleRedirectSignIn}
-                >
-                  Sign In
-                </Button>
-                <Button
-                  ariaLabel={'sign up button'}
-                  size={'small'}
-                  intent={'secondary'}
-                  onClick={handleRedirectSignUp}
-                >
-                  Get started
-                </Button>
-              </>
-            )}
+            {ControlButtons}
           </div>
         </div>
       </nav>
