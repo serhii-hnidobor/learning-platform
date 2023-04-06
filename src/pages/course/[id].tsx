@@ -125,6 +125,7 @@ const CoursePage = ({
               'xl:col-start-2',
               'xl:col-end-3',
               'max-h-fit',
+              'xl:max-w-[444px]',
               'w-full',
               'xl:row-start-1',
               'xl:row-end-3',
@@ -148,7 +149,11 @@ const CoursePage = ({
             className={concatClasses([
               'col-start-1',
               'col-end-2',
+              'xl:col-start-1',
+              'xl:col-end-3',
+              'xl:text-center',
               'xl:w-[80%]',
+              'xl:justify-self-center',
               'w-full',
               'justify-self-start',
             ])}
