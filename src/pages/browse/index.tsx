@@ -1,5 +1,4 @@
 import { BrowsePageHeader } from 'components/browse-page-components/browse-page-header/browse-page-header';
-import { BrowsePageSection } from 'components/browse-page-components/browse-page-section/browse-page-section';
 import { useState } from 'hooks/hooks';
 import { CollectionName, DataStatus } from 'common/enum/api/api';
 import { CourseDataType, TagDataType, TopicDataType } from 'types/api/data';
@@ -8,6 +7,13 @@ import { convertCourseDataToCourseProps } from 'helpers/data/data';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
 import { getData } from 'hooks/use-data-fetch/helper/getData/getData';
+import dynamic from 'next/dynamic';
+
+const BrowsePageSection = dynamic(
+  import(
+    'components/browse-page-components/browse-page-section/browse-page-section'
+  ),
+);
 
 interface BrowsePageContextType {
   handleCourseSearch: (searchString: string) => void;
@@ -65,7 +71,7 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
       'helpers/search/name-search/name-search'
     );
 
-    const searchResult = courseNameSearch({ searchString, courseData });
+    const searchResult = await courseNameSearch({ searchString, courseData });
 
     setSearchCourseResult(searchResult);
   };

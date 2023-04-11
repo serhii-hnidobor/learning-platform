@@ -1,4 +1,3 @@
-import Fuse from 'fuse.js';
 import { CourseDataType } from 'types/api/data';
 import { convertCourseDataToCourseProps } from '../../data/data';
 
@@ -7,13 +6,15 @@ interface CourseNameSearchArgType {
   courseData: CourseDataType[] | null;
 }
 
-function courseNameSearch({
+async function courseNameSearch({
   searchString,
   courseData,
 }: CourseNameSearchArgType) {
   if (!courseData || !courseData.length) {
     return null;
   }
+
+  const { default: Fuse } = await import('fuse.js');
 
   const fuse = new Fuse(courseData, { keys: ['name'] });
   const searchResult: CourseDataType[] = fuse

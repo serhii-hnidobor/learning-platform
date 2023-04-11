@@ -4,13 +4,16 @@ import {
   SearchInput,
   type SearchInputProps as InputProps,
 } from '../search-input/search-input';
-import Fuse from 'fuse.js';
 import { AutoCompleteItem } from './components/autocomplete-item';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 
 interface CourseSearchData {
   name: string;
   id: string;
+}
+
+interface SearchResultType {
+  item: CourseSearchData;
 }
 
 interface SearchBoxProps extends ComponentBaseProps<'div'> {
@@ -31,7 +34,7 @@ const SearchBox = ({
   const [activeAutocompleteItemIndex, setActiveAutocompleteItemIndex] =
     useState<number>();
 
-  let autoCompleteResult: Fuse.FuseResult<CourseSearchData>[] = [];
+  let autoCompleteResult: SearchResultType[] = [];
 
   const handleAutocompleteArrowNavigation = (isUp = false) => {
     if (!autoCompleteResult.length) {
@@ -61,6 +64,7 @@ const SearchBox = ({
     keyArray: ['Escape'],
     callback: () => setIsNeedAutocomplete(false),
   });
+
   useKeyPress({
     keyArray: ['Enter'],
     callback: () => {
@@ -80,10 +84,12 @@ const SearchBox = ({
       setActiveAutocompleteItemIndex(undefined);
     },
   });
+
   useKeyPress({
     keyArray: ['ArrowDown'],
     callback: () => handleAutocompleteArrowNavigation(true),
   });
+
   useKeyPress({
     keyArray: ['ArrowUp'],
     callback: () => handleAutocompleteArrowNavigation(false),
@@ -96,10 +102,14 @@ const SearchBox = ({
     }
     setSearchString(searchValue);
   };
-  const fuse = new Fuse(items, { keys: ['name'] });
 
   if (searchString) {
-    autoCompleteResult = fuse.search(searchString);
+    import('fuse.js').then((module) => {
+      const FuseLib = module.default;
+
+      const fuse = new FuseLib(items, { keys: ['name'] });
+      autoCompleteResult = fuse.search(searchString);
+    });
   }
 
   return (

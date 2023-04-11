@@ -11,7 +11,6 @@ import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 interface BrowseTopicsSectionProps {
   name: string;
   isTopicsSection: true;
-
   selectedTopic: TopicDataType | null;
   isCourseSection?: false;
   content: TopicDataType[] | null;
@@ -110,4 +109,4 @@ const BrowsePageSection = ({
   );
 };
 
-export { BrowsePageSection, type BrowsePageSectionsProps };
+export { BrowsePageSection as default, type BrowsePageSectionsProps };

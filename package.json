@@ -36,6 +36,7 @@
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.8.4",
     "next-mdx-remote": "^4.4.1",
+    "nprogress": "^0.2.0",
     "pretty-bytes": "^6.1.0",
     "pretty-ms": "^8.0.0",
     "react": "^18.2.0",
@@ -80,6 +81,7 @@
     "@svgr/webpack": "^7.0.0",
     "@types/lodash": "^4.14.192",
     "@types/mdx": "^2.0.4",
+    "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@types/react-syntax-highlighter": "^15.5.6",
@@ -87,7 +89,6 @@
     "@typescript-eslint/parser": "^5.57.1",
     "autoprefixer": "^10.4.14",
     "concurrently": "^7.6.0",
-    "del-cli": "^5.0.0",
     "eslint": "^8.37.0",
     "eslint-config-semistandard": "^17.0.0",
     "eslint-config-standard": "^17.0.0",
@@ -112,7 +113,6 @@
     "tailwindcss": "^3.3.1",
     "tailwindcss-border-gradient-radius": "^3.0.1",
     "typescript": "^5.0.3",
-    "unimported": "^1.26.0",
     "webpack-bundle-analyzer": "^4.8.0"
   },
   "main": "index.js"
