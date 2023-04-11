@@ -13,14 +13,19 @@ const Header = dynamic(import('components/common/header/header'));
 import { Lato } from 'next/font/google';
 
 import SimpleBar from 'simplebar-react';
-import 'simplebar-react/dist/simplebar.min.css';
-
-import 'react-toastify/dist/ReactToastify.min.css';
-import '../global-style.css';
 
 import { auth } from 'api/auth';
 
 import Head from 'next/head';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+import Nprogress from 'nprogress';
+
+import 'simplebar-react/dist/simplebar.min.css';
+import 'react-toastify/dist/ReactToastify.min.css';
+import '../global-style.css';
+import 'nprogress/nprogress.css';
+
+Nprogress.configure({ easing: 'ease', speed: 500, showSpinner: false });
 
 const lato = Lato({
   subsets: ['latin'],
@@ -46,6 +51,17 @@ function App({ Component, pageProps }: AppProps) {
   const Router = useRouter();
 
   const { route: pathname } = Router;
+
+  useDeepCompareEffect(() => {
+    Router.events.on('routeChangeStart', () => {
+      Nprogress.start();
+    });
+
+    Router.events.on('routeChangeComplete', () => {
+      Nprogress.done(false);
+    });
+  }, [Router]);
+
   const isAuthRoute =
     pathname === AppRoutes.SIGN_UP || pathname === AppRoutes.SIGN_IN;
 
