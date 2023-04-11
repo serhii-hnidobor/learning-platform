@@ -35,7 +35,7 @@ const Logo = ({
   }
 
   const handleRootRedirect = async () => {
-    if (curRoute !== AppRoutes.ROOT) {
+    if (Router.isReady && curRoute !== AppRoutes.ROOT) {
       await Router.push(AppRoutes.ROOT);
     }
   };

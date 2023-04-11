@@ -4,7 +4,7 @@ import { ContentListItem } from 'components/common/header/components/mobile-head
 import Button from 'components/common/button/button';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
-import { concatClasses } from '../../../../../../helpers/string/concat-classes/concat-classes';
+import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 
 interface Props {
   curRoute: string;
@@ -24,11 +24,15 @@ const MobileDrawerContent = ({
   const Router = useRouter();
 
   const redirectSignIn = async () => {
-    await Router.push(AppRoutes.SIGN_IN);
+    if (Router.isReady) {
+      await Router.push(AppRoutes.SIGN_IN);
+    }
   };
 
   const redirectSignUp = async () => {
-    await Router.push(AppRoutes.SIGN_UP);
+    if (Router.isReady) {
+      await Router.push(AppRoutes.SIGN_UP);
+    }
   };
 
   let buttons: JSX.Element;

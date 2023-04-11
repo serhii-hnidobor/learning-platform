@@ -72,11 +72,15 @@ const Header = () => {
     screen === 'extra-small';
 
   const handleRedirectSignIn = () => {
-    Router.push(`${AppRoutes.SIGN_IN}?from=${from}`);
+    if (Router.isReady) {
+      Router.push(`${AppRoutes.SIGN_IN}?from=${from}`);
+    }
   };
 
   const handleRedirectSignUp = () => {
-    Router.push(`${AppRoutes.SIGN_UP}?from=${from}`);
+    if (Router.isReady) {
+      Router.push(`${AppRoutes.SIGN_UP}?from=${from}`);
+    }
   };
 
   useEffect(() => {
@@ -172,7 +176,11 @@ const Header = () => {
                 curRoute={curRoute}
                 isLoading={isLoading}
                 isSignIn={isSignIn}
-                handleRedirect={(route) => Router.push(route)}
+                handleRedirect={(route) => {
+                  if (Router.isReady) {
+                    Router.push(route);
+                  }
+                }}
               />
             }
             header={

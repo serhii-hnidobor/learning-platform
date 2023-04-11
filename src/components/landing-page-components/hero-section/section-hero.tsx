@@ -14,7 +14,9 @@ const SectionHero = () => {
   const Router = useRouter();
 
   const handleLearnMoreClick = () => {
-    Router.push(AppRoutes.BROWSE);
+    if (Router.isReady) {
+      Router.push(AppRoutes.BROWSE);
+    }
   };
 
   return (

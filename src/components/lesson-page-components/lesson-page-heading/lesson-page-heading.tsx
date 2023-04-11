@@ -316,7 +316,7 @@ const LessonPageHeading = ({
                 ariaLabel={'go to next lesson'}
                 intent={'regularOutlined'}
                 onClick={async () => {
-                  if (nextLesson) {
+                  if (Router.isReady && nextLesson) {
                     await Router.push(`/lesson/${nextLesson.id}`);
                   }
                 }}

@@ -34,7 +34,11 @@ const CoursePageAccordion = ({
   const accordionChildren = (
     <CourseAccordionItemWrapper
       lessonData={lessonData}
-      handleLessonClick={(lessonIndex) => Router.push(`/lesson/${lessonIndex}`)}
+      handleLessonClick={(lessonIndex) => {
+        if (Router.isReady) {
+          Router.push(`/lesson/${lessonIndex}`);
+        }
+      }}
     />
   );
   const accordionHeader = (

@@ -52,7 +52,9 @@ export const BrowsePageHeader = ({
   });
 
   const handleAutocompleteSelect = (id: string) => {
-    Router.push(`/course/${id}`);
+    if (Router.isReady) {
+      Router.push(`/course/${id}`);
+    }
   };
 
   return (

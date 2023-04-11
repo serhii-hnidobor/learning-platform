@@ -8,7 +8,9 @@ import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 const NotFound = () => {
   const Router = useRouter();
   const redirectToMainPage = async () => {
-    await Router.replace(AppRoutes.ROOT);
+    if (Router.isReady) {
+      await Router.replace(AppRoutes.ROOT);
+    }
   };
 
   return (

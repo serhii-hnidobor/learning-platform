@@ -26,7 +26,7 @@ const SignInPage = () => {
       : new URLSearchParams(location.search).get('from') || AppRoutes.ROOT;
 
   const redirectPrev = () => {
-    if (redirectRoute.length) {
+    if (redirectRoute.length && Router.isReady) {
       Router.replace(redirectRoute);
     }
   };
