@@ -23,7 +23,7 @@ const nextConfig = {
       process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
     NEXT_PUBLIC_APP_ID: process.env.NEXT_PUBLIC_APP_ID,
   },
-  webpack(config, { isServer }) {
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
       use: [
