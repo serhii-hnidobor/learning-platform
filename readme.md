@@ -4,8 +4,9 @@
 
 1. specify environment variables in .env.local from root folder using .env.example as example
 2. from root run `pnpm i`
-3. run `pnpm run preview`
-4. go to `http://localhost:3000`
+3. run `pnpm husky install && npx husky add .husky/pre-commit "pnpm lint-staged"`
+4. run `pnpm run preview`
+5. go to `http://localhost:3000`
 
 ## 🏃‍♂️ how to Run storybook
 
