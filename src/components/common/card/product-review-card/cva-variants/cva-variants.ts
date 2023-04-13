@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority';
 
 const productReviewCardVariants = cva(
-  ['px-6', 'pb-6', 'pt-[33px]', 'rounded-[12px]', 'w-[384px]', 'xs:w[300px]'],
+  ['px-6', 'pb-6', 'pt-[33px]', 'rounded-[12px]', 'w-[384px]'],
   {
     variants: {
       variant: {

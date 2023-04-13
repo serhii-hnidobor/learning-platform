@@ -29,19 +29,25 @@ extends:
 rules:
   tailwindcss/no-custom-classname:
     - error
-    - whitelist:
-        [
-          'autocomplete',
-          'bg-grey/10',
-          'translate-y-negative-1/2',
-          'line-clamp-1',
-          'line-clamp-2',
-          'line-clamp-3',
-          'line-clamp-4',
-          'text-blue',
-          'bg-grey-light',
-          'bg-blue',
-        ]
+    - config: tailwind.config.cjs
+      whitelist:
+        - autocomplete
+        - bg-grey/10
+        - translate-y-negative-1/2
+        - focus-outline-offset-0
+        - align-center
+        - hover:bg-transparent
+        - bg-inherit
+        - '!fill-transparent'
+        - divide-gray-100
+        - fill-transparent
+        - stroke-transparent
+        - group-hover:stroke-transparent
+        - group-hover:fill-transparent
+        - bg-transparent
+        - text-inherit
+        - font-regular
+        - translate-all
   react-hooks/exhaustive-deps:
     - error
   no-tabs:

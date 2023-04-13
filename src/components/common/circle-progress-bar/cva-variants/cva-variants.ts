@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 
 const progressRignVariants = cva(
   [
-    '[&>circle]:transform -rotate-90',
+    '-rotate-90',
     '[&>circle]:origin-1/2',
     'relative',
     'left-[-4px]',

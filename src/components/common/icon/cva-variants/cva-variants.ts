@@ -90,7 +90,7 @@ const iconBoxVariants = cva(['inline-table', 'group'], {
       rounded: ['!bg-blue-light', '!p-4', '!rounded-full'],
       squared: ['!rounded-xl', '!p-4', '!bg-blue/10'],
       squaredInverted: ['!rounded-xl', '!p-4', '!bg-white'],
-      roundedActive: ['!rounded-full', '!p4', '!bg-blue'],
+      roundedActive: ['!rounded-full', '!p-4', '!bg-blue'],
       roundedGrey: ['!rounded-full', '!p-[6px]', '!bg-grey-light'],
       roundedPrimary: ['!rounded-full', '!p-4', '!bg-yellow-light'],
       squaredTranslucent: ['!p-5', '!rounded-2xl', '!bg-white/10'],

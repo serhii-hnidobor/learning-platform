@@ -8,7 +8,6 @@ const productStatisticCardVariants = cva(
     'p-9',
     'px-3',
     'sm:px-9',
-    'max-width-[320px]',
     'grid-rows-[48px_1fr]',
     'gap-y-1',
     'gap-x-4',

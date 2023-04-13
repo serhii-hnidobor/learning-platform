@@ -13,3 +13,4 @@ ignore:
   - public
   - .storybook
   - src/assets
+  - .next

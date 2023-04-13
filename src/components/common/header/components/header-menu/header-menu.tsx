@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Typography } from 'components/common/typography/typography';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/enum';
+import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 
 interface HeaderMenuProps {
   handleSignOut: () => Promise<void>;
@@ -29,7 +30,24 @@ const HeaderMenu = ({ handleSignOut }: HeaderMenuProps) => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+          <Menu.Items
+            className={concatClasses([
+              'absolute',
+              'right-0',
+              'z-10',
+              'mt-2',
+              'w-56',
+              'origin-top-right',
+              'divide-y',
+              'divide-gray-100',
+              'rounded-md',
+              'bg-white',
+              'shadow-lg',
+              'ring-1',
+              'ring-black/5',
+              'focus:outline-none',
+            ])}
+          >
             <div className="p-1 ">
               <Menu.Item disabled>
                 <button

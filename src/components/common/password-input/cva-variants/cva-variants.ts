@@ -17,7 +17,7 @@ const passwordInputVariants = cva(
       state: {
         base: 'border-grey',
         validationError:
-          '!border-orange-red border-2 !outline-none !focus:outline-none',
+          '!border-orange-red !focus:outline-none border-2 !outline-none',
         disabled: 'bg-grey',
       },
       defaultVariants: {

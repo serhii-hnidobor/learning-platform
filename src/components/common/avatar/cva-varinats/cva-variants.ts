@@ -8,7 +8,7 @@ const avatarWrapperVariants = cva(['overflow-hidden'], {
       none: ['rounded-none'],
     },
     size: {
-      large: ['w-[495px] h-[495px] flex items-end justify-center'],
+      large: ['flex h-[495px] w-[495px] items-end justify-center'],
       small: ['w-8', 'h-8'],
     },
     background: {
