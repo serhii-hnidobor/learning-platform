@@ -5,3 +5,4 @@ public
 .storybook
 .next
 storybook-static
+.husky

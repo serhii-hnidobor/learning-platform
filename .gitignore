@@ -34,3 +34,6 @@ dist-ssr
 
 # Storybook build folder
 /storybook-static/
+
+# Husky
+.husky
