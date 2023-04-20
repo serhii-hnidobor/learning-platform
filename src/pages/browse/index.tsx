@@ -1,13 +1,15 @@
 import { BrowsePageHeader } from 'components/browse-page-components/browse-page-header/browse-page-header';
-import { useState } from 'hooks/hooks';
+import { useState, createContext } from 'react';
 import { CollectionName, DataStatus } from 'common/enum/api/api';
 import { CourseDataType, TagDataType, TopicDataType } from 'types/api/data';
-import { createContext } from 'react';
 import { convertCourseDataToCourseProps } from 'helpers/data/data';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
-import { getData } from 'hooks/use-data-fetch/helper/getData/getData';
+import { getData } from 'lib/getData';
 import dynamic from 'next/dynamic';
+import { getSession } from 'next-auth/react';
+import { GetServerSidePropsContext } from 'next';
+import createFirebaseCache from '../../lib/cache/create-firebase-cache';
 
 const BrowsePageSection = dynamic(
   import(
@@ -172,17 +174,36 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
 
 export { BrowsePage as default, BrowsePageContext, type BrowsePageContextType };
 
-export async function getStaticProps() {
-  const courseData = await getData({ name: CollectionName.COURSES });
-  const tagData = await getData({ name: CollectionName.TAGS });
-  const topicsData = await getData({ name: CollectionName.TOPICS });
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { data: courseData, isFromCache: isCoursesFromCache } = await getData({
+    name: CollectionName.COURSES,
+  });
+  const { data: tagData, isFromCache: isTagsFromCache } = await getData({
+    name: CollectionName.TAGS,
+  });
+  const { data: topicsData, isFromCache: isTopicsFromCache } = await getData({
+    name: CollectionName.TOPICS,
+  });
+  const session = await getSession(context);
+
+  context.res.on('finish', () => {
+    if (!isCoursesFromCache) {
+      createFirebaseCache(CollectionName.COURSES);
+    }
+    if (!isTagsFromCache) {
+      createFirebaseCache(CollectionName.TAGS);
+    }
+    if (!isTopicsFromCache) {
+      createFirebaseCache(CollectionName.TOPICS);
+    }
+  });
 
   return {
     props: {
+      session,
       courseData,
       tagData,
       topicsData,
     },
-    revalidate: 3600,
   };
 }

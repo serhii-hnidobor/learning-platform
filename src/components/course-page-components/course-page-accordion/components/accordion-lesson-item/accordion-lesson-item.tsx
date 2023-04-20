@@ -1,13 +1,14 @@
 import Skeleton from 'react-loading-skeleton';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
 import { getDurationString } from 'helpers/time/time';
-import { useKeyPress, useRef } from 'hooks/hooks';
 import {
   Typography,
   TypographyProps,
 } from 'components/common/typography/typography';
 import { Icon, IconProps } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
+import { useRef } from 'react';
+import useKeyPress from 'hooks/use-key-press';
 
 interface Props extends Omit<ComponentBaseProps<'div'>, 'onClick'> {
   id: string;
@@ -74,7 +75,9 @@ const AccordionLessonItem = ({
   return (
     <div
       tabIndex={0}
-      className={'flex cursor-pointer items-start justify-start gap-x-4'}
+      className={
+        'group flex w-max max-w-full cursor-pointer items-start justify-start gap-x-4'
+      }
       ref={ref}
       onClick={handleClick}
       {...restProps}
@@ -94,7 +97,10 @@ const AccordionLessonItem = ({
             <Skeleton containerClassName={'w-full'} />
           </div>
         ) : (
-          <Typography {...headerProps}>
+          <Typography
+            {...headerProps}
+            className={'group-hover:text-blue cursor-pointer transition-colors'}
+          >
             {number}. {name}
           </Typography>
         )}

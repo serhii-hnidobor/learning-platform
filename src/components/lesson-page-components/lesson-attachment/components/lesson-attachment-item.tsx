@@ -3,7 +3,7 @@ import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
 import useDownloader from 'react-use-downloader';
 import Skeleton from 'react-loading-skeleton';
 import prettyBytes from 'pretty-bytes';
-import { useEffect } from 'hooks/hooks';
+import { useEffect } from 'react';
 import { concatClasses } from 'helpers/string/string';
 import { createToastNotification } from 'components/common/toast-notification';
 import { Typography } from 'components/common/typography/typography';

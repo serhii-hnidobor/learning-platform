@@ -7,9 +7,7 @@ import { CoursePageAccordion } from 'components/course-page-components/course-pa
 import { ListIcon } from 'components/common/list-icon/list-icon';
 import { Typography } from 'components/common/typography/typography';
 import { IconName } from 'common/enum/enum';
-import { getData } from 'hooks/use-data-fetch/helper/getData/getData';
 
-import getAllCourseId from 'lib/get-all-course-id';
 import getMarkdownHtmlString from 'lib/get-markdown-html-string';
 
 import { CourseSectionType } from 'types/api/data';
@@ -20,6 +18,10 @@ import {
   getSectionLessons,
 } from 'helpers/data/data';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
+import { GetServerSidePropsContext } from 'next';
+import { getSession } from 'next-auth/react';
+import { getData } from 'lib/getData';
+import createFirebaseCache from '../../lib/cache/create-firebase-cache';
 
 type CourseDataPropType = CoursePageHeaderBaseProps & { whatLearn: string[] };
 
@@ -167,22 +169,64 @@ const CoursePage = ({
 
 export default CoursePage;
 
-interface GetStaticPropsArg {
-  params: {
-    id: string;
-  };
-}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (
+    !context.params ||
+    !context.params.id ||
+    typeof context.params.id !== 'string'
+  ) {
+    throw {
+      code: 500,
+      message: 'params id not found',
+    };
+  }
 
-export async function getStaticProps({ params }: GetStaticPropsArg) {
-  const { id: courseId } = params;
-  const courseData = await getData<CollectionName.COURSES>({
-    name: CollectionName.COURSES,
-    whereOptions: {
-      fieldName: 'id',
-      comparator: '==',
-      value: courseId,
-    },
-  });
+  const session = await getSession(context);
+  const { id: courseId } = context.params;
+
+  const { data: courseData, isFromCache: isCoursesFromCache } =
+    await getData<CollectionName.COURSES>({
+      name: CollectionName.COURSES,
+      whereOptions: {
+        fieldName: 'id',
+        comparator: '==',
+        value: courseId,
+      },
+    });
+
+  const { data: courseSectionsData, isFromCache: isCourseSectionsFromCache } =
+    await getData<CollectionName.COURSE_SECTIONS>({
+      name: CollectionName.COURSE_SECTIONS,
+      whereOptions: {
+        fieldName: 'courseId',
+        comparator: '==',
+        value: courseId,
+      },
+    });
+
+  const { data: lessonData, isFromCache: isLessonsFromCache } =
+    await getData<CollectionName.LESSONS>({
+      name: CollectionName.LESSONS,
+      whereOptions: {
+        fieldName: 'courseId',
+        comparator: '==',
+        value: courseId,
+      },
+    });
+
+  const isAllDataFound =
+    courseData &&
+    courseData.length &&
+    lessonData &&
+    lessonData.length &&
+    courseSectionsData &&
+    courseSectionsData.length;
+
+  if (!isAllDataFound) {
+    return {
+      notFound: true,
+    };
+  }
 
   const trimmedCourseData = courseData.map((course) => {
     const { whatLearn } = course;
@@ -191,24 +235,6 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
       ...courseDataToCoursePageHeadingProps(course),
       whatLearn,
     };
-  });
-
-  const courseSectionsData = await getData<CollectionName.COURSE_SECTIONS>({
-    name: CollectionName.COURSE_SECTIONS,
-    whereOptions: {
-      fieldName: 'courseId',
-      comparator: '==',
-      value: courseId,
-    },
-  });
-
-  const lessonData = await getData<CollectionName.LESSONS>({
-    name: CollectionName.LESSONS,
-    whereOptions: {
-      fieldName: 'courseId',
-      comparator: '==',
-      value: courseId,
-    },
   });
 
   const trimmedLessonData = lessonData.map((lesson) => {
@@ -223,22 +249,25 @@ export async function getStaticProps({ params }: GetStaticPropsArg) {
     courseData[0].detailedDescription,
   );
 
+  context.res.on('finish', () => {
+    if (!isCoursesFromCache) {
+      createFirebaseCache(CollectionName.COURSES);
+    }
+    if (!isLessonsFromCache) {
+      createFirebaseCache(CollectionName.LESSONS);
+    }
+    if (!isCourseSectionsFromCache) {
+      createFirebaseCache(CollectionName.COURSE_SECTIONS);
+    }
+  });
+
   return {
     props: {
       courseData: trimmedCourseData,
       courseSectionsData,
       lessonData: trimmedLessonData,
       markdownJsxString: markdownJsxString,
+      session,
     },
-    revalidate: 3600,
-  };
-}
-
-export async function getStaticPaths() {
-  const paths = await getAllCourseId();
-
-  return {
-    paths,
-    fallback: false,
   };
 }

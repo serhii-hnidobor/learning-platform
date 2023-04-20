@@ -1,5 +1,5 @@
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { useHoverScaleAnimation } from 'hooks/hooks';
+import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import {
   ProductShortInfoCardVariants,
   type ProductShortInfoCardVariantsType,

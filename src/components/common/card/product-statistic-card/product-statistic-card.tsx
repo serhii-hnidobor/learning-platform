@@ -6,7 +6,7 @@ import { ComponentBaseProps } from 'types/html-elemet-props';
 import { concatClasses } from 'helpers/string/string';
 import { IconProps, Icon } from 'components/common/icon/icon';
 import { Typography } from 'components/common/typography/typography';
-import { useHoverScaleAnimation } from 'hooks/hooks';
+import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import { animated } from '@react-spring/web';
 import { IconName } from 'common/enum/icons/icons';
 

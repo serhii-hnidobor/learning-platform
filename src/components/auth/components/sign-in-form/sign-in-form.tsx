@@ -1,33 +1,29 @@
-import { useAppForm, useState } from 'hooks/hooks';
+import { useState } from 'react';
+import useAppForm from 'hooks/use-app-form';
 import Button from 'components/common/button/button';
 import { Input } from 'components/common/input/input';
 import { SignInFormValues } from 'types/user/user-sign-in-form-values';
 import { userSignIn } from 'common/validation-schemas/validation-schemas';
-import { PasswordInput } from 'components/common/password-input/password-input';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';
 import { Typography } from 'components/common/typography/typography';
 import { concatClasses } from 'helpers/string/string';
-import { signInWithGoogle } from 'api/auth';
 import { AuthContainerLink } from 'components/auth/components/auth-container/link/auth-container-link';
 import { AppRoutes } from 'common/enum/enum';
+import { Providers } from 'types/auth/auth';
+import { signIn } from 'next-auth/react';
 
 interface SignInFormProps {
-  handleGoogleSuccess: VoidFunction;
-  handleGoogleFail: VoidFunction;
   handleSubmitEvent: (data: SignInFormValues) => Promise<void>;
+  providers: Providers;
 }
 
-const SignInForm = ({
-  handleSubmitEvent,
-  handleGoogleFail,
-  handleGoogleSuccess,
-}: SignInFormProps) => {
+const SignInForm = ({ handleSubmitEvent, providers }: SignInFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { control, errors, handleSubmit, isValid } =
     useAppForm<SignInFormValues>({
-      defaultValues: { email: '', password: '' },
+      defaultValues: { email: '' },
       validationSchema: userSignIn,
       mode: 'onTouched',
     });
@@ -55,19 +51,6 @@ const SignInForm = ({
             styleName: 'body2Medium',
           }}
         />
-        <PasswordInput
-          control={control}
-          errors={errors}
-          state={errors.password ? 'validationError' : 'base'}
-          name="password"
-          label="Password"
-          placeholder="******"
-          labelWrapperTypographyProps={{
-            color: 'white',
-            styleName: 'body2Medium',
-          }}
-          wrapperClassName={'mb-6'}
-        />
         <div className={'mb-5 flex flex-col items-center justify-center'}>
           <Button
             ariaLabel={'sign in button'}
@@ -87,33 +70,38 @@ const SignInForm = ({
           >
             or continue with
           </Typography>
-          <Button
-            ariaLabel={'sign in with google button'}
-            intent={'base'}
-            className={concatClasses([
-              'flex',
-              'h-[44px]',
-              'w-full',
-              'justify-center',
-              'bg-white',
-              'px-[15px]',
-              'py-[10px]',
-            ])}
-            type={'button'}
-            onClick={() =>
-              signInWithGoogle({
-                onError: handleGoogleFail,
-                onSuccess: handleGoogleSuccess,
-              })
+          {Object.values(providers).map((provider) => {
+            if (provider.type === 'email') {
+              return null;
             }
-          >
-            <Icon
-              name={IconName.GOOGLE}
-              width={24}
-              height={24}
-              intent={'base'}
-            />
-          </Button>
+
+            return (
+              <div key={provider.name} className={'w-full'}>
+                <Button
+                  ariaLabel={'sign in with google button'}
+                  intent={'base'}
+                  className={concatClasses([
+                    'flex',
+                    'h-[44px]',
+                    'w-full',
+                    'justify-center',
+                    'bg-white',
+                    'px-[15px]',
+                    'py-[10px]',
+                  ])}
+                  type={'button'}
+                  onClick={() => signIn(provider.id)}
+                >
+                  <Icon
+                    name={IconName.GOOGLE}
+                    width={24}
+                    height={24}
+                    intent={'base'}
+                  />
+                </Button>
+              </div>
+            );
+          })}
         </div>
         <div className={'flex items-center justify-center'}>
           <AuthContainerLink

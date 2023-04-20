@@ -2,7 +2,7 @@ import { IconName } from 'common/enum/enum';
 import { Icon } from 'components/common/icon/icon';
 import { useRef, useState } from 'react';
 import { concatClasses } from 'helpers/string/string';
-import { useKeyPress } from 'hooks/hooks';
+import useKeyPress from 'hooks/use-key-press';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
 
 interface AccordionProps extends Omit<ComponentBaseProps<'div'>, 'children'> {

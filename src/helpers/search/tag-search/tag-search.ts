@@ -1,9 +1,8 @@
 import { CourseDataType } from 'types/api/data';
-import isEqual from 'lodash/isEqual';
-import difference from 'lodash/difference';
 import { convertCourseDataToCourseProps } from 'helpers/data/data';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { CoursePropsDataType } from 'types/props/landing-page';
+import isOneArrayContainAnother from 'helpers/array/is-one-array-contain-another';
 
 /**
  * Searches for a course by tag.
@@ -24,7 +23,13 @@ export function tagSearch(
 
   courseArray.forEach((course) => {
     const { tags: courseTags } = course;
-    if (!isEqual(difference(tagArray, courseTags), tagArray)) {
+    const isTagArrContainCourseTags = isOneArrayContainAnother(
+      courseTags,
+      tagArray,
+      false,
+    );
+
+    if (isTagArrContainCourseTags) {
       searchResult.push(course);
     }
   });

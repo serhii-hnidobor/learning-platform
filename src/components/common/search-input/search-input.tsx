@@ -1,8 +1,9 @@
 import { IconName } from 'common/enum/icons/icons';
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import Button from '../button/button';
 import { concatClasses } from 'helpers/string/string';
-import { useKeyPress, useOutsideClick, useState } from 'hooks/hooks';
+import useKeyPress from 'hooks/use-key-press';
+import useOutsideClick from 'hooks/use-outside-click';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import { Icon } from 'components/common/icon/icon';
 

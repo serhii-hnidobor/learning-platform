@@ -1,7 +1,7 @@
 import { concatClasses } from 'helpers/string/string';
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
-import { useRef } from 'hooks/hooks';
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 interface DrawerProps {

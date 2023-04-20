@@ -4,7 +4,7 @@ import {
 } from 'components/common/tag-scroll/components/tag/cva-varints/cva-variants';
 import { Typography } from 'components/common/typography/typography';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
-import { useHoverScaleAnimation } from 'hooks/hooks';
+import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
 import { animated } from '@react-spring/web';

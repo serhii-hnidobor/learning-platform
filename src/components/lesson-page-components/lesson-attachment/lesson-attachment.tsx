@@ -1,7 +1,7 @@
 import { Typography } from 'components/common/typography/typography';
 import { LessonAttachmentItem } from 'components/lesson-page-components/lesson-attachment/components/lesson-attachment-item';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
-import { useUnderlineAnimation } from 'hooks/hooks';
+import useUnderlineAnimation from 'hooks/use-underline-animation';
 import { concatClasses } from 'helpers/string/string';
 import { typographyVariants } from 'components/common/typography/cva-variants/cva-variants';
 import { animated } from '@react-spring/web';

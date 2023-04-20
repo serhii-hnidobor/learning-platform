@@ -2,18 +2,20 @@ import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
 import { LoadingProps } from 'types/html-elemet-props';
 import { CourseSectionType, NextLessonType } from 'types/api/data';
-import { useRouter, useState } from 'hooks/hooks';
+import { useState } from 'react';
 import { getDurationString } from 'helpers/time/time';
 import { LessonPageDrawerHeader } from './components/lesson-page-drawer-header/lesson-page-drawer-header';
 import { LessonPageDrawerContent } from './components/lesson-page-drawer-conent/lesson-page-drawer-content';
 import { Section } from 'components/common/section/section';
-import dynamic from 'next/dynamic';
 import { Typography } from 'components/common/typography/typography';
 import Button from 'components/common/button/button';
 import { IconName } from 'common/enum/enum';
 import { Icon } from 'components/common/icon/icon';
 import { LessonDataArgType } from 'helpers/data/data';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 const Drawer = dynamic(import('components/common/drawer/drawer'));
 

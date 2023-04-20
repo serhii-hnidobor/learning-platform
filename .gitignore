@@ -37,3 +37,9 @@ dist-ssr
 
 # Husky
 .husky
+
+# Db cache
+/src/lib/cache/firebase-cache-data/
+
+# Service worker
+public/**/*.js

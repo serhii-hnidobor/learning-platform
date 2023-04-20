@@ -1,4 +1,6 @@
-interface TagDataType {
+import { CollectionName } from 'common/enum/api/api';
+
+interface TagDataType extends Record<string, unknown> {
   id: string;
   courseId: string[];
   name: string;
@@ -13,14 +15,14 @@ interface CourseSectionType extends TagDataType {
   index: number;
 }
 
-interface ReviewDataType {
+interface ReviewDataType extends Record<string, unknown> {
   id: string;
   reviewAuthorAvatarSrc: string;
   reviewText: string;
   reviewAuthorName: string;
 }
 
-interface CourseDataType {
+interface CourseDataType extends Record<string, unknown> {
   authorName: string;
   detailedDescription: string;
   description: string;
@@ -49,7 +51,7 @@ type FileAttachmentType = {
   fileSize: number;
 };
 
-interface LessonDataType {
+interface LessonDataType extends Record<string, unknown> {
   id: string;
   duration: number;
   description: string;
@@ -71,11 +73,33 @@ type DataType =
   | TopicDataType
   | TagDataType;
 
-interface UserDataType {
-  id: string;
-  name: string;
-  email: string;
-}
+type DataFieldType =
+  | keyof CourseDataType
+  | keyof CourseSectionType
+  | keyof LessonDataType
+  | keyof TagDataType
+  | keyof TopicDataType;
+
+type FirebaseComparatorType = '==';
+type WhereOptionsType = {
+  fieldName: DataFieldType;
+  comparator: FirebaseComparatorType;
+  value: unknown;
+};
+
+type DataObjectType<T> = T extends CollectionName.COURSES
+  ? CourseDataType
+  : T extends CollectionName.COURSE_SECTIONS
+  ? CourseSectionType
+  : T extends CollectionName.LESSONS
+  ? LessonDataType
+  : T extends CollectionName.TAGS
+  ? TagDataType
+  : T extends CollectionName.TOPICS
+  ? TopicDataType
+  : T extends CollectionName.REVIEWS
+  ? ReviewDataType
+  : never;
 
 export {
   type LessonDataType,
@@ -89,4 +113,8 @@ export {
   type NextLessonType,
   type CourseProgressData,
   type FileAttachmentType,
+  type FirebaseComparatorType,
+  type WhereOptionsType,
+  type DataObjectType,
+  type DataFieldType,
 };

@@ -4,7 +4,6 @@ export enum CollectionName {
   LESSONS = 'lessons',
   TAGS = 'tags',
   TOPICS = 'topics',
-  USERS = 'users',
   REVIEWS = 'reviews',
 }
 

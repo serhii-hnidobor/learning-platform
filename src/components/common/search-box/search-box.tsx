@@ -1,11 +1,12 @@
-import { FormEvent } from 'react';
-import { useKeyPress, useState } from 'hooks/hooks';
+import { FormEvent, useState } from 'react';
+import useKeyPress from 'hooks/use-key-press';
 import {
   SearchInput,
   type SearchInputProps as InputProps,
 } from '../search-input/search-input';
 import { AutoCompleteItem } from './components/autocomplete-item';
 import { ComponentBaseProps } from 'types/html-elemet-props';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 interface CourseSearchData {
   name: string;
@@ -33,8 +34,9 @@ const SearchBox = ({
   const [isNeedAutocomplete, setIsNeedAutocomplete] = useState(true);
   const [activeAutocompleteItemIndex, setActiveAutocompleteItemIndex] =
     useState<number>();
-
-  let autoCompleteResult: SearchResultType[] = [];
+  const [autoCompleteResult, setAutoCompleteResult] = useState<
+    SearchResultType[]
+  >([]);
 
   const handleAutocompleteArrowNavigation = (isUp = false) => {
     if (!autoCompleteResult.length) {
@@ -97,20 +99,36 @@ const SearchBox = ({
   const handleInputChange = (e: FormEvent<HTMLInputElement>) => {
     const searchValue = e.currentTarget.value;
     if (!searchValue.length) {
-      setSearchString(undefined);
+      setAutoCompleteResult([]);
+      setIsNeedAutocomplete(false);
       return;
     }
+
+    if (!isNeedAutocomplete) {
+      setIsNeedAutocomplete(true);
+    }
+
     setSearchString(searchValue);
   };
 
-  if (searchString) {
+  useDeepCompareEffect(() => {
+    if (!isNeedAutocomplete) {
+      return;
+    }
+
+    if (!searchString) {
+      setIsNeedAutocomplete(false);
+      setAutoCompleteResult([]);
+      return;
+    }
+
     import('fuse.js').then((module) => {
       const FuseLib = module.default;
 
       const fuse = new FuseLib(items, { keys: ['name'] });
-      autoCompleteResult = fuse.search(searchString);
+      setAutoCompleteResult([...fuse.search(searchString)]);
     });
-  }
+  }, [searchString, items]);
 
   return (
     <div className={'relative z-30 h-full w-full'}>

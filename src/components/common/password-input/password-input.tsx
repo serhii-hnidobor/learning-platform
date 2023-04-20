@@ -1,7 +1,8 @@
 import { FormControlErrors } from 'types/form/form-control-error';
 import { FormControl } from 'types/form/form-control';
 import { FormControlPath } from 'types/form/form-control-path';
-import { useFormControl, useId, useRef, useState } from 'hooks/hooks';
+import { useId, useRef, useState } from 'react';
+import useFormControl from 'hooks/use-form-control';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import { FieldValues } from 'react-hook-form';
 import {

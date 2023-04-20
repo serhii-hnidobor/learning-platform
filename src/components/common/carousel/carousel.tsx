@@ -1,5 +1,5 @@
 import { ComponentBaseProps } from 'types/html-elemet-props';
-import { useCallback, useEffect, useRef, useState } from 'hooks/hooks';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ControlButton } from 'components/common/control-button/control-button';
 import { Typography } from 'components/common/typography/typography';
 import { PaginationMarker } from './component/pagination-marker/pagination-marker';

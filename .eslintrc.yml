@@ -20,7 +20,6 @@ extends:
   - plugin:import/recommended
   - plugin:@typescript-eslint/recommended
   - plugin:import/typescript
-  - plugin:you-dont-need-lodash-underscore/compatible
   - plugin:@typescript-eslint/recommended
   - plugin:storybook/recommended
   - plugin:tailwindcss/recommended

@@ -1,11 +1,13 @@
 import { ReactNode } from 'react';
-import { useUnderlineAnimation } from 'hooks/use-underline-animation/use-underline-animation';
+import useUnderlineAnimation from 'hooks/use-underline-animation';
 import { Typography } from 'components/common/typography/typography';
-import { ThreeDots } from 'react-loader-spinner';
 import { animated } from '@react-spring/web';
 import { TypographyVariantsType } from 'components/common/typography/cva-variants/cva-variants';
 import { ComponentBaseProps } from 'types/html-elemet-props';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
+import dynamic from 'next/dynamic';
+
+const PulseLoader = dynamic(import('react-spinners/PulseLoader'));
 
 interface TextButtonProps extends ComponentBaseProps<'button'> {
   children: ReactNode;
@@ -40,23 +42,31 @@ const TextButton = ({
         styleName={typographyStyleName}
         as="span"
         textTransform={'capitalize'}
+        style={{
+          opacity: isLoading ? '0' : '100',
+        }}
       >
         {children}
       </Typography>
       {isLoading && (
-        <div className={'absolute right-0 top-0 z-10 h-[70%] w-[70%]'}>
-          <ThreeDots
-            height="15"
-            width="15"
-            radius="9"
-            color="#158FFF"
-            ariaLabel="three-dots-loading"
-            wrapperClass={'h-full w-full flex justify-center items-center'}
-            visible={true}
-          />
+        <div className={'absolute right-0 top-0 z-10 h-full w-full'}>
+          <div className={'flex h-full w-full items-center justify-center'}>
+            <PulseLoader
+              color={'#158FFF'}
+              cssOverride={{
+                height: '100%',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              aria-label="pulse-loader"
+            />
+          </div>
         </div>
       )}
-      <animated.span className={'block h-[2px]'} style={style} />
+      {!isLoading && (
+        <animated.span className={'block h-[2px]'} style={style} />
+      )}
     </button>
   );
 };

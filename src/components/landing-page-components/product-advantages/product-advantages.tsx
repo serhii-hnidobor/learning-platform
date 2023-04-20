@@ -110,4 +110,4 @@ const ProductAdvantages = () => {
   );
 };
 
-export { ProductAdvantages };
+export { ProductAdvantages as default };

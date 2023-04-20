@@ -1,7 +1,6 @@
 import React from 'react';
 import Drawer, { DrawerProps } from './drawer';
 import { Meta, StoryFn } from '@storybook/react';
-import { useState } from 'hooks/hooks';
 import Button from '../button/button';
 
 export default {
@@ -10,7 +9,7 @@ export default {
 } satisfies Meta<typeof Drawer>;
 
 const Template: StoryFn<DrawerProps> = (args) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => setIsOpen(!isOpen);
   return (
     <div>

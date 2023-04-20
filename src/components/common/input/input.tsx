@@ -1,8 +1,8 @@
 import { FormControlErrors } from 'types/form/form-control-error';
 import { FormControl } from 'types/form/form-control';
 import { FormControlPath } from 'types/form/form-control-path';
-import { useFormControl, useId } from 'hooks/hooks';
-import { ReactElement } from 'react';
+import { useId, ReactElement } from 'react';
+import useFormControl from 'hooks/use-form-control';
 import { FieldValues } from 'react-hook-form';
 import { Typography, TypographyProps } from '../typography/typography';
 import { inputVariants, InputVariantsType } from './cva-variants/cva-variants';

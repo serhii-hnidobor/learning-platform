@@ -39,8 +39,30 @@ const CourseAccordionItemWrapper = ({
   let content: JSX.Element[] | JSX.Element;
 
   if (lessonData && lessonData.length) {
-    content = lessonData.map((lesson) => {
+    content = lessonData.map((lesson, index) => {
       const { index: lessonIndex, id } = lesson;
+
+      if (!index) {
+        return (
+          <div key={`short-lesson-info-${id}`}>
+            <hr
+              className={
+                'bg-grey/10 relative top-[-24px] h-[2px] w-full border-0'
+              }
+            />
+            <AccordionLessonItem
+              {...lesson}
+              onClick={() => {
+                if (handleLessonClick) {
+                  handleLessonClick(id);
+                }
+              }}
+              number={lessonIndex}
+              loading={false}
+            />
+          </div>
+        );
+      }
 
       return (
         <AccordionLessonItem

@@ -5,8 +5,7 @@ import {
 } from 'components/common/typography/cva-variants/cva-variants';
 import { MouseEvent, ReactNode } from 'react';
 import { concatClasses } from 'helpers/string/string';
-import { ThreeDots } from 'react-loader-spinner';
-import { useButtonAnimation } from 'hooks/use-button-animation/use-button-animation';
+import useButtonAnimation from 'hooks/use-button-animation';
 import { animated } from '@react-spring/web';
 import { TextButton } from 'components/common/button/components/text-button';
 import { getButtonTypographyVariant } from './helper/get-button-typography-variant';
@@ -16,6 +15,9 @@ import {
   ButtonSizeType,
   ButtonStateType,
 } from 'components/common/button/type/button';
+import dynamic from 'next/dynamic';
+
+const PulseLoader = dynamic(import('react-spinners/PulseLoader'));
 
 interface ButtonProps extends ButtonHTMLProps {
   size?: ButtonSizeType;
@@ -144,15 +146,18 @@ const Button = ({
       </span>
       {isLoading && (
         <div className={'absolute right-0 top-0 z-10 h-full w-full'}>
-          <ThreeDots
-            height="70%"
-            width="70%"
-            radius="9"
-            color="#158FFF"
-            ariaLabel="three-dots-loading"
-            wrapperClass={'h-full w-full flex justify-center items-center'}
-            visible={true}
-          />
+          <div className={'flex h-full w-full items-center justify-center'}>
+            <PulseLoader
+              color={'#158FFF'}
+              cssOverride={{
+                height: '70%',
+                width: '70%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              aria-label="pulse-loader"
+            />
+          </div>
         </div>
       )}
     </animated.button>

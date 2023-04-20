@@ -56,4 +56,4 @@ const ProductCategoriesDescription = () => {
   );
 };
 
-export { ProductCategoriesDescription };
+export { ProductCategoriesDescription as default };

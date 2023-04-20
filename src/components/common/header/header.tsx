@@ -1,20 +1,19 @@
-import { useWindowDimensions } from 'hooks/use-window-dimensions/use-window-dimensions';
+import useWindowDimensions from 'hooks/use-window-dimensions';
 import { concatClasses } from 'helpers/string/string';
-import { useContext, useRouter, useState } from 'hooks/hooks';
-import { createContext, useEffect } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import { MobileDrawerContent } from './components/mobile-header';
 import { AppRoutes } from 'common/enum/app/app';
 import { HeaderLink } from './components/header-link/header-link';
 import { MobileHeaderDrawerHeader } from 'components/common/header/components/mobile-header';
 import { HeaderMenu } from './components/header-menu/header-menu';
-import { AppContext } from 'pages/_app';
-import { auth } from 'api/auth';
 import { Burger } from '../burger/burger';
 import Logo from '../logo/logo';
 import Button from '../button/button';
 import dynamic from 'next/dynamic';
 import { Icon } from '../icon/icon';
 import { IconName } from 'common/enum/enum';
+import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react';
 import Skeleton from 'react-loading-skeleton';
 
 const Drawer = dynamic(import('../drawer/drawer'));
@@ -27,6 +26,7 @@ interface HeaderContextInterface {
 const HeaderContext = createContext<HeaderContextInterface | null>(null);
 
 const Header = () => {
+  const { status, data: session } = useSession();
   const Router = useRouter();
 
   const { route: curRoute } = Router;
@@ -36,26 +36,6 @@ const Header = () => {
   const { screen } = useWindowDimensions();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const appContext = useContext(AppContext);
-
-  const isSignIn = Boolean(appContext?.user);
-
-  if (!appContext) {
-    throw new Error('try to use header without app context');
-  }
-
-  const { isLoading } = appContext;
-
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-    } catch (e: unknown) {
-      console.error(e);
-    } finally {
-      appContext.setUser(undefined);
-    }
-  };
 
   const isCompanyNameNeed = !(
     screen === 'lg' ||
@@ -77,12 +57,6 @@ const Header = () => {
     }
   };
 
-  const handleRedirectSignUp = () => {
-    if (Router.isReady) {
-      Router.push(`${AppRoutes.SIGN_UP}?from=${from}`);
-    }
-  };
-
   useEffect(() => {
     if (!isMobileMenuNeed) {
       setIsDrawerOpen(false);
@@ -90,6 +64,9 @@ const Header = () => {
   }, [isMobileMenuNeed]);
 
   let ControlButtons: JSX.Element;
+
+  const isLoading = status === 'loading';
+  const isAuthenticated = Boolean(session) && status === 'authenticated';
 
   if (isLoading) {
     ControlButtons = (
@@ -104,7 +81,7 @@ const Header = () => {
         ])}
       />
     );
-  } else if (isSignIn) {
+  } else if (!isAuthenticated) {
     ControlButtons = (
       <>
         <Button
@@ -118,14 +95,14 @@ const Header = () => {
           ariaLabel={'sign up button'}
           size={'small'}
           intent={'secondary'}
-          onClick={handleRedirectSignUp}
+          onClick={handleRedirectSignIn}
         >
           Get started
         </Button>
       </>
     );
   } else {
-    ControlButtons = <HeaderMenu handleSignOut={handleSignOut} />;
+    ControlButtons = <HeaderMenu handleSignOut={signOut} />;
   }
 
   return (
@@ -172,10 +149,10 @@ const Header = () => {
             setIsOpen={setIsDrawerOpen}
             children={
               <MobileDrawerContent
-                handleSignOut={handleSignOut}
+                handleSignOut={signOut}
                 curRoute={curRoute}
                 isLoading={isLoading}
-                isSignIn={isSignIn}
+                isSignIn={isAuthenticated}
                 handleRedirect={(route) => {
                   if (Router.isReady) {
                     Router.push(route);

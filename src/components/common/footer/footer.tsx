@@ -128,4 +128,4 @@ const Footer = ({ className, ...restFooterProps }: FooterProps) => {
   );
 };
 
-export { type FooterProps, Footer };
+export { type FooterProps, Footer as default };

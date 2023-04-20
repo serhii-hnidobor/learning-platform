@@ -4,7 +4,7 @@ import {
   LeftArrowButton,
   RightArrowButton,
 } from 'components/common/tag-scroll/components/arrow-button/arrow-button';
-import { useState } from 'hooks/hooks';
+import { useState } from 'react';
 import { concatClasses } from 'helpers/string/string';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
 

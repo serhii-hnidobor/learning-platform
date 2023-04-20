@@ -1,20 +1,13 @@
 import { AppRoutes } from 'common/enum/enum';
-import { createContext, Dispatch, SetStateAction } from 'react';
-import { useEffect, useRouter, useState } from 'hooks/hooks';
 import { concatClasses } from 'helpers/string/string';
 import { ToastContainer } from 'react-toastify';
 import { AppProps } from 'next/app';
 import { SkeletonWrapper } from 'components/common/skeleton-wrapper/skeleton-wrapper';
-import { Footer } from 'components/common/footer/footer';
 import dynamic from 'next/dynamic';
-
-const Header = dynamic(import('components/common/header/header'));
 
 import { Lato } from 'next/font/google';
 
 import SimpleBar from 'simplebar-react';
-
-import { auth } from 'api/auth';
 
 import Head from 'next/head';
 import useDeepCompareEffect from 'use-deep-compare-effect';
@@ -24,6 +17,11 @@ import 'simplebar-react/dist/simplebar.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../global-style.css';
 import 'nprogress/nprogress.css';
+import { useRouter } from 'next/router';
+import { SessionProvider } from 'next-auth/react';
+
+const Header = dynamic(import('components/common/header/header'));
+const Footer = dynamic(import('components/common/footer/footer'));
 
 Nprogress.configure({ easing: 'ease', speed: 500, showSpinner: false });
 
@@ -33,21 +31,7 @@ const lato = Lato({
   variable: '--font-lato',
 });
 
-interface AppUserInterface {
-  id: string;
-  email: string;
-}
-
-interface AppContextType {
-  user: AppUserInterface | undefined;
-  setUser: Dispatch<SetStateAction<AppUserInterface | undefined>>;
-  isLoading: boolean;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-}
-
-export const AppContext = createContext<AppContextType | null>(null);
-
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const Router = useRouter();
 
   const { route: pathname } = Router;
@@ -65,28 +49,14 @@ function App({ Component, pageProps }: AppProps) {
   const isAuthRoute =
     pathname === AppRoutes.SIGN_UP || pathname === AppRoutes.SIGN_IN;
 
-  const [user, setUser] = useState<AppUserInterface>();
-
-  const [isLoading, setIsLoading] = useState(true);
+  const is404Route = pageProps.statusCode === 404;
 
   const fontClassName = `${lato.variable} font-serif`;
 
-  useEffect(() => {
-    auth.onAuthStateChanged(async (authenticate) => {
-      if (authenticate && authenticate.emailVerified) {
-        const { email, uid: id } = authenticate;
-        if (email) {
-          setUser({ email, id });
-        }
-      }
-      setIsLoading(false);
-    });
-  }, []);
-
   return (
-    <div className={fontClassName}>
-      <SkeletonWrapper>
-        <AppContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
+    <SessionProvider session={session}>
+      <div className={fontClassName}>
+        <SkeletonWrapper>
           <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -169,7 +139,7 @@ function App({ Component, pageProps }: AppProps) {
             <meta name="twitter:card" content="summary" />
             <meta
               name="twitter:url"
-              content="https://learning-platform-x.netlify.app/"
+              content="https://learning-platform-pied.vercel.app/"
             />
             <meta name="twitter:title" content="Learning platform" />
             <meta
@@ -178,7 +148,7 @@ function App({ Component, pageProps }: AppProps) {
             />
             <meta
               name="twitter:image"
-              content="https://learning-platform-x.netlify.app/logo-192x192.png"
+              content="https://learning-platform-pied.vercel.app/logo-192x192.png"
             />
             <meta property="og:type" content="website" />
             <meta property="og:title" content="Learning platform" />
@@ -189,14 +159,14 @@ function App({ Component, pageProps }: AppProps) {
             <meta property="og:site_name" content="Learning platform" />
             <meta
               property="og:url"
-              content="https://learning-platform-x.netlify.app/"
+              content="https://learning-platform-pied.vercel.app/"
             />
             <meta
               property="og:image"
-              content="https://learning-platform-x.netlify.app/apple-touch-icon.png"
+              content="https://learning-platform-pied.vercel.app/apple-touch-icon.png"
             />
           </Head>
-          {isAuthRoute && (
+          {(isAuthRoute || is404Route) && (
             <div
               className={concatClasses([
                 'min-h-[100vh]',
@@ -231,10 +201,10 @@ function App({ Component, pageProps }: AppProps) {
               </SimpleBar>
             </>
           )}
-        </AppContext.Provider>
-      </SkeletonWrapper>
-    </div>
+        </SkeletonWrapper>
+      </div>
+    </SessionProvider>
   );
 }
 
-export { App as default, type AppContextType };
+export default App;

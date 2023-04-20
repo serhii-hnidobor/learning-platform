@@ -14,6 +14,10 @@ async function courseNameSearch({
     return null;
   }
 
+  if (!searchString) {
+    return convertCourseDataToCourseProps(courseData);
+  }
+
   const { default: Fuse } = await import('fuse.js');
 
   const fuse = new Fuse(courseData, { keys: ['name'] });

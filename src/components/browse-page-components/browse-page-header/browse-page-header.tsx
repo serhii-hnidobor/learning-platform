@@ -1,11 +1,12 @@
 import { Typography } from 'components/common/typography/typography';
 import { concatClasses } from 'helpers/string/string';
-import { useContext, useRouter } from 'hooks/hooks';
+import { useContext } from 'react';
 import { DataStatus, IconName } from 'common/enum/enum';
 import { BrowsePageContext } from 'pages/browse/index';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
 import { TagDataType } from 'types/api/data';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
 const SearchBox = dynamic(import('components/common/search-box/search-box'));

@@ -1,108 +1,99 @@
 import { AuthContainer } from 'components/auth/components/auth-container/auth-container';
 import { SignInFormValues } from 'types/user/user-sign-in-form-values';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from 'api/auth';
 import { createToastNotification } from 'components/common/toast-notification/index';
-import { AppRoutes, AuthErrorMessages } from 'common/enum/app/app';
-import { FireBaseErrorCode } from 'common/enum/api/api';
-import { useContext, useRouter } from 'hooks/hooks';
-import { AppContext } from 'pages/_app';
-import { appContextProvideCheck } from 'helpers/context/context';
+import { AuthErrorMessages, AuthMessage } from 'common/enum/app/app';
 
 import dynamic from 'next/dynamic';
+import { getServerSession } from 'next-auth';
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { authOptions } from '../api/auth/[...nextauth]';
+import { getCsrfToken, getProviders } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
+
+import fetch from 'helpers/api/fetch';
 
 const SignInForm = dynamic(
   import('components/auth/components/sign-in-form/sign-in-form'),
 );
 
-const SignInPage = () => {
-  const appContext = useContext(AppContext);
-
+const SignInPage = ({
+  providers,
+  csrfToken,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const Router = useRouter();
 
-  const redirectRoute =
-    typeof location === 'undefined'
-      ? ''
-      : new URLSearchParams(location.search).get('from') || AppRoutes.ROOT;
+  const [error, setError] = useState<string | string[]>();
 
-  const redirectPrev = () => {
-    if (redirectRoute.length && Router.isReady) {
-      Router.replace(redirectRoute);
+  useDeepCompareEffect(() => {
+    setError(Router.query.error);
+    if (Router.query) {
+      Router.replace('/sign-in', undefined, { shallow: true });
     }
+  }, [Router.query]);
+
+  const handleError = () => {
+    createToastNotification({
+      type: 'error',
+      title: 'sign up error',
+      message: AuthErrorMessages.UNKNOWN_ERROR,
+    });
   };
+
+  useEffect(() => {
+    if (error && typeof error === 'string') {
+      handleError();
+    }
+  }, [error]);
 
   const onSubmit = async (data: SignInFormValues) => {
     try {
-      const checkedAppContext = appContextProvideCheck(appContext);
-      const { email, password } = data;
-      const res = await signInWithEmailAndPassword(auth, email, password);
-
-      const { currentUser } = auth;
-
-      if (!currentUser?.emailVerified) {
-        createToastNotification({
-          type: 'error',
-          title: 'sign in error',
-          message: AuthErrorMessages.EMAIL_NOT_VERIFIED,
-        });
-
-        return;
-      }
-
-      const { uid } = res.user;
-
-      checkedAppContext.setUser({ id: uid, email });
-
-      redirectPrev();
-    } catch (e: unknown) {
-      const isKnownError = typeof e === 'object' && e !== null && 'code' in e;
-
-      if (
-        isKnownError &&
-        (e?.code === FireBaseErrorCode.USER_NOT_FOUND ||
-          e?.code === FireBaseErrorCode.WRONG_PASSWORD)
-      ) {
-        createToastNotification({
-          type: 'error',
-          title: 'sign in error',
-          message: AuthErrorMessages.INVALID_CREDENTIAL,
-        });
-        return;
-      }
-
-      console.error(e);
-      createToastNotification({
-        type: 'error',
-        title: 'sign up error',
-        message: AuthErrorMessages.UNKNOWN_ERROR,
+      await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/signin/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          csrfToken,
+          callbackUrl: `${window.location.origin}/browse`,
+        }),
       });
+
+      createToastNotification({
+        type: 'success',
+        title: 'Sign In',
+        message: AuthMessage.VERIFICATION_EMAIL_SEND,
+      });
+    } catch {
+      handleError();
       return;
     }
-  };
-
-  const handleGoogleSuccess = () => {
-    redirectPrev();
-  };
-
-  const handleGoogleFail = () => {
-    createToastNotification({
-      title: 'google auth',
-      type: 'error',
-      message: AuthErrorMessages.GOOGLE_ERROR,
-    });
   };
 
   return (
     <div className={'flex h-[100vh] items-center justify-center'}>
       <AuthContainer title={'sign in'}>
-        <SignInForm
-          handleSubmitEvent={onSubmit}
-          handleGoogleFail={handleGoogleFail}
-          handleGoogleSuccess={handleGoogleSuccess}
-        />
+        <SignInForm handleSubmitEvent={onSubmit} providers={providers} />
       </AuthContainer>
     </div>
   );
 };
 
 export default SignInPage;
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const csrfToken = await getCsrfToken(context);
+
+  if (session) {
+    return { redirect: { destination: '/' } };
+  }
+
+  const providers = await getProviders();
+
+  return {
+    props: { providers: providers ?? [], csrfToken, session },
+  };
+}

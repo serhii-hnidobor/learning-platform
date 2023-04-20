@@ -24,7 +24,7 @@ const CourseAccordionHeaderContent = ({
   loading,
 }: PropsType) => {
   return (
-    <div className={'min-w-[250px] pr-8'}>
+    <div className={'group w-full min-w-[250px] pr-8'}>
       {loading ? (
         <Skeleton />
       ) : (
@@ -32,7 +32,9 @@ const CourseAccordionHeaderContent = ({
           as="h2"
           styleName={'h5'}
           color={'black'}
-          className={'mb-3 line-clamp-1 inline-block'}
+          className={
+            'group-hover:text-blue mb-3 line-clamp-1 inline-block transition-colors'
+          }
           title={name}
         >
           {name}

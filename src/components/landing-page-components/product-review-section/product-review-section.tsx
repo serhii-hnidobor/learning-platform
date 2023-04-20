@@ -61,6 +61,8 @@ const ProductReviewSection = ({
   } else {
     content = (
       <Carousel
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         child={reviewsData as ProductReviewPropsType[]}
         title={'People say about learning'}
         description={
@@ -72,4 +74,4 @@ const ProductReviewSection = ({
   return <Section sectionClassName={'bg-white !pb-0'}>{content}</Section>;
 };
 
-export { ProductReviewSection };
+export { ProductReviewSection as default };

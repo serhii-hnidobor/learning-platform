@@ -5,7 +5,7 @@ import {
 } from 'types/html-elemet-props';
 import { Typography, TypographyProps } from '../typography/typography';
 import { concatClasses } from 'helpers/string/string';
-import { useHoverScaleAnimation } from 'hooks/hooks';
+import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import { animated } from '@react-spring/web';
 import { TopicDataType } from 'types/api/data';
 import Skeleton from 'react-loading-skeleton';

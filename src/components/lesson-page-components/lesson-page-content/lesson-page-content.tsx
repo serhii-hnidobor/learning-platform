@@ -74,4 +74,4 @@ const LessonPageContent = ({
   );
 };
 
-export { LessonPageContent, type LessonPagePropsType };
+export { LessonPageContent as default, type LessonPagePropsType };

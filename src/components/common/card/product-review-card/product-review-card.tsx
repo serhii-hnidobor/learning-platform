@@ -3,7 +3,7 @@ import {
   type ProductReviewCardVariantsType,
 } from 'components/common/card/product-review-card/cva-variants/cva-variants';
 import { ComponentBaseProps, LoadingProps } from 'types/html-elemet-props';
-import { useHoverScaleAnimation } from 'hooks/hooks';
+import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import { concatClasses } from 'helpers/string/string';
 import { Icon } from 'components/common/icon/icon';
 import { IconName } from 'common/enum/icons/icons';

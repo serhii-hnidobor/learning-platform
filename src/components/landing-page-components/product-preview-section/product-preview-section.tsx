@@ -2,7 +2,7 @@ import { Typography } from 'components/common/typography/typography';
 import { tagSearch } from 'helpers/search/search';
 import { concatClasses } from 'helpers/string/string';
 import { CoursesList } from 'components/common/courses-list/courses-list';
-import { useState } from 'hooks/hooks';
+import { useState } from 'react';
 import { DataStatus } from 'common/enum/enum';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
 import { CourseCardProps } from 'components/common/course-card/course-card';
@@ -101,4 +101,4 @@ const ProductPreviewSection = ({
   );
 };
 
-export { ProductPreviewSection };
+export { ProductPreviewSection as default };

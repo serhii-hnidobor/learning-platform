@@ -3,7 +3,7 @@ import { Section } from 'components/common/section/section';
 import { ProductInfoCard } from './components/product-info-card/product-info-card';
 import { IconName } from 'common/enum/enum';
 import { concatClasses } from 'helpers/string/string';
-import { useWindowDimensions } from 'hooks/hooks';
+import useWindowDimensions from 'hooks/use-window-dimensions';
 
 const ProductDescriptionSection = () => {
   const { screen } = useWindowDimensions();

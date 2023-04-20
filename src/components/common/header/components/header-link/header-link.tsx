@@ -1,5 +1,5 @@
 import { AppRouteType } from 'common/enum/app/app';
-import { useUnderlineAnimation } from 'hooks/use-underline-animation/use-underline-animation';
+import useUnderlineAnimation from 'hooks/use-underline-animation';
 import { concatClasses } from 'helpers/string/string';
 import { Typography } from 'components/common/typography/typography';
 import { animated } from '@react-spring/web';
