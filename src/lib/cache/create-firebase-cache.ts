@@ -1,12 +1,8 @@
 import { CollectionName } from 'common/enum/api/api';
 import { getData } from 'lib/getData';
 import * as fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
-const rootPath = dirname(fileURLToPath(import.meta.url));
-
-export const CACHE_DIR_PATH = `${rootPath}/firebase-cache-data`;
+export const CACHE_DIR_PATH = '/tmp';
 
 /**
  * Creates cache files for Firebase collections.
