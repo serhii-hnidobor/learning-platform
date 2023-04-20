@@ -60,6 +60,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     await getData<CollectionName.COURSES>({
       name: CollectionName.COURSES,
     });
+  
+  console.info(`is use cache ${isCoursesFromCache}`);
+
   const { data: tagData, isFromCache: isTagsFromCache } =
     await getData<CollectionName.TAGS>({
       name: CollectionName.TAGS,
