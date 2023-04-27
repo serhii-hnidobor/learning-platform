@@ -1,5 +1,5 @@
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
-import { Tag } from 'components/common/tag-scroll/components/tag/tag';
+import Tag from '../tag';
 import {
   LeftArrowButton,
   RightArrowButton,
@@ -7,14 +7,10 @@ import {
 import { useState } from 'react';
 import { concatClasses } from 'helpers/string/string';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
-
-interface Tag {
-  name: string;
-  id: string;
-}
+import { TagsI } from 'types/pages/landing-page';
 
 interface TagScrollProps {
-  tagsArray: Tag[];
+  tagsArray: TagsI[];
   loading?: false;
   isProductPreviewSection?: boolean;
   error?: false;
@@ -102,4 +98,4 @@ const TagScroll = ({
   );
 };
 
-export { TagScroll, type TagScrollPropsType, type Tag };
+export { TagScroll, type TagScrollPropsType };

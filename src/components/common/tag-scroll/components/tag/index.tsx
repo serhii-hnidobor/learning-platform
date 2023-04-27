@@ -22,7 +22,7 @@ interface TagLoadingProps extends LoadingProps<TagProps> {
 
 type TagPropsType = TagProps | TagLoadingProps;
 
-const Tag = ({
+const Index = ({
   title,
   state,
   className,
@@ -61,4 +61,4 @@ const Tag = ({
   );
 };
 
-export { Tag, type TagPropsType };
+export { Index as default, type TagPropsType };

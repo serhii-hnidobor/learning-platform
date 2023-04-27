@@ -1,5 +1,5 @@
 import { DataStatus } from 'common/enum/api/api';
-import { Tag, TagScroll } from './components/tag-scroll/tag-scroll';
+import { TagScroll } from './components/tag-scroll/tag-scroll';
 import { TagsI } from 'types/pages/landing-page';
 
 interface TagScrollComponentWrapperProps {
@@ -38,7 +38,7 @@ const TagScrollComponentWrapper = ({
     }
 
     case DataStatus.SUCCESS: {
-      let tagArray: Tag[] = [];
+      let tagArray: TagsI[] = [];
 
       if (data) {
         tagArray = data.map((el) => {

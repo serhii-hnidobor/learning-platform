@@ -26,7 +26,7 @@ async function getCourses(supabaseAccessToken: string) {
 async function getTags(supabaseAccessToken: string) {
   const supabase = getSupabaseClient(supabaseAccessToken);
 
-  const { data } = await supabase.from('Tag').select();
+  const { data } = await supabase.from('Tag').select('id, name');
 
   return data;
 }
