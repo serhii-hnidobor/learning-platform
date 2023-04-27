@@ -4,17 +4,17 @@ import { Typography } from 'components/common/typography/typography';
 import { DataStatus } from 'common/enum/api/api';
 import Button from 'components/common/button/button';
 import { Section } from 'components/common/section/section';
-import { TopicDataType } from 'types/api/data';
 import { TopicSection } from 'components/browse-page-components/browse-page-section/components/topic-section/topic-section';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
+import { TopicI } from 'types/pages/browse-page';
 
 interface BrowseTopicsSectionProps {
   name: string;
   isTopicsSection: true;
-  selectedTopic: TopicDataType | null;
+  selectedTopic: TopicI | null;
   isCourseSection?: false;
-  content: TopicDataType[] | null;
-  onTopicSelect?: (selectedTopic: TopicDataType | null) => void;
+  content: TopicI[] | null;
+  onTopicSelect?: (selectedTopic: TopicI | null) => void;
   dataStatus: DataStatus;
   headerButtonText?: undefined;
   onHeaderButtonClick?: undefined;

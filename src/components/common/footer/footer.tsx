@@ -1,3 +1,5 @@
+'use client';
+
 import { Section } from 'components/common/section/section';
 import { concatClasses } from 'helpers/string/string';
 import Logo from 'components/common/logo/logo';

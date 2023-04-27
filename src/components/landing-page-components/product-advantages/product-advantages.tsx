@@ -1,3 +1,5 @@
+'use client';
+
 import { Typography } from 'components/common/typography/typography';
 import { ProductStatisticElement } from './components/product-statistic-element/product-statistic-element';
 import { ProductStatisticCard } from 'components/common/card/product-statistic-card/product-statistic-card';

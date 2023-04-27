@@ -31,7 +31,7 @@ const LoadingState: Story = {
 
 const DefaultState: Story = {
   args: {
-    lessonNum: 30,
+    lesson_num: 30,
     name: 'make course section great again',
     duration: 80,
   },

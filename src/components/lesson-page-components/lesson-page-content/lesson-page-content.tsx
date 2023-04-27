@@ -5,13 +5,13 @@ import {
 } from 'types/html-elemet-props';
 import { concatClasses } from 'helpers/string/string';
 import { LessonAttachment } from 'components/lesson-page-components/lesson-attachment/lesson-attachment';
-import { FileAttachmentType } from 'types/api/data';
 import { Section } from 'components/common/section/section';
+import { LessonOfLessonPageI } from 'types/pages/lesson-page';
 
 interface LessonPageContentProps extends ComponentBaseProps<'div'> {
   loading?: false;
   error?: false;
-  fileAttachment: FileAttachmentType | null;
+  fileAttachment: LessonOfLessonPageI['FileAttachment'];
   markdownJsx: JSX.Element;
 }
 
@@ -46,13 +46,22 @@ const LessonPageContent = ({
     );
   } else if (error) {
     lessonAttachmentSection = null;
+  } else if (Array.isArray(fileAttachment)) {
+    lessonAttachmentSection = (
+      <LessonAttachment
+        fileUrl={fileAttachment[0].file_url}
+        fileName={fileAttachment[0].file_name}
+        className={'justify-self-center xl:justify-self-end'}
+        fileSize={fileAttachment[0].file_size}
+      />
+    );
   } else {
     lessonAttachmentSection = fileAttachment ? (
       <LessonAttachment
-        fileUrl={fileAttachment.fileUrl}
-        fileName={fileAttachment.fileName}
+        fileUrl={fileAttachment.file_url}
+        fileName={fileAttachment.file_name}
         className={'justify-self-center xl:justify-self-end'}
-        fileSize={fileAttachment.fileSize}
+        fileSize={fileAttachment.file_size}
       />
     ) : null;
   }

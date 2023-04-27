@@ -10,7 +10,7 @@ type AllCardPropsTypes =
 const isProductReviewCardProps = (
   props: AllCardPropsTypes,
 ): props is ProductReviewPropsType => {
-  return (<ProductReviewPropsType>props).reviewText !== undefined;
+  return (<ProductReviewPropsType>props).review_text !== undefined;
 };
 
 const isProductStatisticCardProps = (

@@ -1,14 +1,11 @@
 import { ProductDescriptionSection } from 'components/landing-page-components/product-description-section/product-description-section';
 import { SectionHero } from 'components/landing-page-components/hero-section/section-hero';
-import { getData } from 'lib/getData';
-import { CollectionName } from 'common/enum/api/api';
-import { ReviewDataType, TagDataType } from 'types/api/data';
-import { convertCourseDataToCourseProps } from 'helpers/data/data';
-import { CoursePropsDataType } from 'types/props/landing-page';
 import dynamic from 'next/dynamic';
 import { GetServerSidePropsContext } from 'next';
-import { getSession } from 'next-auth/react';
-import createFirebaseCache from '../lib/cache/create-firebase-cache';
+import { LandingPageCourses, ReviewI, TagsI } from 'types/pages/landing-page';
+import { getReviews, getCourses, getTags } from 'lib/landing';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 const ProductCategoriesDescription = dynamic(
   import(
@@ -32,9 +29,9 @@ const ProductAdvantages = dynamic(
 );
 
 interface LandingPageProps {
-  courseData: CoursePropsDataType[];
-  tagData: TagDataType[];
-  reviewData: ReviewDataType[];
+  courseData: LandingPageCourses;
+  tagData: TagsI[];
+  reviewData: ReviewI[];
 }
 
 const LandingPage = ({ courseData, tagData, reviewData }: LandingPageProps) => {
@@ -56,52 +53,24 @@ const LandingPage = ({ courseData, tagData, reviewData }: LandingPageProps) => {
 export default LandingPage;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { data: courseData, isFromCache: isCoursesFromCache } =
-    await getData<CollectionName.COURSES>({
-      name: CollectionName.COURSES,
-    });
-  
-  console.info(`is use cache ${isCoursesFromCache}`);
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const supabaseAccessToken = session?.supabaseAccessToken || '';
 
-  const { data: tagData, isFromCache: isTagsFromCache } =
-    await getData<CollectionName.TAGS>({
-      name: CollectionName.TAGS,
-    });
-  const { data: reviewData, isFromCache: isReviewsFromCache } =
-    await getData<CollectionName.REVIEWS>({
-      name: CollectionName.REVIEWS,
-    });
+  const reviewsData = getReviews(supabaseAccessToken);
+  const coursesData = getCourses(supabaseAccessToken);
+  const tagsData = getTags(supabaseAccessToken);
 
-  const session = await getSession(context);
-
-  const popularCourses = courseData.slice(0, 5);
-
-  const trimmedCourseData = convertCourseDataToCourseProps(popularCourses).map(
-    (course, index) => {
-      return {
-        ...course,
-        tags: courseData[index].tags,
-      };
-    },
-  );
-
-  context.res.on('finish', () => {
-    if (!isCoursesFromCache) {
-      createFirebaseCache(CollectionName.COURSES);
-    }
-    if (!isTagsFromCache) {
-      createFirebaseCache(CollectionName.TAGS);
-    }
-    if (!isReviewsFromCache) {
-      createFirebaseCache(CollectionName.REVIEWS);
-    }
-  });
+  const [reviews, courses, tags] = await Promise.all([
+    reviewsData,
+    coursesData,
+    tagsData,
+  ]);
 
   return {
     props: {
-      courseData: trimmedCourseData,
-      tagData,
-      reviewData,
+      courseData: courses,
+      tagData: tags,
+      reviewData: reviews,
       session,
     },
   };

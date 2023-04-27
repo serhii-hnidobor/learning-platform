@@ -1,9 +1,8 @@
-import { CourseDataType } from 'types/api/data';
-import { convertCourseDataToCourseProps } from '../../data/data';
+import { BrowsePageCourses } from 'types/pages/browse-page';
 
 interface CourseNameSearchArgType {
   searchString: string;
-  courseData: CourseDataType[] | null;
+  courseData: BrowsePageCourses;
 }
 
 async function courseNameSearch({
@@ -15,17 +14,15 @@ async function courseNameSearch({
   }
 
   if (!searchString) {
-    return convertCourseDataToCourseProps(courseData);
+    return courseData;
   }
 
   const { default: Fuse } = await import('fuse.js');
 
   const fuse = new Fuse(courseData, { keys: ['name'] });
-  const searchResult: CourseDataType[] = fuse
-    .search(searchString)
-    .map((result) => result.item);
+  const searchResult = fuse.search(searchString).map((result) => result.item);
 
-  return convertCourseDataToCourseProps(searchResult);
+  return searchResult;
 }
 
 export { courseNameSearch as default, type CourseNameSearchArgType };

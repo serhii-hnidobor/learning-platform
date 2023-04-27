@@ -34,7 +34,7 @@ export const AccordionLoading: Story = {
         loading={true}
         duration={100}
         name={'test'}
-        lessonNum={200}
+        lesson_num={200}
       />
     ),
   },
@@ -46,7 +46,7 @@ export const AccordionCoursePage: Story = {
       <CourseAccordionHeaderContent
         duration={100}
         name={'test'}
-        lessonNum={200}
+        lesson_num={200}
       />
     ),
     childrenContent: (
@@ -57,7 +57,7 @@ export const AccordionCoursePage: Story = {
               loading={false}
               key={`accordion-content-${index}`}
               duration={40}
-              isTextLesson={Boolean(index % 2)}
+              is_text_lesson={Boolean(index % 2)}
               id={String(index)}
               number={index}
               name={'test'}

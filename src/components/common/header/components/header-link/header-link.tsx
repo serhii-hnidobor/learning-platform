@@ -1,3 +1,5 @@
+'use client';
+
 import { AppRouteType } from 'common/enum/app/app';
 import useUnderlineAnimation from 'hooks/use-underline-animation';
 import { concatClasses } from 'helpers/string/string';

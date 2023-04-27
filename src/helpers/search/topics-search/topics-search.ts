@@ -1,22 +1,34 @@
-import { convertCourseDataToCourseProps } from 'helpers/data/data';
-import { CourseDataType, TopicDataType } from 'types/api/data';
-
+import { BrowsePageCourses, TopicI } from 'types/pages/browse-page';
+import resultWithoutTagAndTopic from 'helpers/data/remove-topic-and-tag-from-browse-page-course';
 interface CourseTopicsSearchArgInterface {
-  selectedTopicData: TopicDataType;
-  courseData: CourseDataType[];
+  selectedTopicData: TopicI;
+  courseData: BrowsePageCourses;
 }
 
 function courseTopicsSearch({
   selectedTopicData,
   courseData,
 }: CourseTopicsSearchArgInterface) {
+  if (!courseData) {
+    return [];
+  }
+
   const { id: selectedTopicId } = selectedTopicData;
 
   const searchResult = courseData.filter((course) => {
-    return course.topics.includes(selectedTopicId);
+    const { Topic: courseTopics } = course;
+
+    if (!Array.isArray(courseTopics) && selectedTopicId === courseTopics?.id) {
+      return true;
+    }
+    if (!Array.isArray(courseTopics)) {
+      return false;
+    }
+
+    return courseTopics.map((topic) => topic.id).includes(selectedTopicId);
   });
 
-  return convertCourseDataToCourseProps(searchResult);
+  return searchResult.map((result) => resultWithoutTagAndTopic(result));
 }
 
 export { courseTopicsSearch, type CourseTopicsSearchArgInterface };

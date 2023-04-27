@@ -1,3 +1,5 @@
+'use client';
+
 import { Typography } from 'components/common/typography/typography';
 import { tagSearch } from 'helpers/search/search';
 import { concatClasses } from 'helpers/string/string';
@@ -7,13 +9,13 @@ import { DataStatus } from 'common/enum/enum';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { Section } from 'components/common/section/section';
-import { TagDataType } from 'types/api/data';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
-import { CoursePropsDataType } from 'types/props/landing-page';
+import { LandingPageCourses, TagsI } from 'types/pages/landing-page';
+import { resultWithoutTag as removeTagFromCourseData } from 'helpers/search/tag-search/tag-search';
 
 interface ProductPreviewSectionBaseProps {
-  tagData: TagDataType[];
-  courseCardProposes: CoursePropsDataType[];
+  tagData: TagsI[];
+  courseCardProposes: LandingPageCourses;
   loading?: false;
   error?: false;
 }
@@ -63,7 +65,9 @@ const ProductPreviewSection = ({
   if (foundedCourseList && foundedCourseList.length) {
     courseDataToRender = foundedCourseList;
   } else if (courseCardProposes) {
-    courseDataToRender = courseCardProposes;
+    courseDataToRender = courseCardProposes.map((courseData) =>
+      removeTagFromCourseData(courseData),
+    );
   }
 
   return (

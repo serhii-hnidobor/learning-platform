@@ -1,16 +1,11 @@
 import { Carousel } from 'components/common/carousel/carousel';
 import { Section } from 'components/common/section/section';
 import { ProductReviewPropsType } from 'components/common/card/product-review-card/product-review-card';
-import { ReviewDataType } from 'types/api/data';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
-import dynamic from 'next/dynamic';
-
-const FetchFailedBanner = dynamic(
-  import('components/common/fetch-failed-banner/fetch-failed-banner'),
-);
+import { ReviewI } from 'types/pages/landing-page';
 
 interface ProductReviewSectionBaseProps {
-  reviewsData: ReviewDataType[];
+  reviewsData: ReviewI[];
   loading?: false;
   error?: false;
 }
@@ -35,43 +30,40 @@ const ProductReviewSection = ({
   loading,
   error,
 }: ProductReviewSection) => {
-  let content: JSX.Element;
+  let reviewsProps: ProductReviewPropsType[];
 
   if (loading) {
-    const reviewsLoadingCardsProps = new Array(3).fill(null).map(() => {
+    reviewsProps = new Array(3).fill(null).map(() => {
       return {
         loading: true,
-        reviewText: null,
+        review_text: null,
       };
     });
-
-    content = (
-      <Carousel
-        child={reviewsLoadingCardsProps as ProductReviewPropsType[]}
-        title={'People say about learning'}
-        description={
-          'Global learning platform that provides international quality learning'
-        }
-      />
-    );
-  } else if (error || !reviewsData) {
-    content = <FetchFailedBanner status={'error'} />;
-  } else if (!reviewsData.length) {
-    content = <FetchFailedBanner status={'empty'} />;
-  } else {
-    content = (
-      <Carousel
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        child={reviewsData as ProductReviewPropsType[]}
-        title={'People say about learning'}
-        description={
-          'Global learning platform that provides international quality learning'
-        }
-      />
-    );
   }
-  return <Section sectionClassName={'bg-white !pb-0'}>{content}</Section>;
+
+  reviewsProps = reviewsData
+    ? reviewsData.map((review) => {
+        return {
+          ...review,
+          loading: false,
+        };
+      })
+    : [];
+
+  const isSuccessFetch = !error && reviewsData && reviewsData?.length;
+
+  return (
+    <Section sectionClassName={`bg-white ${isSuccessFetch ? '!pb-0' : ''}`}>
+      <Carousel
+        child={reviewsProps}
+        error={error}
+        title={'People say about learning'}
+        description={
+          'Global learning platform that provides international quality learning'
+        }
+      />
+    </Section>
+  );
 };
 
 export { ProductReviewSection as default };

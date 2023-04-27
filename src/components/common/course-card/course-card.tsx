@@ -7,16 +7,17 @@ import Link from 'next/link';
 import { Typography } from '../typography/typography';
 import { Icon } from '../icon/icon';
 import { Rating } from '../rating/rating';
+import { useRouter } from 'next/router';
 
 interface CourseCardProps extends ComponentBaseProps<'div'> {
-  previewImgSrc: string;
+  preview_img_src: string;
   name: string;
   id: string;
-  isPopular?: boolean;
+  popular?: boolean;
   titleColor?: 'black' | 'white';
-  authorName: string;
-  lessonNum: number;
-  rate: number;
+  author_name: string;
+  lesson_num: number;
+  rating: number;
   loading?: false;
 }
 
@@ -27,28 +28,38 @@ interface CourseCardLoadingProps extends LoadingProps<CourseCardProps> {
 type CourseCardPropsType = CourseCardLoadingProps | CourseCardProps;
 
 const CourseCard = ({
-  previewImgSrc,
-  lessonNum,
-  authorName,
+  preview_img_src,
+  lesson_num,
+  author_name,
   title,
   titleColor = 'white',
   name,
-  isPopular = false,
+  popular = false,
   loading,
-  rate,
+  rating,
   id,
   ...restWrapperProps
 }: CourseCardPropsType) => {
+  const Router = useRouter();
+
+  const handleRedirectToCourse = () => {
+    if (loading) {
+      return;
+    }
+
+    Router.push(`/course/${id}`);
+  };
+
   return (
     <div {...restWrapperProps}>
-      <Link href={`/course/${id}`}>
+      <div onClick={handleRedirectToCourse}>
         <div
           className={concatClasses([
             'aspect-video-preview',
             'group',
             'relative',
             'mb-4',
-            'cursor-pointer',
+            loading ? '' : 'cursor-pointer',
             'select-none',
           ])}
         >
@@ -57,7 +68,7 @@ const CourseCard = ({
           ) : (
             <Image
               className={'z-0 w-full'}
-              src={previewImgSrc}
+              src={preview_img_src}
               fill={true}
               sizes={
                 '(min-width: 1280px) 280px, (min-width: 1024px) 240px, (min-width: 768px) 275px, 280px'
@@ -66,7 +77,7 @@ const CourseCard = ({
             />
           )}
 
-          {isPopular && (
+          {popular && (
             <div
               className={concatClasses([
                 'bg-blue',
@@ -107,13 +118,13 @@ const CourseCard = ({
               name={IconName.PLAYER_PLAY}
               stroke={'yellow-light'}
               strokeWidth={'2'}
-              width={36}
-              height={36}
+              width={46}
+              height={46}
               intent={'base'}
             />
           </div>
         </div>
-      </Link>
+      </div>
       <div>
         {loading ? (
           <Skeleton />
@@ -132,7 +143,7 @@ const CourseCard = ({
         )}
       </div>
       <div className={'my-[10px]'}>
-        <Rating rating={rate as number} loading={loading} />
+        <Rating rating={rating as number} loading={loading} />
       </div>
       <div className={'flex items-center justify-between'}>
         <div
@@ -165,10 +176,10 @@ const CourseCard = ({
                 as={'span'}
                 styleName={'body3Regular'}
                 className={'truncate'}
-                title={authorName}
+                title={author_name}
                 color={'grey'}
               >
-                {authorName}
+                {author_name}
               </Typography>
             </div>
           )}
@@ -196,7 +207,7 @@ const CourseCard = ({
                 strokeWidth={'2'}
               />
               <Typography as={'span'} styleName={'body3Regular'} color={'grey'}>
-                {lessonNum} lessons
+                {lesson_num} lessons
               </Typography>
             </div>
           )}

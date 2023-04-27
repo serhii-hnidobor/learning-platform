@@ -30,12 +30,12 @@ CourseCardLoadingState.decorators = [
 export const CourseCardDefaultState: Story = {
   args: {
     name: 'The Complete Personal Development Course - 22 Courses in 1',
-    rate: 4.6,
-    authorName: 'Casey Abbott',
-    lessonNum: 56,
+    rating: 4.6,
+    author_name: 'Casey Abbott',
+    lesson_num: 56,
     id: '345hft',
     titleColor: 'black',
-    previewImgSrc: 'https://loremflickr.com/280/184/abstract?lock=28379',
+    preview_img_src: 'https://loremflickr.com/280/184/abstract?lock=28379',
   },
 };
 
@@ -50,12 +50,12 @@ CourseCardDefaultState.decorators = [
 export const CourseCardWhiteTitle: Story = {
   args: {
     name: 'The Complete Personal Development Course - 22 Courses in 1',
-    rate: 4.6,
-    authorName: 'Casey Abbott',
-    lessonNum: 56,
+    rating: 4.6,
+    author_name: 'Casey Abbott',
+    lesson_num: 56,
     id: '345hft',
     titleColor: 'white',
-    previewImgSrc: 'https://loremflickr.com/280/184/abstract?lock=28379',
+    preview_img_src: 'https://loremflickr.com/280/184/abstract?lock=28379',
   },
   parameters: {
     backgrounds: { default: 'dark' },

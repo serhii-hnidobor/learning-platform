@@ -1,3 +1,4 @@
+'use client';
 import { Typography } from 'components/common/typography/typography';
 import { Section } from 'components/common/section/section';
 import { ProductInfoCard } from './components/product-info-card/product-info-card';

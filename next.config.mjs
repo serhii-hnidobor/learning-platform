@@ -8,6 +8,7 @@ import withPwa from 'next-pwa';
 import runtimeCaching from 'next-pwa/cache.js';
 
 const nextConfig = {
+  reactStrictMode: true,
   images: {
     domains: ['loremflickr.com', 'i.ibb.co'],
   },
@@ -16,6 +17,8 @@ const nextConfig = {
     defaultLocale: 'en',
   },
   webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+
     config.module.rules.push({
       test: /\.svg$/i,
       use: [

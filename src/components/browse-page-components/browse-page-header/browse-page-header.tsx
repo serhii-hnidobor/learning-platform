@@ -4,15 +4,15 @@ import { useContext } from 'react';
 import { DataStatus, IconName } from 'common/enum/enum';
 import { BrowsePageContext } from 'pages/browse/index';
 import { TagScrollComponentWrapper } from 'components/common/tag-scroll';
-import { TagDataType } from 'types/api/data';
 import { ErrorProps, LoadingProps } from 'types/html-elemet-props';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { TagsI } from 'types/pages/landing-page';
 
 const SearchBox = dynamic(import('components/common/search-box/search-box'));
 
 interface BrowsePageHeaderBaseProps {
-  tagData: TagDataType[];
+  tagData: TagsI[];
   loading?: false;
   error?: false;
 }

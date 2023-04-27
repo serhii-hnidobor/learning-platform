@@ -9,10 +9,10 @@ import { LoadingProps } from 'types/html-elemet-props';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 interface CoursePageHeaderBaseProps {
-  authorName: string;
-  rate: number;
+  author_name: string;
+  rating: number;
   name: string;
-  youtubeEmbedId: string;
+  youtube_embed_id: string;
   description: string;
   loading?: false;
 }
@@ -27,10 +27,10 @@ type CoursePageHeaderProps =
   | CoursePageHeaderLoadingProps;
 
 const CoursePageHeading = ({
-  authorName,
+  author_name,
   name,
-  rate,
-  youtubeEmbedId,
+  rating,
+  youtube_embed_id,
   description,
   loading,
 }: CoursePageHeaderProps) => {
@@ -39,7 +39,7 @@ const CoursePageHeading = ({
   if (loading) {
     ratingComponent = <Rating loading={true} />;
   } else {
-    ratingComponent = <Rating rating={rate} />;
+    ratingComponent = <Rating rating={rating} />;
   }
 
   return (
@@ -143,7 +143,7 @@ const CoursePageHeading = ({
                 styleName={'body2Regular'}
                 color={'white'}
               >
-                {authorName}
+                {author_name}
               </Typography>
             )}
           </div>
@@ -167,7 +167,7 @@ const CoursePageHeading = ({
           />
         ) : (
           <LiteYouTubeEmbed
-            id={youtubeEmbedId}
+            id={youtube_embed_id}
             title={name}
             wrapperClass={concatClasses([
               'relative',

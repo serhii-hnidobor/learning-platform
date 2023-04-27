@@ -26,8 +26,6 @@ const Logo = ({
 }: LogoProps) => {
   const Router = useRouter();
 
-  const { route: curRoute } = Router;
-
   let wrapperClassName = 'inline-flex items-center cursor-pointer';
 
   if (className && className.length) {
@@ -35,9 +33,7 @@ const Logo = ({
   }
 
   const handleRootRedirect = async () => {
-    if (Router.isReady && curRoute !== AppRoutes.ROOT) {
-      await Router.push(AppRoutes.ROOT);
-    }
+    await Router.push(AppRoutes.ROOT);
   };
   return (
     <div

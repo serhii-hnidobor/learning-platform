@@ -49,7 +49,8 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const isAuthRoute =
     pathname === AppRoutes.SIGN_UP || pathname === AppRoutes.SIGN_IN;
 
-  const is404Route = pageProps.statusCode === 404;
+  const is404Or500Route =
+    pageProps.statusCode === 404 || pageProps.statusCode === 500;
 
   const fontClassName = `${lato.variable} font-serif`;
 
@@ -166,7 +167,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               content="https://learning-platform-pied.vercel.app/apple-touch-icon.png"
             />
           </Head>
-          {(isAuthRoute || is404Route) && (
+          {(isAuthRoute || is404Or500Route) && (
             <div
               className={concatClasses([
                 'min-h-[100vh]',
@@ -178,7 +179,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               <Component {...pageProps} />
             </div>
           )}
-          {!isAuthRoute && (
+          {!isAuthRoute && !is404Or500Route && (
             <>
               <Header />
               <SimpleBar

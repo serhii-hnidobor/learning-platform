@@ -15,9 +15,11 @@ import {
 } from 'components/common/card/product-review-card/product-review-card';
 import { isProductReviewCardProps } from 'components/common/card/card-props-type-check';
 import { getUserViewCardInfo } from './helpers/get-user-view-card-info';
+import FetchFailedBanner from '../fetch-failed-banner/fetch-failed-banner';
 
 interface CarouselProps extends Omit<ComponentBaseProps<'div'>, 'title'> {
   child: ProductShortInfoCardProps[] | ProductReviewPropsType[];
+  error?: boolean;
   title?: string;
   description?: string;
 }
@@ -27,10 +29,12 @@ const Carousel = ({
   title,
   description,
   className,
+  error = false,
   ...restWrapperProps
 }: CarouselProps) => {
   const gap = 32;
   const cardWidth = 374;
+  const isDataSuccess = child?.length && !error;
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -206,87 +210,95 @@ const Carousel = ({
             )}
           </div>
 
-          <div className="flex gap-6">
-            <ControlButton
-              state={isDisabled('prev') ? 'nonActive' : 'active'}
-              isLeft={true}
-              onClick={movePrev}
-            />
-            <ControlButton
-              state={isDisabled('next') ? 'nonActive' : 'active'}
-              isLeft={false}
-              onClick={moveNext}
-            />
-          </div>
+          {Boolean(isDataSuccess) && (
+            <div className="flex gap-6">
+              <ControlButton
+                state={isDisabled('prev') ? 'nonActive' : 'active'}
+                isLeft={true}
+                onClick={movePrev}
+              />
+              <ControlButton
+                state={isDisabled('next') ? 'nonActive' : 'active'}
+                isLeft={false}
+                onClick={moveNext}
+              />
+            </div>
+          )}
         </>
       </header>
-      <div
-        className={concatClasses([
-          'carousel-main',
-          'flex',
-          'justify-center',
-          'gap-8',
-          'max-w-full',
-          'overflow-visible',
-          'mx-auto',
-          'px-2',
-          'sm:px-9',
-          'pb-24',
-        ])}
-        style={{
-          width: `${containerWidth}px`,
-        }}
-        {...swipeHandlers}
-      >
-        {showedCardProps.map((cardProps, index) => {
-          const activeCardIndex = activeCardIndexInfo?.index;
-          const activeCardPageIndex = activeCardIndexInfo?.pageIndex;
-          if (isProductReviewCardProps(cardProps)) {
-            return (
-              <ProductReviewCard
-                {...cardProps}
-                onClick={() => handleCardClick(index)}
-                variant={
-                  activeCardIndex === index &&
-                  activeCardPageIndex === activePaginationMarker
-                    ? 'active'
-                    : 'nonActive'
-                }
-                key={`${index}-${cardProps.id}`}
-              />
-            );
-          }
-
-          return (
-            <ProductShortInfoCard
-              {...cardProps}
-              onClick={() => handleCardClick(index)}
-              variant={
-                activeCardIndex === index &&
-                activeCardPageIndex === activePaginationMarker
-                  ? 'active'
-                  : 'nonActive'
+      {isDataSuccess ? (
+        <>
+          <div
+            className={concatClasses([
+              'carousel-main',
+              'flex',
+              'justify-center',
+              'gap-8',
+              'max-w-full',
+              'overflow-visible',
+              'mx-auto',
+              'px-2',
+              'sm:px-9',
+              'pb-24',
+            ])}
+            style={{
+              width: `${containerWidth}px`,
+            }}
+            {...swipeHandlers}
+          >
+            {showedCardProps.map((cardProps, index) => {
+              const activeCardIndex = activeCardIndexInfo?.index;
+              const activeCardPageIndex = activeCardIndexInfo?.pageIndex;
+              if (isProductReviewCardProps(cardProps)) {
+                return (
+                  <ProductReviewCard
+                    {...cardProps}
+                    onClick={() => handleCardClick(index)}
+                    variant={
+                      activeCardIndex === index &&
+                      activeCardPageIndex === activePaginationMarker
+                        ? 'active'
+                        : 'nonActive'
+                    }
+                    key={`${index}-${cardProps.id}`}
+                  />
+                );
               }
-              key={`${index}-${cardProps.id}`}
-            />
-          );
-        })}
-      </div>
 
-      <footer className="relative bottom-16 flex items-center justify-center">
-        <div className={'mx-auto flex justify-center gap-3'}>
-          {new Array(paginationMarkerNum).fill(0).map((_, index) => {
-            return (
-              <PaginationMarker
-                state={
-                  index === activePaginationMarker ? 'active' : 'nonActive'
-                }
-                key={`${index}-pagination`}
-              />
-            );
-          })}
-        </div>
-      </footer>
+              return (
+                <ProductShortInfoCard
+                  {...cardProps}
+                  onClick={() => handleCardClick(index)}
+                  variant={
+                    activeCardIndex === index &&
+                    activeCardPageIndex === activePaginationMarker
+                      ? 'active'
+                      : 'nonActive'
+                  }
+                  key={`${index}-${cardProps.id}`}
+                />
+              );
+            })}
+          </div>
+
+          <footer className="relative bottom-16 flex items-center justify-center">
+            <div className={'mx-auto flex justify-center gap-3'}>
+              {new Array(paginationMarkerNum).fill(0).map((_, index) => {
+                return (
+                  <PaginationMarker
+                    state={
+                      index === activePaginationMarker ? 'active' : 'nonActive'
+                    }
+                    key={`${index}-pagination`}
+                  />
+                );
+              })}
+            </div>
+          </footer>
+        </>
+      ) : (
+        <FetchFailedBanner status={error ? 'error' : 'empty'} />
+      )}
     </div>
   );
 };

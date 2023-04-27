@@ -7,12 +7,12 @@ import { Typography, TypographyProps } from '../typography/typography';
 import { concatClasses } from 'helpers/string/string';
 import useHoverScaleAnimation from 'hooks/use-hover-scale-animation';
 import { animated } from '@react-spring/web';
-import { TopicDataType } from 'types/api/data';
 import Skeleton from 'react-loading-skeleton';
 import { topicVariants, TopicVariantsType } from './cva-variants/cva-variants';
+import { TopicI } from 'types/pages/browse-page';
 
 interface TopicProps extends ComponentBaseProps<'div'> {
-  topicData: TopicDataType;
+  topicData: TopicI;
   loading?: false;
   error?: false;
   state?: NonNullable<TopicVariantsType['state']>;

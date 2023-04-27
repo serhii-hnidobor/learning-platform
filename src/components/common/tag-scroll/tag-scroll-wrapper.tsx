@@ -1,10 +1,10 @@
 import { DataStatus } from 'common/enum/api/api';
 import { Tag, TagScroll } from './components/tag-scroll/tag-scroll';
-import { DataType } from 'types/api/data';
+import { TagsI } from 'types/pages/landing-page';
 
 interface TagScrollComponentWrapperProps {
   status: DataStatus;
-  data: DataType[] | null;
+  data: TagsI[] | null;
   handleCourseSearch: (tagArray: string[]) => void;
   isProductPreviewSection?: boolean;
 }
@@ -26,7 +26,7 @@ const TagScrollComponentWrapper = ({
   };
 
   switch (status) {
-    case DataStatus.FAILED: {
+    case DataStatus.FAILED || !data: {
       return <TagScroll error={true} />;
     }
     case DataStatus.PENDING: {

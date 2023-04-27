@@ -25,18 +25,18 @@ const avatarSrc =
 const DefaultState: Story = {
   args: {
     variant: 'active',
-    reviewText: 'Lorem ipsum set alamet dolor',
-    reviewAuthorName: 'somebody',
-    reviewAuthorAvatarSrc: avatarSrc,
+    review_text: 'Lorem ipsum set alamet dolor',
+    review_author_name: 'somebody',
+    review_author_avatar_src: avatarSrc,
   },
 };
 
 const ActiveState: Story = {
   args: {
     variant: 'active',
-    reviewText: 'Lorem ipsum set alamet dolor',
-    reviewAuthorName: 'somebody',
-    reviewAuthorAvatarSrc: avatarSrc,
+    review_text: 'Lorem ipsum set alamet dolor',
+    review_author_name: 'somebody',
+    review_author_avatar_src: avatarSrc,
   },
 };
 

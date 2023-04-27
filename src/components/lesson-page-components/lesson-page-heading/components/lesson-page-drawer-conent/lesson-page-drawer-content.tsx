@@ -1,14 +1,11 @@
 import { CoursePageAccordion } from 'components/course-page-components/course-page-accordion/course-page-accordion';
 import { concatClasses } from 'helpers/string/string';
-import { CourseSectionType } from 'types/api/data';
-import {
-  getSectionLessons,
-  LessonDataArgType,
-} from 'helpers/data/get-section-lessons/get-section-lessons';
+import { getSectionLessons } from 'helpers/data/get-section-lessons/get-section-lessons';
+import { CoursePageLessonI, CourseSectionI } from 'types/pages/course-page';
 
 interface LessonPageDrawerContentProps {
-  lessonData: LessonDataArgType[];
-  courseSectionData: CourseSectionType[];
+  lessonData: CoursePageLessonI[];
+  courseSectionData: CourseSectionI[];
 }
 
 const LessonPageDrawerContent = ({
@@ -27,7 +24,7 @@ const LessonPageDrawerContent = ({
       ])}
     >
       {courseSectionData.map((section, index) => {
-        const { name, lessonsNum, duration, id: courseSectionId } = section;
+        const { name, lessons_num, duration, id: courseSectionId } = section;
 
         const sectionLesson = getSectionLessons(lessonData, courseSectionId);
 
@@ -35,7 +32,7 @@ const LessonPageDrawerContent = ({
           <CoursePageAccordion
             name={name}
             key={`${section.id}-section-${index}`}
-            lessonNum={lessonsNum}
+            lesson_num={lessons_num}
             duration={duration}
             lessonData={sectionLesson}
           />

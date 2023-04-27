@@ -1,5 +1,5 @@
 interface CoursePageAccordionLessonType {
-  isTextLesson: boolean;
+  is_text_lesson: boolean;
   duration: number;
   name: string;
   index: number;

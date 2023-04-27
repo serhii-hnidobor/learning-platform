@@ -1,7 +1,6 @@
 import { concatClasses } from 'helpers/string/string';
 import Skeleton from 'react-loading-skeleton';
 import { LoadingProps } from 'types/html-elemet-props';
-import { CourseSectionType, NextLessonType } from 'types/api/data';
 import { useState } from 'react';
 import { getDurationString } from 'helpers/time/time';
 import { LessonPageDrawerHeader } from './components/lesson-page-drawer-header/lesson-page-drawer-header';
@@ -11,26 +10,27 @@ import { Typography } from 'components/common/typography/typography';
 import Button from 'components/common/button/button';
 import { IconName } from 'common/enum/enum';
 import { Icon } from 'components/common/icon/icon';
-import { LessonDataArgType } from 'helpers/data/data';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { CoursePageLessonI, CourseSectionI } from 'types/pages/course-page';
+import { NextLessonI } from 'types/pages/lesson-page';
 
 const Drawer = dynamic(import('components/common/drawer/drawer'));
 
 interface LessonPageHeadingProps {
-  lessonData: LessonDataArgType[];
-  courseSectionData: CourseSectionType[];
-  sectionIndex: number;
+  lessonData: CoursePageLessonI[];
+  courseSectionData: CourseSectionI[];
+  section_index: number;
   index: number;
-  courseId: string;
-  textContent: string;
-  youtubeEmbedId: string | null;
+  course_id: string;
+  text_content: string;
+  youtube_embed_id: string | null;
   name: string;
   loading?: false;
+  next_lesson: NextLessonI | null;
   description: string;
-  nextLesson: NextLessonType | null;
 }
 
 interface LessonPageHeadingPropsLoadingProps
@@ -44,14 +44,14 @@ type LessonPageHeaderProps =
 
 const LessonPageHeading = ({
   index,
-  sectionIndex,
+  section_index,
   name,
   description,
-  nextLesson,
   loading,
-  youtubeEmbedId,
-  courseId,
+  youtube_embed_id,
+  course_id,
   lessonData,
+  next_lesson,
   courseSectionData,
 }: LessonPageHeaderProps) => {
   const Router = useRouter();
@@ -60,7 +60,7 @@ const LessonPageHeading = ({
 
   let drawer: JSX.Element | null;
 
-  if (!courseId || loading) {
+  if (!course_id || loading) {
     drawer = null;
   } else {
     drawer = (
@@ -149,7 +149,7 @@ const LessonPageHeading = ({
           )}
         </div>
 
-        {youtubeEmbedId && (
+        {youtube_embed_id && (
           <div
             className={concatClasses([
               'aspect-video',
@@ -167,7 +167,7 @@ const LessonPageHeading = ({
             ) : (
               <LiteYouTubeEmbed
                 title={name}
-                id={youtubeEmbedId}
+                id={youtube_embed_id}
                 wrapperClass={concatClasses([
                   'relative',
                   'yt-lite',
@@ -204,7 +204,7 @@ const LessonPageHeading = ({
               styleName={'body2Medium'}
               className={'mb-3 block'}
             >
-              Section {sectionIndex} · Lesson {index}
+              Section {section_index} · Lesson {index}
             </Typography>
           )}
           {loading ? (
@@ -225,7 +225,7 @@ const LessonPageHeading = ({
             </Typography>
           )}
         </div>
-        {nextLesson && (
+        {next_lesson && (
           <div
             className={concatClasses([
               'sm:w-[440px]',
@@ -259,7 +259,7 @@ const LessonPageHeading = ({
                   className={'mb-1 block text-center sm:text-left'}
                   styleName={'body3Regular'}
                 >
-                  Next · Lesson {nextLesson.index}
+                  Next · Lesson {next_lesson.index}
                 </Typography>
               )}
               {loading ? (
@@ -271,7 +271,7 @@ const LessonPageHeading = ({
                   className={'mb-[18px] block text-center sm:text-left'}
                   styleName={'body2Regular'}
                 >
-                  {nextLesson.name}
+                  {next_lesson.name}
                 </Typography>
               )}
               <div
@@ -302,7 +302,7 @@ const LessonPageHeading = ({
                     color={'grey'}
                     className={'text-center sm:text-left'}
                   >
-                    {getDurationString(nextLesson.duration)}
+                    {getDurationString(next_lesson.duration)}
                   </Typography>
                 )}
               </div>
@@ -318,8 +318,8 @@ const LessonPageHeading = ({
                 ariaLabel={'go to next lesson'}
                 intent={'regularOutlined'}
                 onClick={async () => {
-                  if (Router.isReady && nextLesson) {
-                    await Router.push(`/lesson/${nextLesson.id}`);
+                  if (Router.isReady && next_lesson) {
+                    await Router.push(`/lesson/${next_lesson.id}`);
                   }
                 }}
               >

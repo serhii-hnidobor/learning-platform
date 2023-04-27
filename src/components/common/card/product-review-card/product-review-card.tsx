@@ -13,17 +13,17 @@ import { animated } from '@react-spring/web';
 import Skeleton from 'react-loading-skeleton';
 
 interface ProductReviewCardProps extends ComponentBaseProps<'div'> {
-  variant: NonNullable<ProductReviewCardVariantsType['variant']>;
-  reviewText: string;
-  reviewAuthorName: string;
-  reviewAuthorAvatarSrc: string;
+  variant?: NonNullable<ProductReviewCardVariantsType['variant']>;
+  review_text: string;
+  review_author_name: string;
+  review_author_avatar_src: string;
   loading?: false;
 }
 
 interface ProductReviewCardLoadingProps
-  extends LoadingProps<Omit<ProductReviewCardProps, 'reviewText'>> {
+  extends LoadingProps<Omit<ProductReviewCardProps, 'review_text'>> {
   // for correct detect review card props
-  reviewText: string | null;
+  review_text: string | null;
   loading: true;
 }
 
@@ -31,11 +31,11 @@ type ProductReviewPropsType =
   | ProductReviewCardProps
   | ProductReviewCardLoadingProps;
 const ProductReviewCard = ({
-  variant,
+  variant = 'nonActive',
   className,
-  reviewText,
-  reviewAuthorName,
-  reviewAuthorAvatarSrc,
+  review_text,
+  review_author_name,
+  review_author_avatar_src,
   loading,
   ...restWrapperProps
 }: ProductReviewPropsType) => {
@@ -78,7 +78,7 @@ const ProductReviewCard = ({
             color={'grey'}
             className={'line-clamp-3'}
           >
-            {reviewText}
+            {review_text}
           </Typography>
         )}
       </div>
@@ -94,8 +94,8 @@ const ProductReviewCard = ({
           <Avatar
             size={'small'}
             background={'inherit'}
-            src={reviewAuthorAvatarSrc}
-            alt={reviewAuthorName}
+            src={review_author_avatar_src}
+            alt={review_author_name}
             rounded={'full'}
           />
         )}
@@ -107,9 +107,9 @@ const ProductReviewCard = ({
             styleName={'body2Bold'}
             color={'black'}
             className={'truncate'}
-            title={reviewAuthorName}
+            title={review_author_name}
           >
-            {reviewAuthorName}
+            {review_author_name}
           </Typography>
         )}
       </div>

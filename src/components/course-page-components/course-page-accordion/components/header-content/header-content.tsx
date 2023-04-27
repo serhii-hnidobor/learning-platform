@@ -6,7 +6,7 @@ import { Typography } from 'components/common/typography/typography';
 
 interface Props {
   name: string;
-  lessonNum: number;
+  lesson_num: number;
   duration: number;
   loading?: boolean;
 }
@@ -19,7 +19,7 @@ type PropsType = LoadingProps | Props;
 
 const CourseAccordionHeaderContent = ({
   name,
-  lessonNum,
+  lesson_num,
   duration,
   loading,
 }: PropsType) => {
@@ -66,7 +66,7 @@ const CourseAccordionHeaderContent = ({
               color={'grey'}
               className={'line-clamp-1'}
             >
-              {lessonNum} lessons
+              {lesson_num} lessons
             </Typography>
           )}
         </div>

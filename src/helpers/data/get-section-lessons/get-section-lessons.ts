@@ -1,16 +1,7 @@
-import { CoursePageAccordionLessonType } from 'components/course-page-components/course-page-accordion/type/course-page-lesson';
+import { CoursePageLessons } from 'types/pages/course-page';
 
-type LessonDataArgType = CoursePageAccordionLessonType & {
-  sectionId: string;
-};
-
-function getSectionLessons(lessonData: LessonDataArgType[], sectionId: string) {
-  return lessonData
-    .filter((lesson) => lesson.sectionId === sectionId)
-    .map((lesson) => {
-      const { index, duration, id, isTextLesson, name } = lesson;
-      return { index, duration, id, isTextLesson, name };
-    });
+function getSectionLessons(lessonData: CoursePageLessons, sectionId: string) {
+  return lessonData.filter((lesson) => lesson.section_id === sectionId);
 }
 
-export { getSectionLessons, type LessonDataArgType };
+export { getSectionLessons };

@@ -1,3 +1,5 @@
+'use client';
+
 import useWindowDimensions from 'hooks/use-window-dimensions';
 import { concatClasses } from 'helpers/string/string';
 import { useState, createContext, useEffect } from 'react';

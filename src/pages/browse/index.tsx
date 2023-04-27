@@ -1,15 +1,18 @@
 import { BrowsePageHeader } from 'components/browse-page-components/browse-page-header/browse-page-header';
 import { useState, createContext } from 'react';
-import { CollectionName, DataStatus } from 'common/enum/api/api';
-import { CourseDataType, TagDataType, TopicDataType } from 'types/api/data';
-import { convertCourseDataToCourseProps } from 'helpers/data/data';
+import { DataStatus } from 'common/enum/api/api';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
-import { getData } from 'lib/getData';
 import dynamic from 'next/dynamic';
-import { getSession } from 'next-auth/react';
 import { GetServerSidePropsContext } from 'next';
-import createFirebaseCache from '../../lib/cache/create-firebase-cache';
+import { BrowsePageCourseI, TopicI } from 'types/pages/browse-page';
+import { getTags } from 'lib/landing';
+import { getCourses } from 'lib/browse-page/index';
+import { getTopics } from 'lib/browse-page';
+import { TagsI } from 'types/pages/landing-page';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
+import removeTopicAndTagFromBrowsePageCourse from '../../helpers/data/remove-topic-and-tag-from-browse-page-course';
 
 const BrowsePageSection = dynamic(
   import(
@@ -20,15 +23,15 @@ const BrowsePageSection = dynamic(
 interface BrowsePageContextType {
   handleCourseSearch: (searchString: string) => void;
   handleTagsSearch: (topics: string[]) => void;
-  courseData: CourseDataType[];
+  courseData: BrowsePageCourseI[];
 }
 
 const BrowsePageContext = createContext<BrowsePageContextType | null>(null);
 
 interface BrowsePageProps {
-  courseData: CourseDataType[];
-  tagData: TagDataType[];
-  topicsData: TopicDataType[];
+  courseData: BrowsePageCourseI[];
+  tagData: TagsI[];
+  topicsData: TopicI[];
 }
 
 const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
@@ -36,9 +39,7 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
     CourseCardProps[] | null
   >();
 
-  const [selectedTopic, setSelectedTopic] = useState<TopicDataType | null>(
-    null,
-  );
+  const [selectedTopic, setSelectedTopic] = useState<TopicI | null>(null);
 
   const [isNeedFullCourseSection, setIsNeedFullCourseSection] = useState(false);
 
@@ -50,9 +51,7 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
     CourseCardProps[] | null
   >(null);
 
-  const handleSearchCourseByTopic = (
-    selectedTopicData: TopicDataType | null,
-  ) => {
+  const handleSearchCourseByTopic = (selectedTopicData: TopicI | null) => {
     if (!selectedTopicData || !courseData || !courseData.length) {
       setTopicCourseSearchResult(undefined);
       setSelectedTopic(null);
@@ -92,7 +91,9 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
   if (!courseData) {
     content = [];
   } else {
-    content = convertCourseDataToCourseProps(courseData);
+    content = courseData.map((course) =>
+      removeTopicAndTagFromBrowsePageCourse(course),
+    );
   }
 
   return (
@@ -175,35 +176,24 @@ const BrowsePage = ({ courseData, tagData, topicsData }: BrowsePageProps) => {
 export { BrowsePage as default, BrowsePageContext, type BrowsePageContextType };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { data: courseData, isFromCache: isCoursesFromCache } = await getData({
-    name: CollectionName.COURSES,
-  });
-  const { data: tagData, isFromCache: isTagsFromCache } = await getData({
-    name: CollectionName.TAGS,
-  });
-  const { data: topicsData, isFromCache: isTopicsFromCache } = await getData({
-    name: CollectionName.TOPICS,
-  });
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
+  const supabaseAccessToken = session?.supabaseAccessToken || '';
 
-  context.res.on('finish', () => {
-    if (!isCoursesFromCache) {
-      createFirebaseCache(CollectionName.COURSES);
-    }
-    if (!isTagsFromCache) {
-      createFirebaseCache(CollectionName.TAGS);
-    }
-    if (!isTopicsFromCache) {
-      createFirebaseCache(CollectionName.TOPICS);
-    }
-  });
+  const coursesData = getCourses(supabaseAccessToken);
+  const tagsData = getTags(supabaseAccessToken);
+  const topicsData = getTopics(supabaseAccessToken);
 
+  const [courses, tags, topics] = await Promise.all([
+    coursesData,
+    tagsData,
+    topicsData,
+  ]);
   return {
     props: {
       session,
-      courseData,
-      tagData,
-      topicsData,
+      courseData: courses,
+      tagData: tags,
+      topicsData: topics,
     },
   };
 }

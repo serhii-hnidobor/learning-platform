@@ -5,17 +5,17 @@ import {
   ErrorProps,
   LoadingProps,
 } from 'types/html-elemet-props';
-import { TopicDataType } from 'types/api/data';
 import dynamic from 'next/dynamic';
+import { TopicI } from 'types/pages/browse-page';
 
 const FetchFailedBanner = dynamic(
   import('components/common/fetch-failed-banner/fetch-failed-banner'),
 );
 
 interface TopicSectionProps extends ComponentBaseProps<'div'> {
-  topicArray: TopicDataType[] | null;
-  onTopicSelect?: (selectedTopic: TopicDataType | null) => void;
-  selectedTopic: TopicDataType | null;
+  topicArray: TopicI[] | null;
+  onTopicSelect?: (selectedTopic: TopicI | null) => void;
+  selectedTopic: TopicI | null;
   loading?: false;
   error?: false;
 }

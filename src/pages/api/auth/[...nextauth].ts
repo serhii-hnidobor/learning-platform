@@ -1,49 +1,46 @@
-import NextAuth from 'next-auth';
+import NextAuth, { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import EmailProvider from 'next-auth/providers/email';
-import { FirestoreAdapter, initFirestore } from '@next-auth/firebase-adapter';
-import { credential } from 'firebase-admin';
+import { SupabaseAdapter } from '@next-auth/supabase-adapter';
+import jwt from 'jsonwebtoken';
 
-const firestore = initFirestore({
-  credential: credential.cert({
-    projectId: process.env.PROJECT_ID,
-    clientEmail: process.env.CLIENT_EMAIL,
-    privateKey: process.env.PRIVATE_KEY
-      ? process.env.PRIVATE_KEY.replace(/\\n/gm, '\n')
-      : undefined,
-  }),
-});
-
-const getAuthOptions = () => {
-  const { GOOGLE_SECRET, GOOGLE_ID, EMAIL_SERVER, EMAIL_FROM } = process.env;
-
-  const isAllEnvSpecify =
-    GOOGLE_ID && GOOGLE_SECRET && EMAIL_SERVER && EMAIL_FROM;
-
-  if (!isAllEnvSpecify) {
-    throw new Error('auth credential not specify');
-  }
-
+const getAuthOptions = (): AuthOptions => {
   return {
-    adapter: FirestoreAdapter({
-      firestore,
-      namingStrategy: 'snake_case',
+    adapter: SupabaseAdapter({
+      url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+      secret: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
     }),
+    callbacks: {
+      async session({ session, user }) {
+        const signingSecret = process.env.SUPABASE_JWT_SECRET;
+        if (signingSecret) {
+          const payload = {
+            aud: 'authenticated',
+            exp: Math.floor(new Date(session.expires).getTime() / 1000),
+            sub: user.id,
+            email: user.email,
+            role: 'authenticated',
+          };
+          session.supabaseAccessToken = jwt.sign(payload, signingSecret);
+        }
+        return session;
+      },
+    },
     providers: [
       GoogleProvider({
-        clientId: GOOGLE_ID,
-        clientSecret: GOOGLE_SECRET,
+        clientId: process.env.GOOGLE_ID || '',
+        clientSecret: process.env.GOOGLE_SECRET || '',
       }),
       EmailProvider({
         server: {
-          host: process.env.EMAIL_SERVER_HOST,
-          port: process.env.EMAIL_SERVER_PORT,
+          host: process.env.EMAIL_SERVER_HOST || '',
+          port: process.env.EMAIL_SERVER_PORT || '',
           auth: {
-            user: process.env.EMAIL_SERVER_USER,
-            pass: process.env.EMAIL_SERVER_PASSWORD,
+            user: process.env.EMAIL_SERVER_USER || '',
+            pass: process.env.EMAIL_SERVER_PASSWORD || '',
           },
         },
-        from: process.env.EMAIL_FROM,
+        from: process.env.EMAIL_FROM || '',
       }),
     ],
     pages: {

@@ -49,7 +49,7 @@ const TagScroll = ({
     content = new Array(10).fill(null).map((_, index) => {
       return <Tag loading={true} key={`${index}-tag-skeleton`} />;
     });
-  } else if (error) {
+  } else if (error || !tagsArray || !tagsArray.length) {
     return null;
   } else {
     content = tagsArray.map((tag, index) => {

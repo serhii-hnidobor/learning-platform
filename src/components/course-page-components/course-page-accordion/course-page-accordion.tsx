@@ -7,7 +7,7 @@ import { CoursePageAccordionLessonType } from './type/course-page-lesson';
 
 interface CoursePageAccordionProps extends ComponentBaseProps<'div'> {
   name: string;
-  lessonNum: number;
+  lesson_num: number;
   lessonData: CoursePageAccordionLessonType[];
   duration: number;
   onClick?: VoidFunction;
@@ -25,7 +25,7 @@ const CoursePageAccordionLoading = () => {
 const CoursePageAccordion = ({
   name,
   duration,
-  lessonNum,
+  lesson_num,
   lessonData,
   ...restWrapperProps
 }: CoursePageAccordionProps) => {
@@ -45,7 +45,7 @@ const CoursePageAccordion = ({
     <CourseAccordionHeaderContent
       name={name}
       duration={duration}
-      lessonNum={lessonNum}
+      lesson_num={lesson_num}
     />
   );
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductInfoListItem } from './components/product-info-list-item/product-info-list-item';
 import { AppRoutes, IconName } from 'common/enum/enum';
 import { HeroLabel } from './components/hero-label/hero-label';
@@ -14,9 +16,7 @@ const SectionHero = () => {
   const Router = useRouter();
 
   const handleLearnMoreClick = () => {
-    if (Router.isReady) {
-      Router.push(AppRoutes.BROWSE);
-    }
+    Router.push(AppRoutes.BROWSE);
   };
 
   return (

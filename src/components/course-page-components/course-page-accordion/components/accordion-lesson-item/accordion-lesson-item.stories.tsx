@@ -31,7 +31,7 @@ export const DefaultState: Story = {
     number: 10,
     duration: 70,
     name: 'default accordion lesson item state',
-    isTextLesson: undefined,
+    is_text_lesson: undefined,
   },
 };
 
@@ -41,6 +41,6 @@ export const TextLessonState: Story = {
     number: 10,
     duration: 70,
     name: 'text lesson',
-    isTextLesson: true,
+    is_text_lesson: true,
   },
 };

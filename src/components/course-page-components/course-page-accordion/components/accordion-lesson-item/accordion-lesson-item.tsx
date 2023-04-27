@@ -17,7 +17,7 @@ interface Props extends Omit<ComponentBaseProps<'div'>, 'onClick'> {
   name: string;
   headerProps?: Omit<TypographyProps<HTMLHeadElement>, 'children'>;
   iconProps?: IconProps;
-  isTextLesson?: boolean;
+  is_text_lesson?: boolean;
   loading?: false;
   onClick: (id: string) => void;
 }
@@ -28,7 +28,7 @@ interface LessonItemLoadingProps extends LoadingProps<Props> {
 
 type AccordionLessonItemPropsType = Props | LessonItemLoadingProps;
 const AccordionLessonItem = ({
-  isTextLesson,
+  is_text_lesson,
   duration,
   id,
   number,
@@ -42,7 +42,7 @@ const AccordionLessonItem = ({
   const ref = useRef<HTMLDivElement>(null);
 
   iconProps = iconProps || {
-    name: isTextLesson ? IconName.FILE_TEXT : IconName.PLAYER_PLAY,
+    name: is_text_lesson ? IconName.FILE_TEXT : IconName.PLAYER_PLAY,
     intent: 'roundedGrey',
     width: '24',
     height: '24',

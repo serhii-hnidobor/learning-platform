@@ -1,34 +1,25 @@
-import { CollectionName } from 'common/enum/api/api';
-import {
-  CoursePageHeaderBaseProps,
-  CoursePageHeading,
-} from 'components/course-page-components/course-page-heading/course-page-heading';
+import { CoursePageHeading } from 'components/course-page-components/course-page-heading/course-page-heading';
 import { CoursePageAccordion } from 'components/course-page-components/course-page-accordion/course-page-accordion';
 import { ListIcon } from 'components/common/list-icon/list-icon';
 import { Typography } from 'components/common/typography/typography';
 import { IconName } from 'common/enum/enum';
-
 import getMarkdownHtmlString from 'lib/get-markdown-html-string';
-
-import { CourseSectionType } from 'types/api/data';
-import {
-  convertLessonDataToAccordionLessonItemProps,
-  courseDataToCoursePageHeadingProps,
-  LessonDataArgType,
-  getSectionLessons,
-} from 'helpers/data/data';
 import { concatClasses } from 'helpers/string/concat-classes/concat-classes';
 import { GetServerSidePropsContext } from 'next';
-import { getSession } from 'next-auth/react';
-import { getData } from 'lib/getData';
-import createFirebaseCache from '../../lib/cache/create-firebase-cache';
-
-type CourseDataPropType = CoursePageHeaderBaseProps & { whatLearn: string[] };
+import {
+  CoursePageCourseDataI,
+  CoursePageLessons,
+  CourseSectionI,
+} from 'types/pages/course-page';
+import { getSectionLessons } from 'helpers/data/get-section-lessons/get-section-lessons';
+import { getCourse, getCourseLessons, getCourseSection } from 'lib/course-page';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 interface CoursePageProps {
-  courseData: CourseDataPropType[];
-  courseSectionsData: CourseSectionType[];
-  lessonData: LessonDataArgType[];
+  courseData: CoursePageCourseDataI;
+  courseSectionsData: CourseSectionI[];
+  lessonData: CoursePageLessons;
   markdownJsxString: string;
 }
 
@@ -38,14 +29,15 @@ const CoursePage = ({
   lessonData,
   markdownJsxString,
 }: CoursePageProps) => {
-  const { description, name, rate, authorName, youtubeEmbedId } = courseData[0];
+  const { description, name, rating, author_name, youtube_embed_id } =
+    courseData;
 
   const coursePageHeadingProps = {
     description,
     name,
-    rate,
-    authorName,
-    youtubeEmbedId,
+    rating,
+    author_name,
+    youtube_embed_id,
   };
 
   return (
@@ -86,33 +78,34 @@ const CoursePage = ({
               'justify-self-start',
             ])}
           >
-            {courseSectionsData.map((section, index) => {
-              const { name, lessonsNum, duration, id: sectionId } = section;
+            {courseSectionsData &&
+              courseSectionsData.map((section, index) => {
+                const { name, lessons_num, duration, id: sectionId } = section;
 
-              const sectionLesson = getSectionLessons(lessonData, sectionId);
+                const lessons = getSectionLessons(lessonData, section.id);
 
-              return (
-                <div
-                  className={concatClasses([
-                    'flex',
-                    'flex-col',
-                    'justify-center',
-                    'gap-3',
-                  ])}
-                  key={`course-page-accordion-${sectionId}`}
-                >
-                  <CoursePageAccordion
-                    name={name}
-                    lessonData={sectionLesson}
-                    lessonNum={lessonsNum}
-                    duration={duration}
-                  />
-                  {index === courseSectionsData.length - 1 ? null : (
-                    <hr className={'bg-grey/10 h-[2px] w-full border-0'} />
-                  )}
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    className={concatClasses([
+                      'flex',
+                      'flex-col',
+                      'justify-center',
+                      'gap-3',
+                    ])}
+                    key={`course-page-accordion-${sectionId}`}
+                  >
+                    <CoursePageAccordion
+                      name={name}
+                      lessonData={lessons}
+                      lesson_num={lessons_num}
+                      duration={duration}
+                    />
+                    {index === courseSectionsData.length - 1 ? null : (
+                      <hr className={'bg-grey/10 h-[2px] w-full border-0'} />
+                    )}
+                  </div>
+                );
+              })}
           </div>
           <div
             className={concatClasses([
@@ -140,12 +133,14 @@ const CoursePage = ({
                 What you’ll learn
               </Typography>
             </div>
-            <ListIcon
-              loading={false}
-              iconName={IconName.CHECK}
-              className={'flex flex-col gap-6'}
-              children={courseData[0].whatLearn}
-            />
+            {courseData.what_learn && (
+              <ListIcon
+                loading={false}
+                iconName={IconName.CHECK}
+                className={'flex flex-col gap-6'}
+                children={courseData.what_learn}
+              />
+            )}
           </div>
           <div
             className={concatClasses([
@@ -181,46 +176,29 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const session = await getSession(context);
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  const supabaseAccessToken = session?.supabaseAccessToken || '';
+
   const { id: courseId } = context.params;
 
-  const { data: courseData, isFromCache: isCoursesFromCache } =
-    await getData<CollectionName.COURSES>({
-      name: CollectionName.COURSES,
-      whereOptions: {
-        fieldName: 'id',
-        comparator: '==',
-        value: courseId,
-      },
-    });
+  const sectionData = getCourseSection(courseId, supabaseAccessToken);
+  const courseData = getCourse(courseId, supabaseAccessToken);
+  const lessonData = getCourseLessons(courseId, supabaseAccessToken);
 
-  const { data: courseSectionsData, isFromCache: isCourseSectionsFromCache } =
-    await getData<CollectionName.COURSE_SECTIONS>({
-      name: CollectionName.COURSE_SECTIONS,
-      whereOptions: {
-        fieldName: 'courseId',
-        comparator: '==',
-        value: courseId,
-      },
-    });
-
-  const { data: lessonData, isFromCache: isLessonsFromCache } =
-    await getData<CollectionName.LESSONS>({
-      name: CollectionName.LESSONS,
-      whereOptions: {
-        fieldName: 'courseId',
-        comparator: '==',
-        value: courseId,
-      },
-    });
+  const [course, lessons, section] = await Promise.all([
+    courseData,
+    lessonData,
+    sectionData,
+  ]);
 
   const isAllDataFound =
-    courseData &&
-    courseData.length &&
-    lessonData &&
-    lessonData.length &&
-    courseSectionsData &&
-    courseSectionsData.length;
+    course &&
+    course.length &&
+    lessons &&
+    lessons.length &&
+    section &&
+    section.length;
 
   if (!isAllDataFound) {
     return {
@@ -228,44 +206,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const trimmedCourseData = courseData.map((course) => {
-    const { whatLearn } = course;
-
-    return {
-      ...courseDataToCoursePageHeadingProps(course),
-      whatLearn,
-    };
-  });
-
-  const trimmedLessonData = lessonData.map((lesson) => {
-    const { sectionId } = lesson;
-    return {
-      ...convertLessonDataToAccordionLessonItemProps(lesson),
-      sectionId,
-    };
-  });
-
   const markdownJsxString = getMarkdownHtmlString(
-    courseData[0].detailedDescription,
+    course[0].detailed_description,
   );
-
-  context.res.on('finish', () => {
-    if (!isCoursesFromCache) {
-      createFirebaseCache(CollectionName.COURSES);
-    }
-    if (!isLessonsFromCache) {
-      createFirebaseCache(CollectionName.LESSONS);
-    }
-    if (!isCourseSectionsFromCache) {
-      createFirebaseCache(CollectionName.COURSE_SECTIONS);
-    }
-  });
 
   return {
     props: {
-      courseData: trimmedCourseData,
-      courseSectionsData,
-      lessonData: trimmedLessonData,
+      courseData: course[0],
+      courseSectionsData: section,
+      lessonData: lessons,
       markdownJsxString: markdownJsxString,
       session,
     },
