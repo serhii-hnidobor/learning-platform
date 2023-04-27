@@ -3,7 +3,6 @@ import { useState, createContext } from 'react';
 import { DataStatus } from 'common/enum/api/api';
 import { CourseCardProps } from 'components/common/course-card/course-card';
 import { courseTopicsSearch, tagSearch } from 'helpers/search/search';
-import dynamic from 'next/dynamic';
 import { GetServerSidePropsContext } from 'next';
 import { BrowsePageCourseI, TopicI } from 'types/pages/browse-page';
 import { getTags } from 'lib/landing';
@@ -12,13 +11,8 @@ import { getTopics } from 'lib/browse-page';
 import { TagsI } from 'types/pages/landing-page';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import removeTopicAndTagFromBrowsePageCourse from '../../helpers/data/remove-topic-and-tag-from-browse-page-course';
-
-const BrowsePageSection = dynamic(
-  import(
-    'components/browse-page-components/browse-page-section/browse-page-section'
-  ),
-);
+import removeTopicAndTagFromBrowsePageCourse from 'helpers/data/remove-topic-and-tag-from-browse-page-course';
+import BrowsePageSection from 'components/browse-page-components/browse-page-section/browse-page-section';
 
 interface BrowsePageContextType {
   handleCourseSearch: (searchString: string) => void;

@@ -1,19 +1,13 @@
 import { LessonPageHeading } from 'components/lesson-page-components/lesson-page-heading/lesson-page-heading';
 import getMarkdownHtmlString from 'lib/get-markdown-html-string';
 import { GetServerSidePropsContext } from 'next';
-import dynamic from 'next/dynamic';
 import { getCourseLessons, getCourseSection } from 'lib/course-page';
 import { getLessonById } from 'lib/lesson';
 import { LessonOfLessonPageI } from 'types/pages/lesson-page';
 import { CoursePageLessonI, CourseSectionI } from 'types/pages/course-page';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-
-const LessonPageContent = dynamic(
-  import(
-    'components/lesson-page-components/lesson-page-content/lesson-page-content'
-  ),
-);
+import LessonPageContent from 'components/lesson-page-components/lesson-page-content/lesson-page-content';
 
 interface LessonPageProps {
   courseLessons: CoursePageLessonI[];

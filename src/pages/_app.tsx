@@ -3,7 +3,6 @@ import { concatClasses } from 'helpers/string/string';
 import { ToastContainer } from 'react-toastify';
 import { AppProps } from 'next/app';
 import { SkeletonWrapper } from 'components/common/skeleton-wrapper/skeleton-wrapper';
-import dynamic from 'next/dynamic';
 
 import { Analytics } from '@vercel/analytics/react';
 import { Lato } from 'next/font/google';
@@ -20,9 +19,8 @@ import 'simplebar-react/dist/simplebar.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../global-style.css';
 import 'nprogress/nprogress.css';
-
-const Header = dynamic(import('components/common/header/header'));
-const Footer = dynamic(import('components/common/footer/footer'));
+import Header from 'components/common/header/header';
+import Footer from 'components/common/footer/footer';
 
 Nprogress.configure({ easing: 'ease', speed: 500, showSpinner: false });
 

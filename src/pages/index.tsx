@@ -1,32 +1,14 @@
 import { ProductDescriptionSection } from 'components/landing-page-components/product-description-section/product-description-section';
 import { SectionHero } from 'components/landing-page-components/hero-section/section-hero';
-import dynamic from 'next/dynamic';
 import { GetServerSidePropsContext } from 'next';
 import { LandingPageCourses, ReviewI, TagsI } from 'types/pages/landing-page';
 import { getReviews, getCourses, getTags } from 'lib/landing';
 import { getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-
-const ProductCategoriesDescription = dynamic(
-  import(
-    'components/landing-page-components/product-categories-description/product-categories-description'
-  ),
-);
-const ProductPreviewSection = dynamic(
-  import(
-    'components/landing-page-components/product-preview-section/product-preview-section'
-  ),
-);
-const ProductReviewSection = dynamic(
-  import(
-    'components/landing-page-components/product-review-section/product-review-section'
-  ),
-);
-const ProductAdvantages = dynamic(
-  import(
-    'components/landing-page-components/product-advantages/product-advantages'
-  ),
-);
+import ProductCategoriesDescription from 'components/landing-page-components/product-categories-description/product-categories-description';
+import ProductAdvantages from 'components/landing-page-components/product-advantages/product-advantages';
+import ProductReviewSection from 'components/landing-page-components/product-review-section/product-review-section';
+import ProductPreviewSection from 'components/landing-page-components/product-preview-section/product-preview-section';
 
 interface LandingPageProps {
   courseData: LandingPageCourses;

@@ -15,7 +15,7 @@ import {
 } from 'components/common/card/product-review-card/product-review-card';
 import { isProductReviewCardProps } from 'components/common/card/card-props-type-check';
 import { getUserViewCardInfo } from './helpers/get-user-view-card-info';
-import FetchFailedBanner from '../fetch-failed-banner/fetch-failed-banner';
+import FetchFailedBanner from 'components/common/fetch-failed-banner/fetch-failed-banner';
 
 interface CarouselProps extends Omit<ComponentBaseProps<'div'>, 'title'> {
   child: ProductShortInfoCardProps[] | ProductReviewPropsType[];
